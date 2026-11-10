@@ -1,54 +1,70 @@
-# Remotion video
+# Office Comedy
 
-<p align="center">
-  <a href="https://github.com/remotion-dev/logo">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://github.com/remotion-dev/logo/raw/main/animated-logo-banner-dark.apng">
-      <img alt="Animated Remotion Logo" src="https://github.com/remotion-dev/logo/raw/main/animated-logo-banner-light.gif">
-    </picture>
-  </a>
-</p>
+Dự án sản xuất tự động video hài ngắn về công sở và đời thường bằng tiếng Việt, dựng bằng [Remotion](https://www.remotion.dev) + TypeScript.
 
-Welcome to your Remotion project!
+Thông số mỗi tập: 1080x1920, 30fps, 1800 khung hình (60 giây), MP4 H.264 + AAC. Quy tắc chi tiết nằm trong [CLAUDE.md](CLAUDE.md), tiến độ trong [PROGRESS.md](PROGRESS.md).
 
-## Commands
+## Yêu cầu
 
-**Install Dependencies**
+- Node.js 20.19+ / 22.13+ / 24+ (máy hiện tại: 24.6.0)
+- npm, Git
+- FFmpeg + ffprobe trong PATH (kiểm tra kết quả render)
+- Remotion tự tải Chrome Headless Shell khi render lần đầu
 
-```console
-npm i --loglevel=error
+## Cài đặt (PowerShell, trong thư mục dự án)
+
+```
+npm install
+Copy-Item .env.example .env
 ```
 
-**Start Preview**
+Mở `.env` và điền key nếu cần. Không commit `.env`.
 
-```console
+## Xem trước (Remotion Studio)
+
+```
 npm run dev
 ```
 
-**Render video**
+Studio mở ở `http://localhost:3000`. Chọn composition ở cột trái.
 
-```console
-npx remotion render
+## Render
+
+Video kiểm tra kỹ thuật 5 giây:
+
+```
+npm run render:test
 ```
 
-**Upgrade Remotion**
+Kết quả: `out/tech-check.mp4`.
 
-```console
-npx remotion upgrade
+Kiểm tra file đã xuất:
+
+```
+npm run probe:test
 ```
 
-## Docs
+Kết quả mong đợi: `h264` 1080x1920 30/1 với 150 khung hình, `aac`, thời lượng 5.0 giây.
 
-Get started with Remotion by reading the [fundamentals page](https://www.remotion.dev/docs/the-fundamentals).
+## Lệnh khác
 
-## Help
+| Lệnh | Tác dụng |
+|---|---|
+| `npm run dev` | Mở Remotion Studio |
+| `npm run lint` | ESLint + kiểm tra kiểu TypeScript |
+| `npm run render:test` | Render `TechCheck` ra `out/tech-check.mp4` |
+| `npm run probe:test` | In thông số codec/khung hình/thời lượng của file test |
 
-We provide help on our [Discord server](https://discord.gg/6VzzNDwUwV).
+## Cấu trúc
 
-## Issues
+```
+src/Root.tsx           đăng ký composition
+src/test/TechCheck.tsx composition kiểm tra kỹ thuật (5 giây)
+public/test/           tài nguyên kiểm tra (âm thanh tự tạo bằng FFmpeg)
+.claude/skills/        Remotion Agent Skills cho Claude Code (phạm vi dự án)
+out/                   video xuất ra (bị Git bỏ qua)
+```
 
-Found an issue with Remotion? [File an issue here](https://github.com/remotion-dev/remotion/issues/new).
+## Giấy phép
 
-## License
-
-Note that for some entities a company license is needed. [Read the terms here](https://github.com/remotion-dev/remotion/blob/main/LICENSE.md).
+Remotion miễn phí cho cá nhân và nhóm tối đa 3 người; tổ chức lớn hơn cần giấy phép công ty. Xem https://www.remotion.dev/license.

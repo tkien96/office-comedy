@@ -11,3 +11,10 @@ Config.setRspack(true);
 Config.setVideoImageFormat("jpeg");
 Config.setOverwriteOutput(true);
 Config.setDefaultPremountInSeconds(2);
+
+// Output spec for every episode: MP4 H.264 (limited-range yuv420p) + AAC.
+Config.setCodec("h264");
+Config.setPixelFormat("yuv420p");
+Config.setAudioCodec("aac");
+// bt709 -> tagged limited-range yuv420p (default gives untagged full-range yuvj420p).
+Config.setColorSpace("bt709");

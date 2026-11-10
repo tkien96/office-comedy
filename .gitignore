@@ -1,7 +1,28 @@
 node_modules
 dist
+build
 .DS_Store
-.env
+Thumbs.db
 
-# Ignore the output video from Git but not videos you import into src/.
+# Secrets — never commit
+.env
+.env.*
+!.env.example
+
+# Rendered output (videos, stills, frames)
 out
+renders
+
+# Logs and temp
+*.log
+npm-debug.log*
+tmp
+.cache
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea
+
+# Claude Code personal settings (project skills in .claude/skills are committed)
+.claude/settings.local.json
