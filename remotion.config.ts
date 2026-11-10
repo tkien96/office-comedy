@@ -18,3 +18,5 @@ Config.setPixelFormat("yuv420p");
 Config.setAudioCodec("aac");
 // bt709 -> tagged limited-range yuv420p (default gives untagged full-range yuvj420p).
 Config.setColorSpace("bt709");
+// Always write an AAC track, even for silent drafts (no TTS yet).
+Config.setEnforceAudioTrack(true);

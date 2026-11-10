@@ -10,6 +10,8 @@
   "private": true,
   "dependencies": {
     "@remotion/cli": "4.0.542",
+    "@remotion/google-fonts": "4.0.542",
+    "@remotion/layout-utils": "4.0.542",
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "remotion": "4.0.542"
@@ -28,7 +30,9 @@
     "upgrade": "remotion upgrade",
     "lint": "eslint src && tsc",
     "render:test": "remotion render TechCheck out/tech-check.mp4 --codec=h264 --audio-codec=aac --concurrency=2",
-    "probe:test": "ffprobe -v error -show_entries stream=codec_type,codec_name,width,height,r_frame_rate,nb_frames,pix_fmt -show_entries format=duration -of compact out/tech-check.mp4"
+    "probe:test": "ffprobe -v error -show_entries stream=codec_type,codec_name,width,height,r_frame_rate,nb_frames,pix_fmt -show_entries format=duration -of compact out/tech-check.mp4",
+    "render:demo": "remotion render DemoNotification out/demo-notification.mp4 --concurrency=3",
+    "render:sheets": "remotion still CharacterSheet out/character-sheet.png && remotion still BackgroundSheet out/background-sheet.png"
   },
   "allowScripts": {
     "esbuild": false

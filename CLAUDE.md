@@ -57,19 +57,32 @@ ffprobe -v error -show_entries stream=codec_type,codec_name,width,height,r_frame
 - Render bằng trình duyệt đi kèm của Remotion (Chrome Headless Shell), không đặt `--browser-executable`.
 - Tài nguyên tĩnh đặt trong `public/`, tham chiếu bằng `staticFile()`.
 
-## Cấu trúc thư mục (dự kiến)
+## Cấu trúc thư mục
 
 ```
 src/
-  Root.tsx              đăng ký các Composition
+  Root.tsx              đăng ký các Composition / Still
+  design/               tokens (khung hình, vùng an toàn, dải phụ đề), font
+  lib/timeline.ts       keyframe, nội suy, hash tất định
+  characters/           rig SVG dùng chung + thiết kế Nam/Linh/Sếp
+  backgrounds/          văn phòng, phòng họp, pantry, bàn phía trước
+  ui/                   phụ đề, thẻ thông báo, chữ sốc, overlay vùng an toàn
+  scenes/ScriptedScene  bộ dựng chung: đọc dữ liệu cảnh rồi vẽ
+  episodes/             CHỈ dữ liệu kịch bản (types.ts + mỗi tập một file)
+  sheets/               ảnh tổng hợp nhân vật và bối cảnh
   test/                 composition kiểm tra kỹ thuật
-  components/           bộ dựng dùng lại (nhân vật, phụ đề, cảnh, hiệu ứng)
-  episodes/             dữ liệu kịch bản từng tập (không chứa logic dựng)
-public/
-  characters/           bộ tài nguyên cố định cho từng nhân vật
-  audio/                giọng đọc, nhạc nền, hiệu ứng âm thanh
-out/                    video xuất ra (không đưa vào Git)
+public/audio/           giọng đọc, nhạc, SFX (sau này)
+assets/LICENSES.md      nguồn và giấy phép mọi tài nguyên
+out/                    video và ảnh xuất ra (không đưa vào Git)
 ```
+
+## Quy tắc bộ hình ảnh
+
+- Nhân vật chỉ được điều khiển qua `CharacterState` (pose, expression, lookX/lookY, talking, lean, seated, laptop), đặt bằng keyframe trong dữ liệu tập. Không vẽ nhân vật mới cho từng cảnh.
+- Muốn thêm biểu cảm hoặc tư thế thì thêm vào rig (`FACE_SPECS` trong `Face.tsx`, `armsFor` trong `Character.tsx`) để mọi nhân vật cùng dùng được.
+- Mọi chuyển động phải là hàm của frame. Cấm `Math.random`, `Date`, `performance.now`. Cần biến thiên thì dùng `hash01(seed)`.
+- Phụ đề nằm trong `SUBTITLE_ZONE` và tối đa 2 dòng (render báo lỗi nếu vượt). Cằm nhân vật phải ở trên dải phụ đề (`assertClearOfSubtitles`). Thẻ thông báo và chữ sốc đặt ở nửa trên khung hình.
+- Rig 400x800 đơn vị, chân ở y=780. Khi ngồi có laptop, mặt bàn ở `y + 690 * scale`.
 
 ## Quy trình làm việc
 

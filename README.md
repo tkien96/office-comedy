@@ -54,12 +54,22 @@ Kết quả mong đợi: `h264` 1080x1920 30/1 với 150 khung hình, `aac`, th�
 | `npm run lint` | ESLint + kiểm tra kiểu TypeScript |
 | `npm run render:test` | Render `TechCheck` ra `out/tech-check.mp4` |
 | `npm run probe:test` | In thông số codec/khung hình/thời lượng của file test |
+| `npm run render:demo` | Render cảnh mẫu 10 giây ra `out/demo-notification.mp4` |
+| `npm run render:sheets` | Xuất ảnh tổng hợp nhân vật và bối cảnh vào `out/` |
+
+Xem vùng an toàn và dải phụ đề trong Studio: chọn `DemoNotification` rồi bật `debugSafeArea` trong bảng props.
 
 ## Cấu trúc
 
 ```
 src/Root.tsx           đăng ký composition
+src/characters/        rig nhân vật SVG + thiết kế Nam, Linh, Sếp
+src/backgrounds/       văn phòng, phòng họp, pantry
+src/episodes/          dữ liệu kịch bản (tách khỏi code dựng)
+src/scenes/            bộ dựng cảnh dùng chung
+src/ui/                phụ đề, thông báo, overlay
 src/test/TechCheck.tsx composition kiểm tra kỹ thuật (5 giây)
+assets/LICENSES.md     nguồn và giấy phép tài nguyên
 public/test/           tài nguyên kiểm tra (âm thanh tự tạo bằng FFmpeg)
 .claude/skills/        Remotion Agent Skills cho Claude Code (phạm vi dự án)
 out/                   video xuất ra (bị Git bỏ qua)
