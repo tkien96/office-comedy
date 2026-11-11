@@ -42,6 +42,12 @@ type RefEntry = {
   rights: { confirmed: boolean; note: string };
 };
 const EXPECTED_GENDER: Record<string, string> = { kien: "male", trinh: "female", sep: "male", narrator: "male" };
+const roleRegion = (role: string): string => {
+  const casting = JSON.parse(readFileSync("config/casting.json", "utf8")) as { roles: Record<string, { region?: string }> };
+  const r = casting.roles[role]?.region;
+  if (!r) throw new Error(`config/casting.json chưa ghi region cho vai ${role}.`);
+  return r;
+};
 type SampleResult = { file?: string; role?: string; voiceId?: string; settings?: VoiceSettings; model?: string };
 
 const args = process.argv.slice(2);
@@ -76,7 +82,9 @@ const main = async () => {
       if ("preset" in spec) {
         const v = meta.voices.find((x) => x.voice_id === spec.preset);
         if (!v) throw new Error(`Preset "${spec.preset}" không có trong metadata gói đã cài.`);
-        if (v.region !== "Nam") throw new Error(`Preset "${spec.preset}" có region=${v.region}, không phải miền Nam.`);
+        // Region per role comes from config/casting.json (Kiên/Trinh/người kể: Nam; Sếp: Bắc).
+        const wantRegion = roleRegion(role);
+        if (v.region !== wantRegion) throw new Error(`Preset "${spec.preset}" có region=${v.region}, vai ${role} cần ${wantRegion}.`);
         if (EXPECTED_GENDER[role] && v.gender !== EXPECTED_GENDER[role]) throw new Error(`Preset "${spec.preset}" sai giới tính cho vai ${role}.`);
         voices[role] = { voiceId: spec.preset, label: spec.preset, settings: cfg.settings, sampleModel: null };
       } else {

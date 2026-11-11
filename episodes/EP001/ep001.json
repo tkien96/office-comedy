@@ -1,0 +1,578 @@
+{
+  "$comment": "Dữ liệu kịch bản EP001 (nguồn duy nhất cho âm thanh và sau này cho video). Mỗi beat là câu thoại (line) hoặc nhịp hành động không lời (action, thời lượng \"sec\" theo nội dung hành động). Hành động diễn ra trong lúc có thoại ghi ở \"visual\" của câu đó, không tạo beat riêng và không cộng thêm thời gian. Tổng thời lượng = điểm kết thúc của mục cuối trên timeline thực tế.",
+  "id": "EP001",
+  "title": "Công cụ tiết kiệm thời gian",
+  "logline": "Kiên làm công cụ giúp tiết kiệm thời gian làm báo cáo. Sếp yêu cầu báo cáo về thời gian tiết kiệm được, rồi tổ chức họp để giải thích báo cáo đó.",
+  "status": "đã duyệt (kịch bản + âm thanh + video)",
+  "fps": 30,
+  "timing": {
+    "turnGapSec": 0.22,
+    "sameTurnGapSec": 0.2,
+    "leadInSec": 0.25
+  },
+  "scenes": [
+    {
+      "id": "S1",
+      "title": "Mở đầu",
+      "location": "office",
+      "speakers": [
+        "narrator"
+      ],
+      "note": "Câu móc trong 3 giây đầu."
+    },
+    {
+      "id": "S2",
+      "title": "Khoe công cụ",
+      "location": "office",
+      "speakers": [
+        "trinh",
+        "kien"
+      ]
+    },
+    {
+      "id": "S3",
+      "title": "Sếp giao báo cáo",
+      "location": "office",
+      "speakers": [
+        "sep",
+        "kien"
+      ]
+    },
+    {
+      "id": "S4",
+      "title": "Cuối tuần",
+      "location": "office",
+      "speakers": [
+        "narrator"
+      ],
+      "note": "Montage không thoại, chỉ lời dẫn."
+    },
+    {
+      "id": "S5",
+      "title": "Phòng họp",
+      "location": "meeting",
+      "speakers": [
+        "sep",
+        "trinh"
+      ],
+      "note": "Kiên có mặt nhưng không nói."
+    },
+    {
+      "id": "S6",
+      "title": "Pantry",
+      "location": "pantry",
+      "speakers": [
+        "trinh",
+        "kien"
+      ],
+      "note": "Lời dẫn chốt là của Kiên, không đọc chồng lên thoại."
+    }
+  ],
+  "beats": [
+    {
+      "id": "n01",
+      "scene": "S1",
+      "kind": "line",
+      "role": "narrator",
+      "text": "Tôi tiết kiệm được ba tiếng mỗi tuần.",
+      "visual": "Cận mặt Kiên tự tin trước laptop; thanh tiến trình 'Báo cáo tuần' chạy vèo tới 100%.",
+      "expression": {
+        "kien": "happy"
+      }
+    },
+    {
+      "id": "n02",
+      "scene": "S1",
+      "kind": "line",
+      "role": "narrator",
+      "text": "Đó là sai lầm lớn nhất đời tôi.",
+      "sameTurn": true,
+      "visual": "Hình đứng khựng, Kiên vẫn cười.",
+      "expression": {
+        "kien": "happy"
+      }
+    },
+    {
+      "id": "a01",
+      "scene": "S1",
+      "kind": "action",
+      "desc": "Kiên ngả ghế, cười mãn nguyện. Trinh ở bàn bên liếc sang.",
+      "sec": 1
+    },
+    {
+      "id": "t01",
+      "scene": "S2",
+      "kind": "line",
+      "role": "trinh",
+      "text": "Anh cười gì một mình vậy?",
+      "visual": "Trinh nghiêng người sang.",
+      "expression": {
+        "trinh": "suspicious",
+        "kien": "happy"
+      }
+    },
+    {
+      "id": "k01",
+      "scene": "S2",
+      "kind": "line",
+      "role": "kien",
+      "text": "Công cụ tự làm báo cáo nè.",
+      "visual": "Kiên xoay laptop cho Trinh xem.",
+      "expression": {
+        "kien": "happy"
+      }
+    },
+    {
+      "id": "k02",
+      "scene": "S2",
+      "kind": "line",
+      "role": "kien",
+      "text": "Bấm một cái là xong.",
+      "sameTurn": true,
+      "visual": "Kiên chỉ tay vào màn hình.",
+      "pose": {
+        "kien": "pointing"
+      }
+    },
+    {
+      "id": "a02",
+      "scene": "S2",
+      "kind": "action",
+      "desc": "Trinh ghé sát màn hình, mắt sáng lên.",
+      "sec": 0.8
+    },
+    {
+      "id": "t02",
+      "scene": "S2",
+      "kind": "line",
+      "role": "trinh",
+      "text": "Thiệt hả? Vậy làm giùm em luôn nha.",
+      "visual": "Trinh cười, đẩy file của mình sang.",
+      "expression": {
+        "trinh": "happy"
+      }
+    },
+    {
+      "id": "k03",
+      "scene": "S2",
+      "kind": "line",
+      "role": "kien",
+      "text": "Ờ, cũng được.",
+      "visual": "Kiên gật đầu, hơi ngượng (cả nể).",
+      "expression": {
+        "kien": "embarrassed"
+      }
+    },
+    {
+      "id": "a03",
+      "scene": "S2",
+      "kind": "action",
+      "desc": "Sếp xuất hiện sau lưng Kiên, tay cầm tách trà. Trinh quay về bàn mình.",
+      "sec": 1.2
+    },
+    {
+      "id": "s01",
+      "scene": "S3",
+      "kind": "line",
+      "role": "sep",
+      "text": "Kiên này, nghe nói em có công cụ tiết kiệm thời gian à?",
+      "visual": "Sếp đứng sau lưng, điềm tĩnh.",
+      "expression": {
+        "sep": "neutral",
+        "kien": "surprised"
+      }
+    },
+    {
+      "id": "k04",
+      "scene": "S3",
+      "kind": "line",
+      "role": "kien",
+      "text": "Dạ, mỗi tuần đỡ được ba tiếng.",
+      "visual": "Kiên đứng dậy, hơi tự hào.",
+      "expression": {
+        "kien": "happy"
+      },
+      "pose": {
+        "kien": "standing"
+      }
+    },
+    {
+      "id": "s02",
+      "scene": "S3",
+      "kind": "line",
+      "role": "sep",
+      "text": "Tốt. Thế em viết cho anh một báo cáo.",
+      "visual": "Sếp gật đầu.",
+      "expression": {
+        "sep": "happy"
+      }
+    },
+    {
+      "id": "s03",
+      "scene": "S3",
+      "kind": "line",
+      "role": "sep",
+      "text": "Tiết kiệm bao nhiêu, ở khâu nào, số liệu cụ thể.",
+      "sameTurn": true,
+      "visual": "Sếp đếm ngón tay.",
+      "pose": {
+        "sep": "pointing"
+      }
+    },
+    {
+      "id": "a04",
+      "scene": "S3",
+      "kind": "action",
+      "desc": "Kiên khựng lại, mắt chớp hai cái.",
+      "sec": 0.7
+    },
+    {
+      "id": "k05a",
+      "scene": "S3",
+      "kind": "line",
+      "role": "kien",
+      "text": "Hay em gửi công cụ luôn, bấm thử là thấy liền.",
+      "visual": "Kiên xoay laptop về phía Sếp, cười gượng.",
+      "expression": {
+        "kien": "embarrassed"
+      }
+    },
+    {
+      "id": "s03b",
+      "scene": "S3",
+      "kind": "line",
+      "role": "sep",
+      "text": "Công cụ thì anh không đọc. Anh đọc báo cáo.",
+      "visual": "Sếp khoát tay nhẹ, không nhìn màn hình.",
+      "expression": {
+        "sep": "neutral"
+      }
+    },
+    {
+      "id": "k05",
+      "scene": "S3",
+      "kind": "line",
+      "role": "kien",
+      "text": "Dạ, báo cáo về việc không phải làm báo cáo hả sếp?",
+      "visual": "Kiên hỏi lại, không chắc mình nghe đúng.",
+      "expression": {
+        "kien": "suspicious"
+      }
+    },
+    {
+      "id": "s04",
+      "scene": "S3",
+      "kind": "line",
+      "role": "sep",
+      "text": "Đúng rồi. Sáng thứ Hai gửi anh nhé.",
+      "visual": "Sếp vỗ vai Kiên rồi đi.",
+      "expression": {
+        "sep": "neutral",
+        "kien": "surprised"
+      }
+    },
+    {
+      "id": "a05",
+      "scene": "S3",
+      "kind": "action",
+      "desc": "Kiên đứng chết lặng nhìn theo. Chuyển cảnh.",
+      "sec": 1.2
+    },
+    {
+      "id": "n03",
+      "scene": "S4",
+      "kind": "line",
+      "role": "narrator",
+      "text": "Để chứng minh tiết kiệm ba tiếng, tôi mất trọn cuối tuần.",
+      "visual": "Montage: đồng hồ quay nhanh, Kiên ngồi máy tính sáng thứ Bảy rồi tối Chủ nhật, cốc cà phê chồng lên nhau.",
+      "expression": {
+        "kien": "annoyed"
+      }
+    },
+    {
+      "id": "a06",
+      "scene": "S4",
+      "kind": "action",
+      "desc": "Kiên bấm gửi báo cáo lúc gần nửa đêm Chủ nhật, gục xuống bàn.",
+      "sec": 1.4
+    },
+    {
+      "id": "s05",
+      "scene": "S5",
+      "kind": "line",
+      "role": "sep",
+      "text": "Báo cáo tốt lắm. Anh muốn cả phòng hiểu cách làm này.",
+      "visual": "Phòng họp, Sếp đứng cạnh bảng biểu đồ.",
+      "expression": {
+        "sep": "happy",
+        "kien": "happy"
+      }
+    },
+    {
+      "id": "t03",
+      "scene": "S5",
+      "kind": "line",
+      "role": "trinh",
+      "text": "Sếp ơi, phòng kế toán với nhân sự cũng hỏi nữa.",
+      "visual": "Trinh giơ tay, hào hứng.",
+      "expression": {
+        "trinh": "happy"
+      }
+    },
+    {
+      "id": "s06",
+      "scene": "S5",
+      "kind": "line",
+      "role": "sep",
+      "text": "Thế thì mỗi phòng một buổi họp. Kiên trình bày nhé.",
+      "visual": "Sếp chỉ về phía Kiên.",
+      "pose": {
+        "sep": "pointing"
+      },
+      "expression": {
+        "sep": "neutral",
+        "kien": "surprised"
+      }
+    },
+    {
+      "id": "t03b",
+      "scene": "S5",
+      "kind": "line",
+      "role": "trinh",
+      "text": "Dạ, em lên lịch liền cho sếp.",
+      "visual": "Trinh mở điện thoại, gõ lịch ngay tại chỗ.",
+      "pose": {
+        "trinh": "phone"
+      },
+      "expression": {
+        "trinh": "happy"
+      }
+    },
+    {
+      "id": "a07",
+      "scene": "S5",
+      "kind": "action",
+      "desc": "Kiên quay sang Trinh, mặt chết lặng. Trinh giơ ngón cái, cười tươi.",
+      "sec": 1.2
+    },
+    {
+      "id": "t04",
+      "scene": "S6",
+      "kind": "line",
+      "role": "trinh",
+      "text": "Anh ơi, lịch họp tuần này của anh nè. Bảy buổi.",
+      "visual": "Pantry. Trinh đưa điện thoại có lịch kín mít.",
+      "pose": {
+        "trinh": "phone"
+      },
+      "expression": {
+        "trinh": "happy"
+      }
+    },
+    {
+      "id": "k06",
+      "scene": "S6",
+      "kind": "line",
+      "role": "kien",
+      "text": "Bảy buổi? Mỗi buổi một tiếng?",
+      "visual": "Kiên suýt làm đổ cà phê.",
+      "expression": {
+        "kien": "surprised"
+      }
+    },
+    {
+      "id": "t05",
+      "scene": "S6",
+      "kind": "line",
+      "role": "trinh",
+      "text": "Dạ. Mà anh yên tâm.",
+      "visual": "Trinh vỗ vai Kiên.",
+      "expression": {
+        "trinh": "happy"
+      }
+    },
+    {
+      "id": "t06",
+      "scene": "S6",
+      "kind": "line",
+      "role": "trinh",
+      "text": "Biên bản họp em làm bằng công cụ của anh rồi.",
+      "sameTurn": true,
+      "visual": "Trinh nháy mắt, cầm cốc rời đi.",
+      "expression": {
+        "trinh": "happy"
+      }
+    },
+    {
+      "id": "a08",
+      "scene": "S6",
+      "kind": "action",
+      "desc": "Kiên nhìn theo, cầm cốc cà phê nguội.",
+      "sec": 0.9
+    },
+    {
+      "id": "n04",
+      "scene": "S6",
+      "kind": "line",
+      "role": "narrator",
+      "text": "Công cụ tiết kiệm cho tôi ba tiếng.",
+      "visual": "Cận mặt Kiên, tỉnh bơ.",
+      "expression": {
+        "kien": "neutral"
+      }
+    },
+    {
+      "id": "n05",
+      "scene": "S6",
+      "kind": "line",
+      "role": "narrator",
+      "text": "Giải thích nó tốn bảy tiếng.",
+      "sameTurn": true,
+      "gapBeforeSec": 0.35,
+      "visual": "Kiên nhìn thẳng ống kính.",
+      "expression": {
+        "kien": "embarrassed"
+      }
+    },
+    {
+      "id": "a09",
+      "scene": "S6",
+      "kind": "action",
+      "desc": "Giữ khung hình mặt Kiên; kết thúc.",
+      "sec": 1
+    }
+  ],
+  "duration": {
+    "minSec": 60,
+    "targetRangeSec": [
+      60,
+      90
+    ]
+  },
+  "approval": {
+    "approvedAt": "2026-11-11",
+    "approvedBy": "người dùng",
+    "scope": "kịch bản và bản âm thanh nghe duyệt",
+    "contentEndSec": 63.27,
+    "durationInFrames": 1899,
+    "lines": [
+      {
+        "id": "n01",
+        "cacheKey": "79b50c37695e6d10a792cc89"
+      },
+      {
+        "id": "n02",
+        "cacheKey": "14af7f14ae0a1130a6a5ccf5"
+      },
+      {
+        "id": "t01",
+        "cacheKey": "a9034472cfba6c34bf463ce2"
+      },
+      {
+        "id": "k01",
+        "cacheKey": "5f3bf6cb786373fa87c23ee2"
+      },
+      {
+        "id": "k02",
+        "cacheKey": "0b3b5af0405ea5817ce238e2"
+      },
+      {
+        "id": "t02",
+        "cacheKey": "3e166aa121ce104fe4567ec1"
+      },
+      {
+        "id": "k03",
+        "cacheKey": "eaa315921618c2b3a6ccc3e0"
+      },
+      {
+        "id": "s01",
+        "cacheKey": "164a3273551c9a6007245d4a"
+      },
+      {
+        "id": "k04",
+        "cacheKey": "72550cbb668893f7863fbaaa"
+      },
+      {
+        "id": "s02",
+        "cacheKey": "99c31440af7dec630105a577"
+      },
+      {
+        "id": "s03",
+        "cacheKey": "4680eff9857816e9efef53e8"
+      },
+      {
+        "id": "k05a",
+        "cacheKey": "f51c19b196c2e47a9eabded9"
+      },
+      {
+        "id": "s03b",
+        "cacheKey": "578aca24ee1528cbcfd1936e"
+      },
+      {
+        "id": "k05",
+        "cacheKey": "af9d6687813fd7a8e76b3166"
+      },
+      {
+        "id": "s04",
+        "cacheKey": "1ff31a160511373a5cb3f831"
+      },
+      {
+        "id": "n03",
+        "cacheKey": "bb6fc18583c42e60865d5a89"
+      },
+      {
+        "id": "s05",
+        "cacheKey": "7155430f407c7b6a8c78b1a9"
+      },
+      {
+        "id": "t03",
+        "cacheKey": "fa3e0708dbdb2f64fd66bd2c"
+      },
+      {
+        "id": "s06",
+        "cacheKey": "d8870e0484eec70fa0001168"
+      },
+      {
+        "id": "t03b",
+        "cacheKey": "35b99be4f984289556f7c71c"
+      },
+      {
+        "id": "t04",
+        "cacheKey": "0e16ead37d4959726567b12b"
+      },
+      {
+        "id": "k06",
+        "cacheKey": "5e12ae424791932dab267fc5"
+      },
+      {
+        "id": "t05",
+        "cacheKey": "61cdda6ce4cd2b954e28f102"
+      },
+      {
+        "id": "t06",
+        "cacheKey": "2979c63aa9bbd129d4c2fb21"
+      },
+      {
+        "id": "n04",
+        "cacheKey": "6eec5a3130aa4d8548f842df"
+      },
+      {
+        "id": "n05",
+        "cacheKey": "bcf57c1974f8e02707e93e8f"
+      }
+    ]
+  },
+  "videoApproval": {
+    "approvedAt": "2026-11-11",
+    "approvedBy": "người dùng",
+    "file": "out/EP001.mp4",
+    "sha256": "8e4da8097b0c65788af5711943075c487d6d204ec38ba6ed1f51de898e204547",
+    "durationSec": 63.317,
+    "durationInFrames": 1899,
+    "format": "1080x1920 @30, h264 yuv420p + aac",
+    "staging": "src/episodes/ep001-staging.ts",
+    "renderCommand": "npm run render:ep001",
+    "verify": "npm run episode:verify -- episodes/EP001/ep001.json out/EP001.mp4 (10/10 đạt)",
+    "note": "Không tự đăng lên mạng xã hội."
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "$comment": "Câu mới, không có trong âm thanh tham chiếu, để kiểm tra độ ổn định giọng clone của Kiên và Sếp. Tiếng Việt miền Nam, xưng hô sếp–nhân viên: anh/em. Trạng thái: tham chiếu mới, chờ duyệt kết quả.",
+  "$comment": "LỊCH SỬ (bản dùng để duyệt giọng): câu Sếp viết theo cách nói miền Nam (\"đó\", \"nha\") trước quyết định 2026-11-11; không dùng làm mẫu lời thoại Sếp. Câu mới, không có trong âm thanh tham chiếu, để kiểm tra độ ổn định giọng clone của Kiên và Sếp. Tiếng Việt miền Nam, xưng hô sếp–nhân viên: anh/em. Trạng thái: tham chiếu mới, chờ duyệt kết quả.",
   "campaign": "vieneu-stability-03",
   "voices": {
     "kien": {

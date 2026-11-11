@@ -74,5 +74,5 @@ export const CHARACTERS: Record<CharacterId, CharacterDesign> = {
 export const CHARACTER_BIOS: Record<CharacterId, string> = {
   kien: "~30 tuổi · áo xanh · cả nể, muốn làm hiệu quả nhưng hay tự đưa mình vào thế khó",
   trinh: "~28 tuổi · áo cam · nhanh trí, thực tế, lúc giúp Kiên lúc vì lợi ích riêng",
-  sep: "45–50 tuổi · sơ mi sáng · mê số liệu và quy trình, không mặc định là người xấu",
+  sep: "Trên 50 tuổi · sơ mi sáng · giọng Bắc, điềm tĩnh, chắc lời · mê số liệu và quy trình, không mặc định là người xấu",
 };

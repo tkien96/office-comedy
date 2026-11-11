@@ -26,6 +26,8 @@ export const SUBTITLE_ZONE = {
 
 export const SUBTITLE_STYLE = {
   fontSize: 58,
+  /** Long lines may shrink (2 px steps) down to this size to stay within maxLines. */
+  minFontSize: 48,
   lineHeight: 1.28,
   fontWeight: "700",
   maxLines: 2,

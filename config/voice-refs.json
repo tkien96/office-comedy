@@ -44,7 +44,7 @@
       }
     },
     "sep": {
-      "status": "tham chiếu mới, chờ xác nhận quyền và quyết định về vùng giọng",
+      "status": "đã duyệt; giọng nam miền Bắc là lựa chọn chính thức",
       "replaces": "preset Adam / Đức Trí (ứng viên trước)",
       "source": {
         "path": "D:/Download/voice_sep.mp4",
@@ -67,9 +67,9 @@
         "bandwidth": "~10,7 kHz",
         "reverb": "thấp"
       },
-      "accentConflict": "Nhãn trong giao diện nguồn là 'nam miền Bắc'; yêu cầu của vai Sếp là miền Nam. Clone giữ đặc trưng tham chiếu nên có thể mang giọng Bắc. Cần người dùng quyết định.",
+      "accentConflict": "ĐÃ GIẢI QUYẾT 2026-11-11: người dùng chốt Sếp nói giọng miền Bắc từ nguồn này là lựa chọn chính thức.",
       "usable": true,
-      "usableReason": "Đạt về kỹ thuật; vướng xung đột vùng giọng (xem accentConflict).",
+      "usableReason": "Đạt về kỹ thuật. Giọng nam miền Bắc, đúng định hướng chính thức của vai Sếp.",
       "rights": {
         "confirmed": true,
         "confirmedAt": "2026-11-11",

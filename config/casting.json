@@ -1,14 +1,39 @@
 {
-  "$comment": "Phân vai giọng. Đã duyệt 2026-11-11: Kiên, Trinh, Sếp dùng giọng tham chiếu (clone) theo roles.<vai>.approved. Giữ cố định voice ID cho mọi cảnh; không đổi voice ID để thể hiện cảm xúc. Người kể chưa chọn. Ứng viên preset là lịch sử.",
+  "$comment": "Phân vai giọng. Đã duyệt 2026-11-11: Kiên, Trinh, Sếp dùng giọng tham chiếu (clone) theo roles.<vai>.approved. Giữ cố định voice ID cho mọi cảnh; không đổi voice ID để thể hiện cảm xúc. Người kể = giọng Kiên (lời dẫn của Kiên, ngôi thứ nhất), chốt 2026-11-11. Ứng viên preset là lịch sử.",
   "provider": "vieneu-local",
-  "language": "vi-VN, miền Nam (Sài Gòn)",
+  "language": "vi-VN. Kiên, Trinh, người kể: miền Nam (Sài Gòn). Sếp: miền Bắc (quyết định chính thức 2026-11-11).",
   "roles": {
     "narrator": {
       "displayName": "Người kể",
-      "direction": "Nam trưởng thành, miền Nam, trầm vừa, rõ lời, kể tỉnh bơ có duyên, không đọc như quảng cáo.",
-      "candidatesFrom": "kien",
-      "approved": null,
-      "sampleText": "Ở công ty tôi, ai làm nhanh thì được thưởng. Thưởng gì hả? Thưởng thêm việc."
+      "direction": "Lời dẫn của Kiên, ngôi thứ nhất \"tôi\", giọng và ngôn ngữ miền Nam, kể tỉnh bơ có duyên. Chỉ dùng khi cần; không kể lại điều hình ảnh hoặc hội thoại đã thể hiện; không đọc chồng lên hội thoại.",
+      "approved": {
+        "voiceId": "ref:806c4f559c3a4cf0d30045b650044c008d565ae95ae7d8df94f27c5b953b5712",
+        "type": "reference",
+        "ref": "kien",
+        "referenceFile": "cache/voice-refs/kien-02/ref_7.50-11.86.wav",
+        "referenceSha256": "806c4f559c3a4cf0d30045b650044c008d565ae95ae7d8df94f27c5b953b5712",
+        "source": "D:/Download/voice_kien_02.mp4",
+        "sourceSha256": "7c0ad211fe2eb0dc423be8d31c027506e6047d36daa742992d73a07654423c29",
+        "model": "vieneu@3.8.4/v3turbo-onnx-fp32/pnnbao-ump/VieNeu-TTS-v3-Turbo@61b85e3d937fbbacb387714180e8182823512523/OpenMOSS-Team/MOSS-Audio-Tokenizer-Nano-ONNX@ceff0d0749bfb3fa2d61149794ec6feef0d1e1ae",
+        "settings": {
+          "temperature": 0.8,
+          "top_k": 25,
+          "top_p": 0.95,
+          "repetition_penalty": 1.2,
+          "max_chars": 256,
+          "silence_p": 0.15,
+          "crossfade_p": 0,
+          "apply_watermark": false,
+          "ref_denoise": false
+        },
+        "approvedAt": "2026-11-11",
+        "approvedBy": "người dùng (quyết định trong yêu cầu, không cần nghe thử riêng)",
+        "basedOn": "giọng Kiên đã duyệt",
+        "sameVoiceAs": "kien",
+        "note": "Người kể là lời dẫn của chính Kiên, ngôi thứ nhất \"tôi\", miền Nam. Không phải nhân vật thứ tư."
+      },
+      "sampleText": "Ở công ty tôi, ai làm nhanh thì được thưởng. Thưởng gì hả? Thưởng thêm việc.",
+      "region": "Nam"
     },
     "kien": {
       "displayName": "Kiên",
@@ -49,13 +74,21 @@
           "metadata": "male · region Nam · style doc_truyen · 'Nam · Nam · Phong cách kể chuyện'"
         }
       ],
-      "sampleText": "Ủa anh, em làm xong sớm để về đúng giờ mà. Sao giờ phần của người khác cũng qua em luôn vậy?",
+      "sampleText": "Ủa sếp, em làm xong sớm để về đúng giờ mà. Sao giờ phần của người khác cũng qua em luôn vậy?",
       "reference": {
         "ref": "kien",
         "source": "voice_kien_02.mp4",
         "status": "đã duyệt 2026-11-11"
       },
-      "candidatesNote": "Ứng viên preset bên dưới là lịch sử (người dùng chưa hài lòng); vai này đang thử giọng tham chiếu."
+      "candidatesNote": "Ứng viên preset bên dưới là lịch sử (người dùng chưa hài lòng); vai này đang thử giọng tham chiếu.",
+      "region": "Nam",
+      "sampleTextHistory": [
+        {
+          "until": "2026-11-11",
+          "text": "Ủa anh, em làm xong sớm để về đúng giờ mà. Sao giờ phần của người khác cũng qua em luôn vậy?",
+          "reason": "gọi sếp là \"anh\" (quy tắc cũ)"
+        }
+      ]
     },
     "trinh": {
       "displayName": "Trinh",
@@ -100,17 +133,25 @@
         "Thục Đoan",
         "Kim Thanh"
       ],
-      "sampleText": "Ông làm nhanh quá chi. Giờ nguyên phòng được về sớm, còn ông ở lại làm tiếp.",
+      "sampleText": "Anh làm nhanh quá chi. Giờ nguyên phòng được về sớm, còn anh ở lại làm tiếp.",
       "reference": {
         "ref": "trinh",
         "source": "voice_trinh.mp4",
         "status": "đã duyệt 2026-11-11"
       },
-      "candidatesNote": "Ứng viên preset bên dưới là lịch sử (người dùng chưa hài lòng); vai này đang thử giọng tham chiếu."
+      "candidatesNote": "Ứng viên preset bên dưới là lịch sử (người dùng chưa hài lòng); vai này đang thử giọng tham chiếu.",
+      "region": "Nam",
+      "sampleTextHistory": [
+        {
+          "until": "2026-11-11",
+          "text": "Ông làm nhanh quá chi. Giờ nguyên phòng được về sớm, còn ông ở lại làm tiếp.",
+          "reason": "Trinh gọi Kiên là \"ông\" (quy tắc cũ)"
+        }
+      ]
     },
     "sep": {
       "displayName": "Sếp",
-      "direction": "Nam miền Nam, trên 50 tuổi, trầm vừa, có độ dày, chắc lời, điềm tĩnh, dứt khoát, như người quản lý lâu năm; không quá trẻ, không gằn, không giả già yếu; không tạo tuổi bằng hạ pitch hoặc kéo chậm.",
+      "direction": "Nam miền Bắc (giọng voice_sep.mp4 đã duyệt), trên 50 tuổi, điềm tĩnh, chắc lời, như người quản lý lâu năm. Tuổi thể hiện qua nội dung và nhịp thoại; không chỉnh pitch, không thay giọng đã duyệt. Lời thoại theo cách nói miền Bắc tự nhiên.",
       "approved": {
         "voiceId": "ref:f19ba79593237254d45e8b7bc91595b51af2ca685765eecce63ab53ad5e16230",
         "type": "reference",
@@ -134,7 +175,7 @@
         "approvedAt": "2026-11-11",
         "approvedBy": "người dùng",
         "basedOn": "out/tts-vieneu/vieneu-dialogue-03 + vieneu-stability-03",
-        "note": "Nguồn ghi nhãn \"Bình (nam miền Bắc)\"; người dùng nghe và vẫn duyệt."
+        "note": "Giọng nam miền Bắc từ voice_sep.mp4; người dùng chốt chính thức 2026-11-11."
       },
       "candidates": [
         {
@@ -153,9 +194,17 @@
         "ref": "sep",
         "source": "voice_sep.mp4",
         "status": "đã duyệt 2026-11-11",
-        "warning": "nguồn ghi nhãn nam miền Bắc"
+        "note": "Giọng nam miền Bắc là lựa chọn chính thức (2026-11-11), không còn là ngoại lệ."
       },
-      "candidatesNote": "Ứng viên preset bên dưới là lịch sử (người dùng chưa hài lòng); vai này đang thử giọng tham chiếu."
+      "candidatesNote": "Ứng viên preset bên dưới là lịch sử (người dùng chưa hài lòng); vai này đang thử giọng tham chiếu.",
+      "region": "Bắc",
+      "sampleTextNote": "Câu mẫu Sếp vẫn hợp quy tắc mới (Sếp xưng anh, gọi em)."
     }
+  },
+  "addressing": {
+    "decidedAt": "2026-11-11",
+    "nhanVien->sep": "Gọi \"sếp\", xưng \"em\"; không gọi Sếp là \"anh\" trong lời thoại thông thường; không lặp \"sếp\" ở mọi câu.",
+    "sep->nhanVien": "Xưng \"anh\", gọi \"em\", \"các em\" hoặc tên.",
+    "kien<->trinh": "anh–em: Trinh gọi Kiên \"anh\", xưng \"em\"; Kiên gọi Trinh \"em\", xưng \"anh\"."
   }
 }

@@ -13,8 +13,20 @@ import { SUBTITLE_STYLE, SUBTITLE_ZONE } from "../design/tokens";
 const MAX_TEXT_WIDTH =
   SUBTITLE_ZONE.right - SUBTITLE_ZONE.left - SUBTITLE_STYLE.paddingX * 2;
 
+/**
+ * Picks the largest font size (SUBTITLE_STYLE.fontSize down to minFontSize,
+ * 2 px steps) at which the text fits in maxLines. Returns null if none fits.
+ */
+export const fitSubtitle = (text: string): { fontSize: number; lines: string[] } | null => {
+  for (let size = SUBTITLE_STYLE.fontSize; size >= SUBTITLE_STYLE.minFontSize; size -= 2) {
+    const lines = wrapSubtitle(text, size);
+    if (lines.length <= SUBTITLE_STYLE.maxLines) return { fontSize: size, lines };
+  }
+  return null;
+};
+
 /** Greedy word wrap using the real font metrics. */
-export const wrapSubtitle = (text: string): string[] => {
+export const wrapSubtitle = (text: string, fontSize: number = SUBTITLE_STYLE.fontSize): string[] => {
   const words = text.trim().split(/\s+/);
   const lines: string[] = [];
   let line = "";
@@ -23,7 +35,7 @@ export const wrapSubtitle = (text: string): string[] => {
     const { width } = measureText({
       text: candidate,
       fontFamily: FONT_FAMILY,
-      fontSize: SUBTITLE_STYLE.fontSize,
+      fontSize,
       fontWeight: SUBTITLE_STYLE.fontWeight,
     });
     if (width > MAX_TEXT_WIDTH && line) {
@@ -67,12 +79,13 @@ export const Subtitle: React.FC<{
   const ready = useFontReady();
   if (!ready) return null;
 
-  const lines = wrapSubtitle(text);
-  if (lines.length > SUBTITLE_STYLE.maxLines) {
+  const fit = fitSubtitle(text);
+  if (!fit) {
     throw new Error(
-      `Subtitle needs ${lines.length} lines (max ${SUBTITLE_STYLE.maxLines}): "${text}"`,
+      `Subtitle needs more than ${SUBTITLE_STYLE.maxLines} lines even at ${SUBTITLE_STYLE.minFontSize}px: "${text}"`,
     );
   }
+  const { lines, fontSize } = fit;
 
   const enter = interpolate(frame, [0, 6], [0, 1], {
     extrapolateLeft: "clamp",
@@ -115,7 +128,7 @@ export const Subtitle: React.FC<{
         style={{
           fontFamily: FONT_FAMILY,
           fontWeight: SUBTITLE_STYLE.fontWeight,
-          fontSize: SUBTITLE_STYLE.fontSize,
+          fontSize,
           lineHeight: SUBTITLE_STYLE.lineHeight,
           color: "#ffffff",
           textAlign: "center",

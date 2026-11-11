@@ -34,3 +34,10 @@ tmp
 .venv
 **/.venv
 __pycache__
+
+# Episode audio (regenerable, voice clones): keep scripts/timeline/captions in Git
+episodes/*/*.wav
+episodes/*/lines/
+
+# Episode audio copied for rendering (voice clones)
+public/audio/episodes/

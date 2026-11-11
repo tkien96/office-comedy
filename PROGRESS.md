@@ -4,15 +4,26 @@ Ghi lại tiến độ để tiếp tục được khi phiên làm việc bị g
 
 ## Trạng thái hiện tại
 
+- **Quy tắc thời lượng mới (2026-11-11):** tối thiểu 60 s, mục tiêu 60–90 s, được vượt nếu diễn biến cần. Thời lượng tính từ timeline thực tế, `durationInFrames = ceil(contentEndSec × fps)`. Đã bỏ quy tắc "đúng 60 s / 1800 khung hình".
+- **EP001: VIDEO ĐÃ DUYỆT 2026-11-11** (`out/EP001.mp4`, sha256 `8e4da809…`, ghi trong `ep001.json` → `videoApproval`). Không tự đăng lên mạng xã hội.
+  - Bước tiếp theo: chờ người dùng giao việc (ví dụ tập EP002).
+  - 63,317 s, 1899 khung hình, 1080x1920 @30, h264 yuv420p + aac.
+  - `npm run episode:verify` đạt cả 10 mục.
+  - Dựng lại: `npm run render:ep001`.
+- **EP001: kịch bản và âm thanh 63,27 s (1899 khung hình) ĐÃ DUYỆT 2026-11-11.** Ghi trong `ep001.json` → `approval`, kèm cache key của từng câu đã duyệt.
+  - **Không tạo lại** các câu đã duyệt. Nếu sửa lời thì chỉ tạo lại đúng câu đó và báo người dùng.
+  - Phong cách hình ảnh: bộ rig SVG 2D hiện có, chưa có quyết định thay đổi.
+  - Thư mục `episodes/EP001/`: `script.md`, `ep001.json` (nguồn), `dialogue-preview.wav`, `lines/`, `timeline.json`, `captions.srt`, `qa-report.md`.
+  - Dựng lại âm thanh từ cache: `npm run episode:audio -- episodes/EP001/ep001.json`. Xuất lại `script.md`: `npm run episode:docs -- episodes/EP001/ep001.json`. Rà soát kịch bản: `npm run script:lint -- episodes/EP001/ep001.json`.
+- **Người kể = giọng Kiên** (lời dẫn của Kiên, ngôi thứ nhất), chốt 2026-11-11, ghi trong `config/casting.json` và CLAUDE.md.
+- **Tối đa hai nhân vật có thoại trong mỗi cảnh** (thay quy tắc cũ "mỗi tập"), chốt 2026-11-11.
+- Phong cách hình ảnh đang lưu: hoạt hình 2D, rig SVG phẳng. Không có quyết định Ghibli nào.
 - **2026-11-11: người dùng DUYỆT bộ giọng.**
   - Kiên `ref:806c4f55…`, Trinh `ref:b07ad222…`, Sếp `ref:f19ba795…`. Chi tiết trong `config/casting.json` → `approved`.
-  - Người kể chưa chọn.
-- Bước tiếp theo, chờ người dùng giao:
-  1. Chọn giọng người kể.
-  2. Chốt cách xưng hô Trinh–Kiên.
-  3. Viết lại lời thoại video mẫu theo giọng miền Nam.
-  4. Tạo âm thanh từng cue bằng giọng đã duyệt, rồi căn phụ đề theo `timeline`.
-  - **Chưa tạo lại video.**
+- **2026-11-11: quyết định chính thức về xưng hô và vùng giọng** (chi tiết trong CLAUDE.md, mục "Ngôn ngữ kịch bản"):
+  - Kiên/Trinh gọi "sếp", xưng "em". Sếp xưng "anh", gọi "em" hoặc "các em". Kiên–Trinh xưng anh–em.
+  - Sếp nói miền Bắc (giọng `voice_sep.mp4` đã duyệt); Kiên, Trinh, người kể nói miền Nam.
+- Bản đối thoại thử gần nhất (lịch sử): `out/tts-vieneu/vieneu-dialogue-04/`.
 - (Trạng thái trước khi duyệt) Giai đoạn: tham chiếu mới, chờ duyệt kết quả. Kiên, Trinh và Sếp đều dùng giọng tham chiếu (clone).
   - Kiên dùng `voice_kien_02.mp4`, Trinh dùng `voice_trinh.mp4`, Sếp dùng `voice_sep.mp4`.
   - Người dùng đã xác nhận quyền cho cả 3 file ngày 2026-11-11.
@@ -28,6 +39,84 @@ Ghi lại tiến độ để tiếp tục được khi phiên làm việc bị g
 - **Chưa thay giọng chính thức, chưa tạo lại video.**
 
 ## Nhật ký
+
+### 2026-11-11 — Dựng video EP001
+
+- [x] Bộ dựng tập `src/episode/EpisodeVideo.tsx` (dùng lại rig, nền, bàn, phụ đề có sẵn), kiểu dữ liệu ở `src/episode/types.ts`.
+  - Đọc thẳng `episodes/EP001/ep001.json` + `timeline.json` (bật `resolveJsonModule`); `durationInFrames` = 1899 lấy từ timeline.
+  - Nhân vật: biểu cảm/tư thế theo gợi ý câu thoại; `talking` theo khoảng lời; người nghe nhìn người nói. Lời dẫn là giọng ngoài hình.
+- [x] Dữ liệu dàn cảnh `src/episodes/ep001-staging.ts`:
+  - 6 cảnh: văn phòng ×4, phòng họp, pantry.
+  - Camera zoom ở các nhịp phản ứng.
+  - Thẻ: tiến trình "Báo cáo tuần", danh sách yêu cầu báo cáo, montage đồng hồ quay + cốc cà phê, lịch họp 7 buổi, chữ "+3 giờ / −7 giờ".
+  - Trinh rời khung ở a08.
+  - `cues` biểu cảm cho các nhịp hành động, bám mô tả trong kịch bản.
+- [x] Thẻ mới `src/ui/EpisodeCards.tsx`. Phụ đề tự thu cỡ chữ 58 px xuống tối đa 48 px để giữ ≤ 2 dòng (`SUBTITLE_STYLE.minFontSize`). Lý do: render báo câu s01 cần 3 dòng ở 58 px; lời đã duyệt không sửa.
+- [x] Sửa sau khi xem khung mẫu: thẻ che đầu Sếp (S3), chữ "Thứ Bảy → Chủ nhật" bị tràn, "+3/−7 giờ" chồng tủ bếp, cốc cà phê che laptop, nhịp hành động thiếu biểu cảm.
+- [x] Âm thanh: `public/audio/episodes/EP001/dialogue.wav` trùng từng byte với `dialogue-preview.wav` đã duyệt (thư mục bị Git bỏ qua).
+- [x] Render `out/EP001.mp4` (17,9 MB, ~1 phút 44 giây ở concurrency 3).
+  - `tools/tts/cli/episode-verify.ts`: đạt cả 10 mục.
+  - Điểm vào lời trong MP4 khớp timeline (ví dụ 4,608 s so với 4,61 s).
+- [x] Người dùng duyệt video EP001 ngày 2026-11-11.
+
+### 2026-11-11 — Bỏ ràng buộc 60 s cố định, EP001 theo timeline tự nhiên
+
+- [x] Rà ràng buộc cố định 60 s / 1800 khung hình. Đã sửa ở:
+  - CLAUDE.md: mục tiêu, nguyên tắc, bảng thông số, kiểm tra video cuối, phần TTS.
+  - README.
+  - `episode-audio.ts`, `script-lint.ts`, `episode-docs.ts`.
+  - `ep001.json`: `durationSec: 60` thay bằng `duration { minSec: 60, targetRangeSec: [60, 90] }`.
+  - Composition demo 10 s và TechCheck 5 s là bài kiểm tra kỹ thuật, giữ nguyên.
+- [x] `episode-audio.ts` viết lại phần timeline:
+  - Câu ở nhịp tự nhiên; mỗi nhịp hành động có `sec` theo nội dung.
+  - Tổng = điểm kết thúc mục cuối; `durationInFrames = ceil(total × fps)`; âm thanh chỉ đệm tới ranh giới khung hình cuối.
+  - Đã bỏ phân bổ phần dư vào min–max và bỏ cắt mẫu cho đúng 60 s.
+  - Dưới 60 s thì dừng (mã 2), không chèn lặng.
+- [x] Kiểm tra âm thanh EP001 cũ:
+  - Không câu nào bị tăng tốc, time-stretch hay đổi pitch.
+  - Chỉ bỏ lặng đuôi (giữ ≥ 120 ms sau lời); bản thô trùng cache. Phần duy nhất bị ép là các nhịp lặng.
+- [x] EP001 ở nhịp tự nhiên dài 58,56 s, dưới 60 s. Bổ sung diễn biến trong S3:
+  - k05a (Kiên): "Hay em gửi công cụ luôn, bấm thử là thấy liền."
+  - s03b (Sếp): "Công cụ thì anh không đọc. Anh đọc báo cáo."
+- [x] s03b lần đầu bị clip thật trong bản TTS gốc (đỉnh 0 dBFS, 14 mẫu cắt phẳng). Đã chuyển sang `cache/tts/rejected/` và tạo lại; bản mới sạch. Quét 25 câu còn lại không có clip.
+- [x] Kết quả:
+  - 26 câu, trong đó 25 câu dùng lại từ cache.
+  - Nội dung 63,27 s, tức 1899 khung hình (63,300 s).
+  - QC không có cờ; không có khoảng lặng ≥ 1,6 s. 26 cue SRT theo timeline mới.
+  - `script.md` và `qa-report.md` đã cập nhật.
+- [x] Người dùng duyệt EP001 (kịch bản và âm thanh) ngày 2026-11-11.
+
+### 2026-11-11 — EP001: kịch bản và âm thanh 60 giây
+
+- [x] Người kể chốt dùng giọng Kiên: `casting.json` → `narrator.approved` giống hệt `kien.approved`, thêm `sameVoiceAs: "kien"`.
+- [x] Kịch bản EP001 "Công cụ tiết kiệm thời gian": 6 cảnh, 24 câu, 9 nhịp hành động. Dữ liệu ở `episodes/EP001/ep001.json`.
+  - Tự rà soát bằng `tools/tts/cli/script-lint.ts`: số người nói mỗi cảnh, độ dài câu, từ miền Nam trong lời Sếp, cách xưng hô.
+- [x] Công cụ mới:
+  - `tools/tts/cli/episode-audio.ts`: dùng giọng đã duyệt theo vai, kiểm tra quyền, sha và model; cache; cắt khoảng thừa đã xác nhận; cân LUFS. Khớp đúng 60 s bằng cách phân bổ phần dư vào các nhịp hành động trong khoảng min–max, không kéo giọng, không chèn lặng dài. Báo "quá dài" hoặc "quá ngắn" nếu không khớp được.
+  - `tools/tts/cli/episode-docs.ts`: xuất `script.md` với mốc thời gian đo thật.
+- [x] Lần dựng đầu: hành động dùng 92% mức tối đa (có khoảng lặng 2,03 s). Thêm câu t03b "Dạ, em lên lịch liền cho sếp." (Trinh đẩy diễn biến). Lần cuối dùng ~65%, không có khoảng lặng ≥ 1,8 s.
+- [x] Kết quả:
+  - Preview đúng 60,000 s (2.880.000 mẫu). Mọi câu −21,1 LUFS, file −21,4 LUFS, true peak −1,5 dBTP.
+  - QC không có cờ. 24 cue SRT tuần tự, không chồng. Chi tiết trong `episodes/EP001/qa-report.md`.
+- [x] `.gitignore`: bỏ qua `episodes/*/*.wav` và `episodes/*/lines/`.
+- [x] Người dùng duyệt EP001 (kịch bản và âm thanh) ngày 2026-11-11.
+
+### 2026-11-11 — Xưng hô và vùng giọng chính thức
+
+- [x] Cập nhật:
+  - CLAUDE.md: hồ sơ Sếp, bảng giọng, quy tắc phân vai theo vùng, mục "Ngôn ngữ kịch bản" viết lại với bảng xưng hô và ví dụ.
+  - `CHARACTER_BIOS.sep` trong `src/characters/designs.ts`; ảnh `out/character-sheet.png` đã xuất lại.
+  - `config/casting.json`: thêm `addressing`, `region` cho từng vai, định hướng Sếp. Câu mẫu Kiên/Trinh sửa theo quy tắc mới, câu cũ lưu ở `sampleTextHistory`.
+  - `config/voice-refs.json`: xung đột vùng giọng của Sếp ghi là đã giải quyết.
+- [x] Code: `vieneu-dialogue.ts` kiểm tra vùng giọng preset theo `region` của từng vai trong `casting.json` (Sếp: Bắc), thay vì luôn bắt buộc miền Nam.
+- [x] Âm thanh bị ảnh hưởng, chỉ tạo lại lượt bị ảnh hưởng (bản `dialogue-03` giữ nguyên làm lịch sử):
+  - `dialogue-04` lượt 1, Kiên: "Dạ anh…" thành "**Dạ sếp**, em làm xong hết rồi. Hôm nay em về đúng giờ nha?" (tạo mới, 2,88 s).
+  - `dialogue-04` lượt 2, Sếp: "Tốt. Vậy em làm giùm phần của Trinh luôn đi." thành "Tốt. **Thế** em làm **giúp** phần của Trinh luôn **nhé**." theo cách nói miền Bắc (tạo mới, 2,29 s).
+  - Lượt 3 (Trinh: "anh Kiên… nhờ anh", đúng anh–em) và lượt 4 (Kiên): giữ nguyên, cùng cache key với bản 03.
+  - File ghép 10,26 s, −18,6 LUFS, true peak −1,5 dBTP. Khoảng lặng 0,22 / 0,25 / 0,55 s. QC không có cờ. Timeline mới trong `summary.json`.
+  - Giọng, model, thiết lập đã đối chiếu khớp `approved` trước khi tạo.
+- Không tạo lại: `stability-03` (câu Sếp còn "đó", "nha"; là bản thử dùng để duyệt giọng, đánh dấu lịch sử). `vieneu-samples-01`, `dialogue-01/02*`, `sep-candidate-*` là lịch sử preset.
+- Video mẫu (`demo-notification.ts`) không đổi: thông báo của Sếp ("Chúc mừng em… nhé") đã đúng quy tắc mới, phụ đề không có xưng hô cũ.
 
 ### 2026-11-11 — Nguồn tham chiếu mới cho Kiên và Sếp
 

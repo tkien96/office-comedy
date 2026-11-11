@@ -1,0 +1,51 @@
+{
+  "$comment": "Bản 04 = bản 03 sửa theo quyết định 2026-11-11: Kiên/Trinh gọi \"sếp\", xưng \"em\"; Sếp nói miền Bắc. Chỉ đổi lượt 1 (Kiên: \"Dạ anh\" → \"Dạ sếp\") và lượt 2 (Sếp: cách nói miền Bắc). Lượt 3–4 giữ nguyên text nên lấy lại từ cache. Giọng, model, thiết lập giữ nguyên bản đã duyệt. Bản 03 giữ làm lịch sử.",
+  "campaign": "vieneu-dialogue-04",
+  "voices": {
+    "kien": {
+      "reference": "kien"
+    },
+    "trinh": {
+      "reference": "trinh"
+    },
+    "sep": {
+      "reference": "sep"
+    }
+  },
+  "settings": {
+    "temperature": 0.8,
+    "top_k": 25,
+    "top_p": 0.95,
+    "repetition_penalty": 1.2,
+    "max_chars": 256,
+    "silence_p": 0.15,
+    "crossfade_p": 0,
+    "apply_watermark": false,
+    "ref_denoise": false
+  },
+  "mix": {
+    "targetLufs": -18,
+    "maxTruePeakDb": -1.5,
+    "defaultGapSec": 0.22
+  },
+  "lines": [
+    {
+      "role": "kien",
+      "text": "Dạ sếp, em làm xong hết rồi. Hôm nay em về đúng giờ nha?"
+    },
+    {
+      "role": "sep",
+      "text": "Tốt. Thế em làm giúp phần của Trinh luôn nhé."
+    },
+    {
+      "role": "trinh",
+      "text": "Em cảm ơn anh Kiên nha. Nhờ anh mà hôm nay em về đúng giờ."
+    },
+    {
+      "role": "kien",
+      "text": "Ủa, người làm xong là em mà?",
+      "gapBeforeSec": 0.55,
+      "gapNote": "nhịp nghỉ có chủ ý trước câu chốt"
+    }
+  ]
+}

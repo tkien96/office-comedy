@@ -42,7 +42,12 @@
     "tts:edge:samples": "node tools/tts/cli/edge-samples.ts",
     "tts:vieneu:voices": "node tools/tts/cli/vieneu-voices.ts",
     "tts:vieneu:samples": "node tools/tts/cli/vieneu-samples.ts",
-    "tts:vieneu:dialogue": "node tools/tts/cli/vieneu-dialogue.ts"
+    "tts:vieneu:dialogue": "node tools/tts/cli/vieneu-dialogue.ts",
+    "script:lint": "node tools/tts/cli/script-lint.ts",
+    "episode:audio": "node tools/tts/cli/episode-audio.ts",
+    "episode:docs": "node tools/tts/cli/episode-docs.ts",
+    "episode:verify": "node tools/tts/cli/episode-verify.ts",
+    "render:ep001": "remotion render EP001 out/EP001.mp4 --concurrency=3"
   },
   "allowScripts": {
     "esbuild": false

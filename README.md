@@ -2,7 +2,7 @@
 
 Dự án sản xuất tự động video hài ngắn về công sở và đời thường bằng tiếng Việt, dựng bằng [Remotion](https://www.remotion.dev) + TypeScript.
 
-Thông số mỗi tập: 1080x1920, 30fps, 1800 khung hình (60 giây), MP4 H.264 + AAC. Quy tắc chi tiết nằm trong [CLAUDE.md](CLAUDE.md), tiến độ trong [PROGRESS.md](PROGRESS.md).
+Thông số mỗi tập: 1080x1920, 30fps, tối thiểu 60 giây (mục tiêu 60–90 giây, số khung hình tính từ timeline thực tế), MP4 H.264 + AAC. Quy tắc chi tiết nằm trong [CLAUDE.md](CLAUDE.md), tiến độ trong [PROGRESS.md](PROGRESS.md).
 
 ## Yêu cầu
 

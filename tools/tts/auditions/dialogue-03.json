@@ -1,5 +1,5 @@
 {
-  "$comment": "Bộ tham chiếu mới: Kiên = voice_kien_02.mp4, Trinh = voice_trinh.mp4, Sếp = voice_sep.mp4 (config/voice-refs.json). Lời thoại và thứ tự lấy nguyên từ dialogue-01.json. Thiết lập giữ như các lần trước, chỉ thêm ref_denoise=false (bắt buộc cho clone). Trạng thái: tham chiếu mới, chờ duyệt kết quả.",
+  "$comment": "LỊCH SỬ: lượt 1–2 dùng xưng hô/cách nói cũ; đã thay bằng dialogue-04 (2026-11-11). Bộ tham chiếu mới: Kiên = voice_kien_02.mp4, Trinh = voice_trinh.mp4, Sếp = voice_sep.mp4 (config/voice-refs.json). Lời thoại và thứ tự lấy nguyên từ dialogue-01.json. Thiết lập giữ như các lần trước, chỉ thêm ref_denoise=false (bắt buộc cho clone). Trạng thái: tham chiếu mới, chờ duyệt kết quả.",
   "campaign": "vieneu-dialogue-03",
   "voices": {
     "kien": {
