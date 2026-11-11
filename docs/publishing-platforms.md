@@ -43,6 +43,19 @@ Ký hiệu: ✅ có API · ⚠️ có nhưng kèm điều kiện · ❌ không c
 - **Trang audit:** trả về 401 khi đọc, nên chưa xác minh được các yêu cầu audit chi tiết.
 - **Direct Post bắt buộc có giao diện:** người dùng tự chọn quyền riêng tư (không có giá trị mặc định), tự bật bình luận/duet/stitch, xem trước nội dung, và đồng ý Music Usage Confirmation. Một script tự động không đáp ứng được những yêu cầu này.
 
+## Ảnh bìa theo nền tảng (tra lại 2026-11-11)
+
+"Ảnh bàn giao" = file trong `episodes/EPxxx/delivery/` để đăng tay. "Đặt qua API" = dự án có thể tự gắn sau khi tích hợp.
+
+| Đích | Ảnh bàn giao | Đặt tay | Đặt qua API | Thông số chính thức |
+|---|---|---|---|---|
+| YouTube Shorts | `thumb-9x16.png` (2160x3840) | ✅ YouTube Studio **trên máy tính**; tài khoản phải xác minh | ✅ `thumbnails.set` (ghi rõ dùng cho Shorts), gọi sau khi xử lý xong | 9:16, khuyến nghị 2160x3840, cao ≥ 640 px, JPG/PNG, ≤ 50 MB (máy tính). Không rõ ảnh có hiện trong luồng Shorts hay không |
+| Facebook Reels | `thumb-9x16.png` | ❓ chưa tìm được trang trợ giúp chính thức | ⚠️ `POST /{video-id}/thumbnails` (`source`, `is_preferred`); bước publish Reel không có tham số ảnh bìa | ≤ 10 MB; nên cùng tỷ lệ với video |
+| TikTok video | khung hình gợi ý (`coverTimestampMs`) + `thumb-9x16.png` để dự phòng | ❓ chưa xác minh được app có cho tải ảnh bìa riêng không (trang trợ giúp trả 404) | ⚠️ chỉ chọn khung hình `video_cover_timestamp_ms`, không nhận ảnh riêng | — |
+| Facebook / TikTok bài ảnh | `teaser-1x1.png` (1080x1080) | ✅ | Facebook `/{page-id}/photos`; TikTok bài ảnh (cần URL thuộc tên miền đã xác minh) | Tài liệu đã đọc không nêu tỷ lệ khuyến nghị |
+
+Nguồn bổ sung: support.google.com/youtube/answer/72431 · developers.google.com/youtube/v3/docs/thumbnails/set · developers.facebook.com/docs/graph-api/reference/video/thumbnails · developers.tiktok.com/doc/content-posting-api-reference-direct-post · /content-posting-api-reference-photo-post.
+
 ## Đề xuất
 
 1. **YouTube trước.**

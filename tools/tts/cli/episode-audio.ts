@@ -17,6 +17,7 @@ import { synthesize } from "../synthesize.ts";
 import type { VoiceSettings } from "../types.ts";
 import { VieneuProvider } from "../vieneu.ts";
 import { resolveEpisode } from "../../episode/paths.ts";
+import { buildSrt, type Timeline as CaptionTimeline } from "../../episode/captions.ts";
 
 type Beat = {
   id: string;
@@ -237,13 +238,8 @@ const main = async () => {
   writeFileSync(P.timeline, JSON.stringify(timeline, null, 2) + "\n");
 
   // 5) Captions: one cue per line, speech start → speech end (sentence-level).
-  const fmt = (t: number) => {
-    const ms = Math.round(t * 1000);
-    const h = Math.floor(ms / 3600000), m = Math.floor((ms % 3600000) / 60000), s = Math.floor((ms % 60000) / 1000), f = ms % 1000;
-    return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")},${String(f).padStart(3, "0")}`;
-  };
-  const cues = items.filter((i) => i.kind === "line") as { speechStartSec: number; speechEndSec: number; text: string; role: string }[];
-  const srt = cues.map((c, i) => `${i + 1}\n${fmt(c.speechStartSec)} --> ${fmt(c.speechEndSec)}\n${c.text}\n`).join("\n");
+  // Same builder as `npm run episode:captions` (line breaks, minimum display).
+  const srt = buildSrt(timeline as unknown as CaptionTimeline);
   mkdirSync(P.exportsDir, { recursive: true });
   writeFileSync(P.captions, srt, "utf8");
 

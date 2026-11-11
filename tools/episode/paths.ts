@@ -45,6 +45,9 @@ export const episodePaths = (id: string) => {
     publishLock: join(root, "publishing", ".lock"),
     reportsDir: join(root, "reports"),
     qaReport: join(root, "reports", "qa-report.md"),
+    captionsQc: join(root, "reports", "captions-qc.md"),
+    /** Manual-posting package, rebuilt from sources by episode:delivery (not in Git). */
+    deliveryDir: join(root, "delivery"),
     /** Copy of the approved preview used by Remotion (public/ is served). */
     publicAudio: join("public", "audio", "episodes", id, "dialogue.wav"),
     publicAudioSrc: `audio/episodes/${id}/dialogue.wav`,

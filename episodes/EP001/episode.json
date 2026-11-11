@@ -35,7 +35,10 @@
     "publishLock": "episodes/EP001/publishing/.lock",
     "reportsDir": "episodes/EP001/reports",
     "qaReport": "episodes/EP001/reports/qa-report.md",
-    "publicAudio": "public/audio/episodes/EP001/dialogue.wav"
+    "publicAudio": "public/audio/episodes/EP001/dialogue.wav",
+    "captionsQc": "episodes/EP001/reports/captions-qc.md",
+    "socialMd": "episodes/EP001/social/social.md",
+    "delivery": "episodes/EP001/delivery"
   },
   "versions": {
     "voiceConfigHash": "79a5e10c01239a3f242835721c3564a0bef10c5ae134a821bf818bc163ef707f",
@@ -43,16 +46,17 @@
     "gitCommit": "44e92a5",
     "ttsModel": "vieneu@3.8.4/v3turbo-onnx-fp32/pnnbao-ump/VieNeu-TTS-v3-Turbo@61b85e3d937fbbacb387714180e8182823512523/OpenMOSS-Team/MOSS-Audio-Tokenizer-Nano-ONNX@ceff0d0749bfb3fa2d61149794ec6feef0d1e1ae",
     "stagingFile": "src/episodes/ep001-staging.ts",
-    "stagingHash": "d38709ca28993e990dfea21078a939d6baa6a427da9d8773a4a599de7b7f9b4f"
+    "stagingHash": "d38709ca28993e990dfea21078a939d6baa6a427da9d8773a4a599de7b7f9b4f",
+    "thumbnailDesignHash": "f849463e1f3a1a004ae87533e1d9c3187b759bb5d77e6fa0cb3d7121a83c207c"
   },
   "production": {
     "script": "done",
     "audio": "done",
     "video": "done",
     "captions": "done",
-    "thumbnail9x16": "chưa có",
-    "teaser1x1": "chưa có",
-    "social": "draft"
+    "thumbnail9x16": "done",
+    "teaser1x1": "done",
+    "social": "done"
   },
   "checks": {
     "verify": {
@@ -72,7 +76,9 @@
       "approvedAt": "2026-11-11",
       "approvedBy": "người dùng",
       "sha256": "86a8344ee58bf1912a8126c27fe18f34556da286a2296cbbcef1b486f5b7d222",
-      "note": "Hash nội dung kịch bản (không gồm trường trạng thái)."
+      "note": "Hash nội dung kịch bản (không gồm trường trạng thái).",
+      "basis": {},
+      "basisNote": "Nguồn ghi bổ sung 2026-11-11 (sau khi duyệt). Hợp lệ vì hash sản phẩm vẫn trùng bản duyệt, và render lại từ đúng các nguồn này cho video trùng từng byte."
     },
     "audio": {
       "status": "approved",
@@ -106,14 +112,27 @@
         "2979c63aa9bbd129d4c2fb21",
         "6eec5a3130aa4d8548f842df",
         "bcf57c1974f8e02707e93e8f"
-      ]
+      ],
+      "basis": {
+        "script": "86a8344ee58bf1912a8126c27fe18f34556da286a2296cbbcef1b486f5b7d222",
+        "voiceConfig": "79a5e10c01239a3f242835721c3564a0bef10c5ae134a821bf818bc163ef707f"
+      },
+      "basisNote": "Nguồn ghi bổ sung 2026-11-11 (sau khi duyệt). Hợp lệ vì hash sản phẩm vẫn trùng bản duyệt, và render lại từ đúng các nguồn này cho video trùng từng byte."
     },
     "video": {
       "status": "approved",
       "approvedAt": "2026-11-11",
       "approvedBy": "người dùng",
       "sha256": "8e4da8097b0c65788af5711943075c487d6d204ec38ba6ed1f51de898e204547",
-      "note": "Video có phụ đề in sẵn."
+      "note": "Video có phụ đề in sẵn.",
+      "basis": {
+        "script": "86a8344ee58bf1912a8126c27fe18f34556da286a2296cbbcef1b486f5b7d222",
+        "timeline": "a8b2fcdcaa41aa3f6c1d6f6f17786266db475d466be71f5b2fa06029047c2514",
+        "audio": "801e4d91e9c190f746d90bcd4c6d13f4e773e8be1b7f203c749cf9afa855ad2f",
+        "staging": "d38709ca28993e990dfea21078a939d6baa6a427da9d8773a4a599de7b7f9b4f",
+        "sharedAssets": "dbbb624b920fe35d8106e314e87e6d9fce53ae35c75de1838dfa7a7ac68b2524"
+      },
+      "basisNote": "Nguồn ghi bổ sung 2026-11-11 (sau khi duyệt). Hợp lệ vì hash sản phẩm vẫn trùng bản duyệt, và render lại từ đúng các nguồn này cho video trùng từng byte."
     },
     "captions": {
       "status": "not_approved",

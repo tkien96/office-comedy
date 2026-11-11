@@ -89,7 +89,8 @@ src/
   ui/                   phụ đề, thẻ thông báo, chữ sốc, overlay vùng an toàn
   scenes/ScriptedScene  bộ dựng cảnh thử (demo 10 s)
   episode/EpisodeVideo  bộ dựng TẬP: đọc kịch bản đã duyệt + timeline.json + dàn cảnh
-  episodes/             CHỈ dữ liệu: dàn cảnh từng tập (<id>-staging.ts: vị trí, camera, thẻ, cue biểu cảm cho nhịp hành động)
+  episodes/             CHỈ dữ liệu: dàn cảnh từng tập (<id>-staging.ts: vị trí, camera, thẻ, cue biểu cảm cho nhịp hành động), bố cục ảnh bìa (<id>-thumbnails.ts)
+  thumbnails/           bộ dựng ảnh bìa 9:16 / nhá hàng 1:1 (cùng rig, nền, font với video)
   sheets/               ảnh tổng hợp nhân vật và bối cảnh
   test/                 composition kiểm tra kỹ thuật
 public/audio/           giọng đọc, nhạc, SFX (sau này)
@@ -99,13 +100,16 @@ episodes/EPxxx/         mỗi tập (đường dẫn định nghĩa duy nhất t
   script/               script.json (nguồn), script.md, timeline.json
   audio/                dialogue-preview.wav, lines/            (không đưa vào Git)
   assets/               tài nguyên riêng của tập (tài nguyên chung để ngoài)
-  exports/              EPxxx.mp4 (không đưa vào Git), EPxxx.srt
+  exports/              EPxxx.mp4 (không đưa vào Git), EPxxx.srt (tạo bằng episode:captions)
   thumbnails/           thumb-9x16.png, teaser-1x1.png          (ảnh không đưa vào Git)
-  social/               social.json (nội dung từng nền tảng)
-  publishing/           jobs.json; log.jsonl, .lock              (không đưa vào Git)
-  reports/              qa-report.md, publish-dry-run.json
+  social/               social.json (nguồn, từng bài từng nền tảng), social.md (bản đọc, tạo bằng episode:social)
+  publishing/           jobs.json; log.jsonl, .lock, upload-state.json (không đưa vào Git)
+  reports/              qa-report.md, captions-qc.md, publish-dry-run.json
+  delivery/             BẢN XUẤT để đăng tay, tạo lại toàn bộ bằng episode:delivery (không đưa vào Git)
 config/publishing.json  tài khoản đích (chỉ TÊN biến môi trường), khả năng nền tảng
-docs/publishing-platforms.md  bảng khả năng đăng bài theo tài liệu chính thức
+docs/publishing-platforms.md  bảng khả năng đăng bài và ảnh bìa theo tài liệu chính thức
+docs/youtube-integration-plan.md  kế hoạch tích hợp YouTube (chưa triển khai)
+docs/local-assets.md  tài nguyên chỉ có trên máy (không đưa vào Git), hash và cách khôi phục
 out/                    video và ảnh xuất ra (không đưa vào Git)
 ```
 
@@ -206,7 +210,7 @@ Khi sửa xưng hô, sửa theo từng câu và từng quan hệ. **Không tìm�
   - Render ra `episodes/EPxxx/exports/EPxxx.mp4` (ví dụ `npm run render:ep001`).
 - Biểu cảm và tư thế lấy từ gợi ý `expression`/`pose` của câu thoại. Nhịp hành động chỉ có mô tả chữ, nên biểu cảm của chúng ghi ở `cues` trong file dàn cảnh, bám đúng mô tả.
 - Người nói có `talking` trong khoảng lời của họ; người nghe tự nhìn về phía người nói. Lời dẫn (narrator) là giọng đọc ngoài hình: Kiên không mấp máy môi.
-- Phụ đề lấy từ timeline (khoảng lời của từng câu).
+- Phụ đề in trong video lấy từ timeline (khoảng lời của từng câu).
   - Cỡ chữ 58 px, tự thu tối đa xuống 48 px để giữ ≤ 2 dòng; vẫn quá thì render báo lỗi.
   - Có nhãn tên người nói; lời dẫn không có nhãn.
 - Sau khi render: `npm run episode:verify -- EPxxx` (mặc định kiểm `exports/EPxxx.mp4`). Kiểm tra:
@@ -221,16 +225,26 @@ Khi sửa xưng hô, sửa theo từng câu và từng quan hệ. **Không tìm�
   - Lệnh dùng `mkdir` không đệ quy làm khóa nguyên tử, nên chạy lại hay chạy đồng thời cũng không trùng mã.
   - Không tự đặt tên thư mục tập bằng tay.
 - **Duyệt gắn hash** (`episode.json` → `approvals`):
-  - Mỗi phần có hash riêng: kịch bản (hash nội dung), âm thanh, video, phụ đề, thumbnail 9:16, ảnh nhá hàng 1:1, và social của từng nền tảng.
-  - Duyệt chỉ có giá trị khi hash hiện tại khớp hash lúc duyệt. Thay file hoặc chữ thì phần đó thành "cần duyệt lại".
+  - Mỗi phần có hash riêng: kịch bản (hash nội dung), âm thanh, video, phụ đề (SRT, đổi CRLF→LF trước khi hash), thumbnail 9:16, ảnh nhá hàng 1:1.
+  - Social duyệt **theo từng bài**: `approvals.social["youtube.video"]`, `["facebook.teaser"]`, …; mỗi bài một hash. Sửa một bài không làm mất duyệt bài khác.
+  - Mỗi duyệt ghi kèm `basis`: hash các NGUỒN của sản phẩm (`DEPENDS_ON` trong `tools/episode/manifest.ts`). Ví dụ video phụ thuộc kịch bản, timeline, âm thanh, dàn cảnh, rig dùng chung; phụ đề phụ thuộc kịch bản và timeline; social phụ thuộc kịch bản.
+  - Hash sản phẩm đổi → "cần duyệt lại". Hash sản phẩm còn nguyên nhưng nguồn đổi → "cần kiểm tra lại". Cả hai đều chặn đăng.
   - **Không đăng bằng duyệt cũ.**
-  - Chỉ người dùng mới duyệt; mình không tự đặt `approved`.
+  - Chỉ người dùng mới duyệt, bằng `npm run episode:approve -- EPxxx <phần>` (người dùng tự chạy). Mình không chạy lệnh này và không tự đặt `approved`.
+- **File xuất từ nguồn** (SRT ← timeline, social.md ← social.json, delivery/ ← mọi thứ): tạo bằng lệnh, tất định. `episode:status` và `episode:delivery --check` báo "khớp nguồn" hay "lệch nguồn". Không sửa tay file xuất.
+- **Phụ đề:** `npm run episode:captions -- EPxxx`.
+  - Chữ đúng nguyên văn câu đã tạo giọng; chỉ thêm ngắt dòng (≤ 2 dòng, ≤ 42 ký tự; không tách từ ghép trong `NO_BREAK`).
+  - Cue ngắn được giữ tối thiểu 0,8 s trong khoảng lặng phía sau, không chồng câu sau.
+  - Báo cáo `reports/captions-qc.md` tách phần máy kiểm với phần cần người xem/nghe.
+- **Social:** `npm run episode:social -- EPxxx` kiểm từ khóa lộ câu chốt, hứa ngày giờ, giới hạn nền tảng; ghi `social/social.md`. Bộ lọc từ khóa không chứng minh bài không spoil.
+- **Ảnh bìa:** `npm run episode:thumbnails -- EPxxx` render 9:16 (2160x3840) và 1:1 (1080x1080) từ Still `<ID>-thumb-9x16` / `<ID>-teaser-1x1`. Mỗi tỷ lệ có bố cục riêng (camera, vị trí, khối chữ) trong `src/episodes/<id>-thumbnails.ts`. Không vẽ lại nhân vật, không đổi phong cách.
+- **Bộ đăng thủ công:** `npm run episode:delivery -- EPxxx` xoá và tạo lại `delivery/` (video, SRT, 2 ảnh, youtube/facebook/tiktok.md, README, manifest.json có hash và trạng thái duyệt lúc xuất). Xuất không đổi trạng thái duyệt. Kiểm tra: `--check`.
 - **Trạng thái:** `npm run episode:status -- EPxxx` tính lại toàn bộ hash. Những gì chưa tạo thì ghi "chưa có", không ghi là hoàn thành.
 - **Tài nguyên dùng chung** (rig, nền, UI, model TTS, cấu hình giọng) để ngoài thư mục tập. `episode.json` ghi hash phiên bản (`voiceConfigHash`, `sharedAssetsHash`, commit) lúc sản xuất.
 
 ## Đăng bài đa nền tảng (`tools/publish`, `config/publishing.json`)
 
-- **Hiện tại chỉ có dry-run.** Chưa có code upload hay đặt lịch thật. Không đăng hoặc đặt lịch khi người dùng chưa yêu cầu rõ ràng.
+- **Hiện tại chỉ có dry-run.** Chưa có code upload hay đặt lịch thật. Kế hoạch YouTube: `docs/youtube-integration-plan.md`. Không đăng hoặc đặt lịch khi người dùng chưa yêu cầu rõ ràng.
 - **Job:** mỗi job là một bài trên một nền tảng và một tài khoản (`publishing/jobs.json`).
   - Trạng thái: `draft` → `planned` (lịch chỉ có trong dự án) → `uploading`/`processing` → `scheduled` (nền tảng đã xác nhận giữ lịch) → `published` (đã kiểm tra là công khai). Ngoài ra có `failed`, `cancelled`, `missed`.
   - HTTP thành công hay upload xong **không** có nghĩa là đã đăng công khai.

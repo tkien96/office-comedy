@@ -5,6 +5,8 @@ import ep001Timeline from "../episodes/EP001/script/timeline.json";
 import { EpisodeVideo, type EpScript, type Timeline } from "./episode/EpisodeVideo";
 import { demoNotification } from "./episodes/demo-notification";
 import { ep001Staging } from "./episodes/ep001-staging";
+import { ep001Teaser1x1, ep001Thumb9x16 } from "./episodes/ep001-thumbnails";
+import { EpisodeThumbnail } from "./thumbnails/EpisodeThumbnail";
 import { ScriptedScene } from "./scenes/ScriptedScene";
 import { BackgroundSheet, BG_SHEET } from "./sheets/BackgroundSheet";
 import { CharacterSheet, SHEET } from "./sheets/CharacterSheet";
@@ -45,6 +47,9 @@ export const RemotionRoot: React.FC = () => {
           audioSrc: "audio/episodes/EP001/dialogue.wav",
         }}
       />
+      {/* EP001 thumbnail (9:16) and teaser (1:1): npm run episode:thumbnails -- EP001 */}
+      <Still id="EP001-thumb-9x16" component={EpisodeThumbnail} width={ep001Thumb9x16.width} height={ep001Thumb9x16.height} defaultProps={{ spec: ep001Thumb9x16 }} />
+      <Still id="EP001-teaser-1x1" component={EpisodeThumbnail} width={ep001Teaser1x1.width} height={ep001Teaser1x1.height} defaultProps={{ spec: ep001Teaser1x1 }} />
       <Still id="CharacterSheet" component={CharacterSheet} width={SHEET.width} height={SHEET.height} />
       <Still id="BackgroundSheet" component={BackgroundSheet} width={BG_SHEET.width} height={BG_SHEET.height} />
     </>

@@ -1,56 +1,71 @@
 {
-  "$comment": "Nội dung social NHÁP cho EP001. Mỗi nền tảng được duyệt riêng; duyệt gắn với hash nội dung của nền tảng đó (episode.json → approvals.social.<nền tảng>). Sửa chữ sau khi duyệt → cần duyệt lại. Nhá hàng không tiết lộ câu chốt. Không ghi ngày/giờ ra mắt khi chưa có lịch xác nhận.",
+  "$comment": "Nội dung social EP001 (CHỜ DUYỆT). Mỗi BÀI được duyệt riêng (episode.json → approvals.social.<nền tảng>.<bài>), gắn với hash của chính bài đó: sửa một bài không làm mất duyệt bài khác. Bản dán = body + hashtag (xem social.md, tạo bằng npm run episode:social). Không lộ câu chốt, không hứa ngày/giờ.",
   "episode": "EP001",
   "language": "vi",
   "spoilerGuard": {
-    "punchlineMustNotAppear": ["bảy tiếng", "7 tiếng", "bảy buổi", "7 buổi", "giải thích nó tốn"],
-    "note": "Câu chốt: công cụ tiết kiệm 3 tiếng nhưng giải thích nó tốn 7 tiếng. Không đưa vào nhá hàng, tiêu đề hay mô tả."
+    "punchline": "Công cụ tiết kiệm ba tiếng, nhưng giải thích nó tốn bảy tiếng (bảy buổi họp); Trinh còn dùng chính công cụ đó làm biên bản họp.",
+    "keepSecret": ["chuỗi buổi họp và con số bảy", "cả cuối tuần viết báo cáo", "Trinh dùng công cụ làm biên bản", "câu 'báo cáo về việc không phải làm báo cáo'"],
+    "allowedPremise": "Kiên làm công cụ tiết kiệm ba tiếng mỗi tuần, Trinh nhờ làm giùm, Sếp nghe tin và rất mê số liệu. Câu móc 3 giây đầu ('sai lầm lớn nhất đời tôi') đã có ngay đầu video.",
+    "punchlineMustNotAppear": ["bảy tiếng", "7 tiếng", "bảy buổi", "7 buổi", "giải thích nó tốn", "buổi họp", "lịch họp", "biên bản", "cuối tuần", "không phải làm báo cáo"],
+    "note": "Danh sách từ khóa chỉ là lưới lọc thô, KHÔNG chứng minh bài không spoil. Người duyệt cần đọc lại từng bài."
   },
   "platforms": {
     "youtube": {
-      "status": "draft",
       "video": {
-        "title": "Làm công cụ tiết kiệm 3 tiếng mỗi tuần… rồi hối hận | Hài công sở",
-        "description": "Kiên viết một công cụ tự làm báo cáo, mỗi tuần đỡ được ba tiếng. Sếp nghe xong rất vui… và giao thêm một việc nhỏ.\n\nPhim hoạt hình hài công sở, lồng tiếng Việt.",
-        "hashtags": ["#haicongso", "#vanphong", "#Shorts", "#hoathinh"],
+        "kind": "short",
+        "postingMode": "api",
+        "title": "Tiết kiệm 3 tiếng mỗi tuần, rồi sếp biết 😶 | Hài công sở",
+        "body": "Kiên viết được công cụ tự làm báo cáo: bấm một cái là xong, mỗi tuần đỡ ba tiếng. Trinh xin làm giùm luôn. Rồi sếp nghe tin… mà sếp thì rất mê số liệu.\n\nBạn đã bao giờ làm việc nhanh hơn rồi được “thưởng” thêm việc chưa?\n\nPhim hoạt hình hài công sở, lồng tiếng Việt.",
+        "hashtags": ["#haicongso", "#congso", "#hoathinh", "#Shorts"],
         "madeForKids": false,
         "privacyAtUpload": "private",
+        "captionsFile": "exports/EP001.srt",
         "thumbnail": "thumbnails/thumb-9x16.png"
       },
       "teaser": {
+        "kind": "community_text",
+        "optional": true,
+        "postingMode": "manual",
         "supportedByApi": false,
-        "note": "YouTube Data API không có endpoint đăng bài cộng đồng/ảnh. Nếu cần nhá hàng trên YouTube thì đăng thủ công trong YouTube Studio.",
-        "text": "Tiết kiệm được ba tiếng mỗi tuần. Nghe thì sướng… cho tới khi sếp biết chuyện. 🎬 Tập mới sắp lên kênh."
+        "body": "Có ai từng làm việc nhanh hơn… rồi được giao thêm việc không? 🙋\nTập mới của Kiên kể đúng chuyện đó.",
+        "hashtags": [],
+        "image": "thumbnails/teaser-1x1.png",
+        "note": "Tùy chọn. YouTube Data API không có endpoint đăng bài cộng đồng; nếu dùng thì đăng tay trong YouTube Studio. Không tạo job API."
       }
     },
     "facebook": {
-      "status": "draft",
       "video": {
         "kind": "reel",
-        "description": "Kiên vừa làm xong công cụ tự động hoá báo cáo. Bấm một cái là xong. Quá hợp lý… phải không? 😅\n\n#haicongso #vanphong #congso",
-        "hashtags": ["#haicongso", "#vanphong", "#congso"],
-        "coverImage": "thumbnails/thumb-9x16.png"
+        "postingMode": "api",
+        "body": "Bấm một cái là báo cáo xong. Kiên tưởng mình vừa thắng lớn ở công ty… 😌\n\nTag ngay đồng nghiệp hay “làm giùm” cả phòng 👇",
+        "hashtags": ["#haicongso", "#congso", "#vanphong", "#hoathinh"],
+        "coverImage": "thumbnails/thumb-9x16.png",
+        "captionsFile": "exports/EP001.srt"
       },
       "teaser": {
         "kind": "photo",
+        "postingMode": "api",
         "image": "thumbnails/teaser-1x1.png",
-        "text": "Bạn sẽ làm gì nếu tiết kiệm được ba tiếng mỗi tuần? Kiên thì… hơi hối hận. Tập mới sắp lên Page."
+        "body": "Kiên vừa làm được công cụ tiết kiệm ba tiếng mỗi tuần.\nSếp thì đang đứng ngay sau lưng. 👀\n\nBạn đoán chuyện gì xảy ra tiếp theo?",
+        "hashtags": ["#haicongso", "#congso"]
       }
     },
     "tiktok": {
-      "status": "draft",
       "video": {
-        "caption": "Tiết kiệm 3 tiếng mỗi tuần là sai lầm lớn nhất đời tôi 😶 #haicongso #congso #vanphong #hoathinh",
-        "hashtags": ["#haicongso", "#congso", "#vanphong", "#hoathinh"],
-        "coverTimestampMs": 1500,
+        "kind": "video",
         "postingMode": "manual",
-        "note": "TikTok: API không có hẹn giờ; client chưa audit chỉ đăng riêng tư (SELF_ONLY); hướng dẫn nêu công cụ đăng cho tài khoản của chính mình là không được chấp nhận khi audit. Chuẩn bị bản xuất để đăng thủ công."
+        "body": "Tiết kiệm được 3 tiếng mỗi tuần. Rồi sếp biết 😶",
+        "hashtags": ["#haicongso", "#congso", "#vanphong", "#hoathinh"],
+        "coverTimestampMs": 16500,
+        "coverImage": "thumbnails/thumb-9x16.png",
+        "note": "Đăng thủ công trong app TikTok (API không hẹn giờ; client chưa audit chỉ đăng riêng tư). Ảnh bìa: chọn khung hình gợi ý ở coverTimestampMs, hoặc tải ảnh bìa lên nếu app cho phép (xem delivery/tiktok.md)."
       },
       "teaser": {
         "kind": "photo",
+        "postingMode": "manual",
         "image": "thumbnails/teaser-1x1.png",
-        "text": "Ba tiếng mỗi tuần. Đổi lại cái gì? 👀",
-        "postingMode": "manual"
+        "body": "Ba tiếng mỗi tuần. Đổi lại cái gì? 👀",
+        "hashtags": ["#haicongso", "#congso"]
       }
     }
   }

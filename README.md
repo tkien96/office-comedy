@@ -129,6 +129,17 @@ Mỗi tập nằm trong `episodes/EPxxx/` gồm `episode.json`, `script/`, `audi
 | `npm run episode:stage-audio -- EP001` | Chép âm thanh đã duyệt sang `public/` để render (từ chối nếu hash khác) |
 | `npm run render:ep001` | Render ra `episodes/EP001/exports/EP001.mp4` |
 | `npm run episode:verify -- EP001` | Kiểm tra video cuối (thời lượng, khung hình, codec, âm thanh, khung đen, hình đứng im) |
+| `npm run episode:captions -- EP001` | Tạo lại `exports/EP001.srt` từ timeline và kiểm tra (chữ = lời đã đọc, mốc, chồng cue, độ dài, ngắt dòng, xưng hô, đối chiếu âm thanh). Báo cáo `reports/captions-qc.md` |
+| `npm run episode:social -- EP001` | Kiểm nội dung social (lộ câu chốt, hứa ngày giờ, giới hạn nền tảng), ghi `social/social.md` để duyệt |
+| `npm run episode:thumbnails -- EP001` | Render thumbnail 9:16 (2160x3840) và ảnh nhá hàng 1:1 (1080x1080) từ rig của video |
+| `npm run episode:delivery -- EP001` | Tạo lại bộ đăng thủ công `delivery/` (video, SRT, 2 ảnh, youtube/facebook/tiktok.md, README, manifest). `--check`: kiểm bộ còn khớp nguồn |
+| `npm run episode:approve -- EP001 <phần>` | **Người dùng tự chạy** sau khi xem: ghi duyệt gắn hash. Phần: `captions`, `thumbnail9x16`, `teaser1x1`, `social.youtube.video`, `social.facebook.teaser`, …; `--revoke` để thu hồi |
+
+Trạng thái duyệt:
+- **cần duyệt lại**: file hoặc chữ đã đổi sau khi duyệt.
+- **cần kiểm tra lại**: file còn nguyên, nhưng nguồn (kịch bản, timeline, âm thanh…) đã đổi.
+
+Cả hai trạng thái đều chặn đăng. Thư mục `delivery/` là bản xuất, không đưa vào Git, và không bao giờ tự nâng trạng thái duyệt.
 
 ## Đăng bài (mới có dry-run)
 
@@ -137,7 +148,7 @@ Mỗi tập nằm trong `episodes/EPxxx/` gồm `episode.json`, `script/`, `audi
 | `npm run publish:dry-run -- EP001` | Kiểm tra file, hash, duyệt, tài khoản đích, token (chỉ báo có hay không), lịch, giới hạn nền tảng, lộ câu chốt, job trùng. **Không upload.** Báo cáo ở `reports/publish-dry-run.json` |
 | `npm run publish:plan -- EP001 <jobId> "YYYY-MM-DD HH:mm"` | Đặt lịch **trong dự án** theo giờ Việt Nam (lưu kèm UTC). Không gửi gì lên nền tảng |
 
-Khả năng từng nền tảng và thông tin tài khoản còn thiếu: [docs/publishing-platforms.md](docs/publishing-platforms.md). Token đặt trong `.env`; `.env.example` chỉ có tên biến.
+Khả năng từng nền tảng, ảnh bìa và thông tin tài khoản còn thiếu: [docs/publishing-platforms.md](docs/publishing-platforms.md). Kế hoạch tích hợp YouTube (chưa triển khai): [docs/youtube-integration-plan.md](docs/youtube-integration-plan.md). Token đặt trong `.env`; `.env.example` chỉ có tên biến.
 
 ## Lệnh khác
 
@@ -167,6 +178,10 @@ public/test/           tài nguyên kiểm tra (âm thanh tự tạo bằng FFmp
 .claude/skills/        Remotion Agent Skills cho Claude Code (phạm vi dự án)
 out/                   video xuất ra (bị Git bỏ qua)
 ```
+
+## Tài nguyên chỉ có trên máy
+
+Video, giọng clone, giọng tham chiếu, ảnh bìa, model TTS và cache không đưa vào Git (repo công khai). Danh sách, hash và cách khôi phục: [docs/local-assets.md](docs/local-assets.md).
 
 ## Giấy phép
 

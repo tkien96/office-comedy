@@ -2,7 +2,7 @@
   "episode": "EP001",
   "dryRun": true,
   "note": "Không upload, không đặt lịch, không sửa job.",
-  "checkedAt": "2026-11-11T07:38:05.433Z",
+  "checkedAt": "2026-11-11T08:17:40.150Z",
   "readyCount": 0,
   "total": 6,
   "results": [
@@ -18,11 +18,11 @@
         },
         {
           "level": "BLOCK",
-          "msg": "thumbnail: chưa có (episodes/EP001/thumbnails/thumb-9x16.png)."
+          "msg": "thumbnail: chưa duyệt."
         },
         {
           "level": "BLOCK",
-          "msg": "Nội dung social youtube: chưa duyệt."
+          "msg": "Nội dung social youtube.video: chưa duyệt."
         },
         {
           "level": "BLOCK",
@@ -37,7 +37,7 @@
           "msg": "Chưa có lịch đăng được xác nhận."
         }
       ],
-      "idempotencyKey": "64b8a7ec36884c41b054c492dc2991ca",
+      "idempotencyKey": "749d94a4443eaf56382447e78a7d8b8e",
       "scheduleUtc": null
     },
     {
@@ -52,7 +52,7 @@
         },
         {
           "level": "BLOCK",
-          "msg": "Nội dung social youtube: chưa duyệt."
+          "msg": "Nội dung social youtube.teaser: chưa duyệt."
         },
         {
           "level": "WARN",
@@ -63,7 +63,7 @@
           "msg": "Chưa có lịch đăng được xác nhận."
         }
       ],
-      "idempotencyKey": "dfd8e1519d56b5e6c055454b9cc466bd",
+      "idempotencyKey": "9f971a752377f832f299833f809a697a",
       "scheduleUtc": null
     },
     {
@@ -78,11 +78,11 @@
         },
         {
           "level": "BLOCK",
-          "msg": "cover: chưa có (episodes/EP001/thumbnails/thumb-9x16.png)."
+          "msg": "cover: chưa duyệt."
         },
         {
           "level": "BLOCK",
-          "msg": "Nội dung social facebook: chưa duyệt."
+          "msg": "Nội dung social facebook.video: chưa duyệt."
         },
         {
           "level": "BLOCK",
@@ -97,7 +97,7 @@
           "msg": "Chưa có lịch đăng được xác nhận."
         }
       ],
-      "idempotencyKey": "05ad68187b3ecca1f9029306a8e7c371",
+      "idempotencyKey": "6a029db245af98d10658f8a23b1822c6",
       "scheduleUtc": null
     },
     {
@@ -108,11 +108,11 @@
       "findings": [
         {
           "level": "BLOCK",
-          "msg": "image: chưa có (episodes/EP001/thumbnails/teaser-1x1.png)."
+          "msg": "image: chưa duyệt."
         },
         {
           "level": "BLOCK",
-          "msg": "Nội dung social facebook: chưa duyệt."
+          "msg": "Nội dung social facebook.teaser: chưa duyệt."
         },
         {
           "level": "BLOCK",
@@ -127,7 +127,7 @@
           "msg": "Chưa có lịch đăng được xác nhận."
         }
       ],
-      "idempotencyKey": "59f0ac4e093c458cb08b1948979b19d5",
+      "idempotencyKey": "36c82abd05b88ad51339ea6f6881d408",
       "scheduleUtc": null
     },
     {
@@ -142,7 +142,7 @@
         },
         {
           "level": "BLOCK",
-          "msg": "Nội dung social tiktok: chưa duyệt."
+          "msg": "Nội dung social tiktok.video: chưa duyệt."
         },
         {
           "level": "WARN",
@@ -153,7 +153,7 @@
           "msg": "Chưa có lịch đăng được xác nhận."
         }
       ],
-      "idempotencyKey": "0a1227555960c4a9b90a34aab5a733db",
+      "idempotencyKey": "1d12ca66efcf6909475bd58a0c94dd8a",
       "scheduleUtc": null
     },
     {
@@ -168,11 +168,11 @@
         },
         {
           "level": "BLOCK",
-          "msg": "image: chưa có (episodes/EP001/thumbnails/teaser-1x1.png)."
+          "msg": "image: chưa duyệt."
         },
         {
           "level": "BLOCK",
-          "msg": "Nội dung social tiktok: chưa duyệt."
+          "msg": "Nội dung social tiktok.teaser: chưa duyệt."
         },
         {
           "level": "WARN",
@@ -183,7 +183,7 @@
           "msg": "Chưa có lịch đăng được xác nhận."
         }
       ],
-      "idempotencyKey": "c5c8736f2876e2bca4679aa9b43825ef",
+      "idempotencyKey": "fc97a6cba0bb27e3f62e40271be45681",
       "scheduleUtc": null
     }
   ]

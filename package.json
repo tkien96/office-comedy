@@ -52,7 +52,12 @@
     "episode:status": "node tools/episode/cli/status.ts",
     "episode:stage-audio": "node tools/episode/cli/stage-audio.ts",
     "publish:dry-run": "node --env-file-if-exists=.env tools/publish/cli/dry-run.ts",
-    "publish:plan": "node tools/publish/cli/plan.ts"
+    "publish:plan": "node tools/publish/cli/plan.ts",
+    "episode:approve": "node tools/episode/cli/approve.ts",
+    "episode:captions": "node tools/episode/cli/captions.ts",
+    "episode:social": "node tools/episode/cli/social.ts",
+    "episode:thumbnails": "node tools/episode/cli/thumbnails.ts",
+    "episode:delivery": "node tools/episode/cli/delivery.ts"
   },
   "allowScripts": {
     "esbuild": false

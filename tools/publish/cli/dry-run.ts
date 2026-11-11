@@ -8,7 +8,8 @@
 // Writes reports/publish-dry-run.json. Exit 0 = report written (not "ready").
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { checkApproval, currentHashes, hashFile, hashJson, readManifest } from "../../episode/manifest.ts";
+import { checkApproval, currentHashes, currentSources, hashFile, hashJson, hashText, readManifest } from "../../episode/manifest.ts";
+import { DATE_PROMISE } from "../../episode/social.ts";
 import { rel, resolveEpisode } from "../../episode/paths.ts";
 import { idempotencyKey, isMissed, localToUtc, mustReconcileBeforeSend, readJobs, type Job } from "../jobs.ts";
 
@@ -26,12 +27,12 @@ const cfg = JSON.parse(readFileSync("config/publishing.json", "utf8")) as {
 };
 const manifest = readManifest(P);
 const hashes = currentHashes(P);
+const sources = currentSources(P, manifest);
 const social = existsSync(P.social) ? JSON.parse(readFileSync(P.social, "utf8")) : null;
 const jobs = readJobs(P).jobs;
 
 const get = (obj: unknown, path: string) => path.split(".").reduce<unknown>((o, k) => (o && typeof o === "object" ? (o as Record<string, unknown>)[k] : undefined), obj);
 const TARGET_ID_FIELD: Record<string, string> = { youtube: "channelId", facebook: "pageId", tiktok: "username" };
-const DATE_PROMISE = /(\b\d{1,2}[/.-]\d{1,2}\b|\b\d{1,2}\s?(h|giờ)\b|ngày\s+\d|thứ\s+(hai|ba|tư|năm|sáu|bảy)\s+(này|tới|sau)|chủ nhật (này|tới)|tối nay|ngày mai|tuần sau)/iu;
 
 type Finding = { level: "BLOCK" | "WARN" | "INFO"; msg: string };
 const results: { job: string; state: string; mode: string; ready: boolean; findings: Finding[]; idempotencyKey: string | null; scheduleUtc: string | null }[] = [];
@@ -59,14 +60,14 @@ for (const job of jobs as Job[]) {
   const mediaHashes: (string | null)[] = [];
   for (const m of job.media) {
     const abs = join(P.root, m.path);
-    const h = hashFile(abs);
+    const h = m.role === "captions" ? hashText(abs) : hashFile(abs);
     mediaHashes.push(h);
     if (!h) {
       block(`${m.role}: chưa có (${rel(abs)}).`);
       continue;
     }
     const part = m.role === "video" ? "video" : m.role === "captions" ? "captions" : m.path.includes("teaser-1x1") ? "teaser1x1" : "thumbnail9x16";
-    const r = checkApproval(manifest.approvals[part], h);
+    const r = checkApproval(manifest.approvals[part], h, sources);
     if (r.status !== "approved") block(`${m.role}: ${r.detail}.`);
   }
   if (job.type === "video") {
@@ -76,14 +77,15 @@ for (const job of jobs as Job[]) {
   }
 
   // Content + approval + guards.
-  const platformContent = social?.platforms?.[job.platform];
   const content = get(social, job.content.ref);
   let contentHash: string | null = null;
   if (!content) block(`Nội dung social chưa có (${job.content.ref}).`);
   else {
-    contentHash = hashJson(platformContent);
-    const r = checkApproval(manifest.approvals.social[job.platform], hashes.social[job.platform] ?? null);
-    if (r.status !== "approved") block(`Nội dung social ${job.platform}: ${r.detail}.`);
+    // Each post is approved on its own: "platforms.youtube.video" → "youtube.video".
+    const postKey = job.content.ref.replace(/^platforms./, "");
+    contentHash = hashJson(content);
+    const r = checkApproval(manifest.approvals.social[postKey], hashes.social[postKey] ?? null, sources);
+    if (r.status !== "approved") block(`Nội dung social ${postKey}: ${r.detail}.`);
     const text = JSON.stringify(content);
     for (const p of (social.spoilerGuard?.punchlineMustNotAppear ?? []) as string[]) {
       if (text.toLowerCase().includes(p.toLowerCase())) block(`Nội dung lộ câu chốt ("${p}").`);

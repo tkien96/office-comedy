@@ -4,6 +4,27 @@ Ghi lại tiến độ để tiếp tục được khi phiên làm việc bị g
 
 ## Trạng thái hiện tại
 
+- **2026-11-11: HOÀN THIỆN BỘ SẢN PHẨM EP001 (chờ người dùng duyệt). Chưa upload, đăng hay đặt lịch thật.**
+  - **Commit `5dce4dd`:** quản lý tập, metadata, duyệt gắn hash, dry-run. Phần sau commit này chưa commit.
+  - **EP001 đã duyệt, giữ nguyên:**
+    - video `8e4da809…`: 63,317 s, 1899 khung, 30 fps, h264 + aac, 1080x1920;
+    - âm thanh `801e4d91…`;
+    - kịch bản `86a8344e…`.
+    - Không tạo lại TTS, không render lại video.
+  - **Cơ chế duyệt mới:**
+    - Social duyệt theo từng bài.
+    - Mỗi duyệt ghi hash nguồn (`basis`); nguồn đổi thì chuyển "cần kiểm tra lại".
+    - SRT hash sau khi đổi CRLF→LF.
+    - Lệnh `episode:approve` dành cho người dùng tự chạy.
+    - Đã ghi bổ sung nguồn cho các duyệt cũ (kịch bản, âm thanh, video), có ghi chú lý do.
+    - Đã giả lập trên bản sao: sửa 1 bài chỉ mất duyệt bài đó; sửa kịch bản đánh dấu đúng âm thanh, video, phụ đề và social cần kiểm tra lại; delivery cũ bị phát hiện.
+  - **Chờ người dùng duyệt:**
+    - Phụ đề `exports/EP001.srt`: 26 cue, 0 lỗi, 3 cảnh báo tốc độ đọc 20,5 ký tự/giây. Xem `reports/captions-qc.md`.
+    - Social: 6 bài, xem `social/social.md`.
+    - `thumbnails/thumb-9x16.png` và `thumbnails/teaser-1x1.png`.
+  - **Bộ đăng thủ công:** `episodes/EP001/delivery/` (lệnh `episode:delivery`, có `--check`).
+  - **Ghi nhận:** phụ đề in trong video đã duyệt ngắt "công / cụ" ở cue 8 (greedy theo độ rộng). Chưa sửa vì video đã duyệt. Nếu sửa phải render lại và duyệt lại video.
+  - **YouTube:** mới có kế hoạch (`docs/youtube-integration-plan.md`), chưa có code gọi API.
 - **2026-11-11: QUẢN LÝ TẬP + CHUẨN BỊ ĐĂNG ĐA NỀN TẢNG. Phần "ngay bây giờ" đã xong. Chưa upload, đăng hay đặt lịch thật.**
   - **Đã chạy và đã kiểm tra:**
     - Cấu trúc `episodes/EPxxx/{episode.json, script/, audio/, assets/, exports/, thumbnails/, social/, publishing/, reports/}`. Đường dẫn chỉ định nghĩa ở `tools/episode/paths.ts`.
@@ -73,6 +94,18 @@ Ghi lại tiến độ để tiếp tục được khi phiên làm việc bị g
 - **Chưa thay giọng chính thức, chưa tạo lại video.**
 
 ## Nhật ký
+
+### 2026-11-11 — Hoàn thiện bộ sản phẩm EP001
+
+- [x] Commit `5dce4dd`: quản lý tập, metadata, duyệt gắn hash, dry-run. Đã rà diff, không có token, `.env`, model hay media.
+- [x] Duyệt theo từng bài social và theo nguồn (`basis`, `DEPENDS_ON`); thêm lệnh `episode:approve`; `episode:status` báo thêm "khớp nguồn / lệch nguồn".
+- [x] Phụ đề: `tools/episode/captions.ts` dùng chung với `episode:audio`. Ngắt dòng không tách từ ghép; cue ngắn giữ tối thiểu 0,8 s. Có kiểm tra tự động, gồm đối chiếu âm thanh của video đã duyệt.
+- [x] Social viết lại theo kịch bản cho từng nền tảng. Tạo `social.md`. Bài nhá hàng YouTube là tùy chọn, đăng tay.
+- [x] Ảnh: Still `EP001-thumb-9x16` / `EP001-teaser-1x1` (`src/thumbnails/`, `src/episodes/ep001-thumbnails.ts`). Lệnh `episode:thumbnails`.
+- [x] Tra tài liệu chính thức về ảnh bìa (YouTube, Facebook, TikTok). Bổ sung vào `docs/publishing-platforms.md`.
+- [x] Bộ `delivery/` cùng lệnh `episode:delivery`.
+- [x] `docs/youtube-integration-plan.md`.
+- [x] Lint sạch; dry-run vẫn chặn đúng (chưa duyệt, chưa có tài khoản, chưa có lịch).
 
 ### 2026-11-11 — Quản lý tập và chuẩn bị đăng đa nền tảng
 
