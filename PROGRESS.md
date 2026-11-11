@@ -95,6 +95,16 @@ Ghi lại tiến độ để tiếp tục được khi phiên làm việc bị g
 
 ## Nhật ký
 
+### 2026-11-11 — Đẩy lên GitHub
+
+- [x] Sau khi người dùng đăng nhập GitHub bằng tài khoản tkien96 (Git Credential Manager), `main` đã lên https://github.com/tkien96/office-comedy. Commit trên remote `9b7765d` khớp commit local; upstream là `origin/main`.
+
+Lần thử đầu:
+
+- [x] Rà soát: không có bí mật trong lịch sử. Có một khóa tìm kiếm Algolia công khai của Remotion nằm trong tài liệu skill, không phải bí mật của dự án. Media, giọng clone, model và cache vẫn bị Git bỏ qua; danh sách ở `docs/local-assets.md`.
+- [x] Commit `9b7765d`. Đã thêm remote `origin` = https://github.com/tkien96/office-comedy.git (repo công khai, đang trống).
+- [ ] Push `main` bị từ chối (403): tài khoản Git đang đăng nhập (hugo-at-com) không có quyền ghi vào repo tkien96. Cần đăng nhập đúng tài khoản hoặc được thêm làm collaborator, rồi push lại.
+
 ### 2026-11-11 — Hoàn thiện bộ sản phẩm EP001
 
 - [x] Commit `5dce4dd`: quản lý tập, metadata, duyệt gắn hash, dry-run. Đã rà diff, không có token, `.env`, model hay media.
