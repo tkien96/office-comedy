@@ -6,7 +6,7 @@ Thông số mỗi tập: 1080x1920, 30fps, tối thiểu 60 giây (mục tiêu 6
 
 ## Yêu cầu
 
-- Node.js 20.19+ / 22.13+ / 24+ (máy hiện tại: 24.6.0)
+- Node.js 22.18+ (khuyên dùng 24; máy hiện tại: 24.6.0). Công cụ trong `tools/` và Studio chạy thẳng TypeScript bằng type stripping của Node
 - npm, Git
 - FFmpeg + ffprobe trong PATH (kiểm tra kết quả render)
 - Remotion tự tải Chrome Headless Shell khi render lần đầu
@@ -119,7 +119,7 @@ Ràng buộc trong code:
 
 Giao diện tiếng Việt để xem từng tập, duyệt sản phẩm, sửa nội dung social, chạy dry-run và tạo/tải bộ delivery. Chạy trên máy này, địa chỉ **http://127.0.0.1:5178**.
 
-- Mở: nhấp đúp `Studio.cmd`, hoặc chạy `npm run studio` trong PowerShell (cần `npm install` một lần trước đó).
+- Mở: nhấp đúp `Studio.cmd`, hoặc chạy `npm run studio` trong PowerShell (cần Node 22.18 trở lên và `npm install` một lần trước đó).
 - Chỉ chạy máy chủ (khi đã build): `npm run studio:serve`. Đổi cổng: `$env:STUDIO_PORT=5180`.
 - Chưa có: tạo kịch bản bằng Claude, tạo TTS/render từ giao diện, kết nối tài khoản, upload, đặt lịch, đăng thật. Các nút này bị khoá và có ghi lý do.
 

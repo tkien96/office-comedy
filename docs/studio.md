@@ -11,7 +11,8 @@
 
 - Địa chỉ: **http://127.0.0.1:5178**. Đổi cổng: `$env:STUDIO_PORT=5180; npm run studio`.
 - Chỉ nghe trên `127.0.0.1`, nên máy khác trong mạng LAN không vào được. Dừng bằng Ctrl+C trong cửa sổ đang chạy.
-- Cần chạy `npm install` **một lần** trước đó. Launcher không tự cài dependency.
+- Cần **Node 22.18 trở lên** (khuyên dùng Node 24): máy chủ chạy thẳng file TypeScript bằng tính năng type stripping có sẵn của Node. `studio/start.mjs` kiểm phiên bản trước khi nạp file `.ts`; Node cũ sẽ nhận thông báo rõ ràng thay vì lỗi cú pháp.
+- Cần chạy `npm install` **một lần** trước đó. Launcher không tự cài dependency. `esbuild` (dùng để build giao diện) được khai báo trực tiếp trong `devDependencies`, không dựa vào bản đi kèm Remotion.
 - Thiếu dependency hoặc cổng đang bận: lệnh báo rõ rồi dừng.
 
 ## Kiến trúc
@@ -117,8 +118,8 @@ tools/publish/dryrun.ts  dry-run dùng chung
 
 **Chưa kiểm tra:**
 - Trình duyệt khác ngoài trình duyệt tích hợp của ứng dụng Claude.
-- Màn hình desktop rộng (khung trình duyệt lúc thử khá hẹp nên chỉ thấy bố cục hẹp).
-- Chạy `Studio.cmd` bằng nhấp đúp. Mình đã đọc lại file và kiểm CRLF, chưa chạy thật.
+- Bố cục 1366×768 và 1920×1080 đã kiểm bằng giả lập kích thước khung nhìn trong trình duyệt tích hợp. Video dọc được giới hạn chiều cao theo màn hình để thấy thanh điều khiển.
+- Nhấp đúp `Studio.cmd` bằng tay. Mình đã chạy launcher qua `cmd /c Studio.cmd`: kiểm Node, build, máy chủ lên và trả `/api/health`. Bước mở trình duyệt thì chưa quan sát được (lúc thử, stdin bị chuyển hướng). Bạn tự thử: nhấp đúp `Studio.cmd` → cửa sổ đen hiện "Office Comedy Studio đang chạy" → trình duyệt mở http://127.0.0.1:5178 sau khoảng 2 giây.
 
 ## Chưa triển khai (nút liên quan bị khoá và có ghi lý do)
 
