@@ -115,6 +115,16 @@ Ràng buộc trong code:
 - **Cache theo nội dung:** khoá cache gồm text, model, voice, ngôn ngữ, toàn bộ thiết lập giọng, seed và định dạng. Cache nằm ở `cache/tts/` và không đưa vào Git.
 - **Ghi lại đầy đủ:** mỗi bản lưu audio, alignment theo ký tự, thời lượng thực đo bằng ffprobe, và số credit đo được từ `/v1/user/subscription`.
 
+## Office Comedy Studio (website local)
+
+Giao diện tiếng Việt để xem từng tập, duyệt sản phẩm, sửa nội dung social, chạy dry-run và tạo/tải bộ delivery. Chạy trên máy này, địa chỉ **http://127.0.0.1:5178**.
+
+- Mở: nhấp đúp `Studio.cmd`, hoặc chạy `npm run studio` trong PowerShell (cần `npm install` một lần trước đó).
+- Chỉ chạy máy chủ (khi đã build): `npm run studio:serve`. Đổi cổng: `$env:STUDIO_PORT=5180`.
+- Chưa có: tạo kịch bản bằng Claude, tạo TTS/render từ giao diện, kết nối tài khoản, upload, đặt lịch, đăng thật. Các nút này bị khoá và có ghi lý do.
+
+Kiến trúc, nguồn dữ liệu, an toàn và kết quả kiểm tra: [docs/studio.md](docs/studio.md).
+
 ## Quản lý tập
 
 Mỗi tập nằm trong `episodes/EPxxx/` gồm `episode.json`, `script/`, `audio/`, `assets/`, `exports/`, `thumbnails/`, `social/`, `publishing/`, `reports/`. Chi tiết trong CLAUDE.md, mục "Cấu trúc thư mục".

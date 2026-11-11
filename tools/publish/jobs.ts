@@ -1,4 +1,5 @@
-import { appendFileSync, closeSync, existsSync, mkdirSync, openSync, readFileSync, renameSync, statSync, unlinkSync, writeFileSync } from "node:fs";
+import { appendFileSync, existsSync, mkdirSync, readFileSync } from "node:fs";
+import { withFileLock, writeFileAtomic } from "../episode/fsutil.ts";
 import { dirname } from "node:path";
 import { hashJson } from "../episode/manifest.ts";
 import type { EpisodePaths } from "../episode/paths.ts";
@@ -58,11 +59,7 @@ export const readJobs = (P: EpisodePaths): JobsFile =>
   existsSync(P.jobs) ? (JSON.parse(readFileSync(P.jobs, "utf8")) as JobsFile) : { episode: P.id, jobs: [] };
 
 /** Atomic write: temp file + rename, so a crash never leaves half a file. */
-export const writeJobs = (P: EpisodePaths, data: JobsFile) => {
-  const tmp = `${P.jobs}.tmp`;
-  writeFileSync(tmp, JSON.stringify(data, null, 2) + "\n");
-  renameSync(tmp, P.jobs);
-};
+export const writeJobs = (P: EpisodePaths, data: JobsFile) => writeFileAtomic(P.jobs, JSON.stringify(data, null, 2) + "\n");
 
 // ---- Time: Asia/Ho_Chi_Minh is UTC+7 all year (no DST). -------------------
 
@@ -87,36 +84,8 @@ export const idempotencyKey = (job: Job, mediaHashes: (string | null)[], content
 
 // ---- Lock: one processor per episode at a time. -----------------------------
 
-const LOCK_STALE_MS = 30 * 60_000;
-
 /** Runs fn while holding publishing/.lock (exclusive create). Stale locks (>30 min) are reported, not stolen silently. */
-export const withLock = async <T>(P: EpisodePaths, owner: string, fn: () => Promise<T> | T): Promise<T> => {
-  mkdirSync(dirname(P.publishLock), { recursive: true });
-  let fd: number;
-  try {
-    fd = openSync(P.publishLock, "wx");
-  } catch (err) {
-    if ((err as NodeJS.ErrnoException).code !== "EEXIST") throw err;
-    const age = Date.now() - statSync(P.publishLock).mtimeMs;
-    const holder = readFileSync(P.publishLock, "utf8");
-    throw new Error(
-      age > LOCK_STALE_MS
-        ? `Khóa ${P.publishLock} đã cũ (${Math.round(age / 60000)} phút, ${holder}). Kiểm tra trạng thái job rồi xoá khóa thủ công.`
-        : `Đang có tiến trình khác xử lý ${P.id} (${holder}).`,
-    );
-  }
-  try {
-    writeFileSync(fd, JSON.stringify({ owner, pid: process.pid, at: new Date().toISOString() }));
-    closeSync(fd);
-    return await fn();
-  } finally {
-    try {
-      unlinkSync(P.publishLock);
-    } catch {
-      /* already removed */
-    }
-  }
-};
+export const withLock = <T>(P: EpisodePaths, owner: string, fn: () => Promise<T> | T): Promise<T> => withFileLock(P.publishLock, owner, `phát hành ${P.id}`, fn);
 
 // ---- Log: append-only, secrets redacted. -------------------------------------
 

@@ -41,6 +41,8 @@ episodes/*/exports/*.mp4
 episodes/*/thumbnails/*.png
 episodes/*/thumbnails/*.jpg
 episodes/*/publishing/.lock
+episodes/*/.lock
+episodes/*/delivery.*/
 episodes/*/publishing/log.jsonl
 # Resumable upload session URLs (allow upload without login): never in Git
 episodes/*/publishing/upload-state.json
@@ -50,3 +52,7 @@ public/audio/episodes/
 
 # Delivery package: rebuilt from current sources by `npm run episode:delivery` (build output, not in Git)
 episodes/*/delivery/
+
+# Office Comedy Studio: built frontend and runtime data (background job records)
+studio/dist/
+runtime/
