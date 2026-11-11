@@ -23,8 +23,8 @@ import {
 import { Subtitle } from "../ui/Subtitle";
 
 const SPEAKER_COLORS: Record<string, string> = {
-  nam: "#93c5fd",
-  linh: "#fdba74",
+  kien: "#93c5fd",
+  trinh: "#fdba74",
   sep: "#e2e8f0",
 };
 

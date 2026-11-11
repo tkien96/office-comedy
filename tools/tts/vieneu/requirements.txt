@@ -1,0 +1,2 @@
+# Isolated environment for VieNeu-TTS (local, CPU/ONNX). See README.
+vieneu==3.8.4

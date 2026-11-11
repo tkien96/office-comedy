@@ -13,6 +13,9 @@ Thumbs.db
 out
 renders
 
+# TTS cache: generated audio, alignment, local ledger of paid calls
+cache
+
 # Logs and temp
 *.log
 npm-debug.log*
@@ -26,3 +29,8 @@ tmp
 
 # Claude Code personal settings (project skills in .claude/skills are committed)
 .claude/settings.local.json
+
+# Python virtualenvs
+.venv
+**/.venv
+__pycache__

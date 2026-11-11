@@ -8,7 +8,7 @@ export const HairBack: React.FC<{ design: CharacterDesign; sway: number }> = ({
   design,
   sway,
 }) => {
-  if (design.hairStyle !== "linhLong") return null;
+  if (design.hairStyle !== "trinhLong") return null;
   const s = sway * 6;
   return (
     <path
@@ -23,7 +23,7 @@ export const HairFront: React.FC<{ design: CharacterDesign; sway: number }> = ({
   sway,
 }) => {
   switch (design.hairStyle) {
-    case "namShort":
+    case "kienShort":
       return (
         <g>
           <path
@@ -41,7 +41,7 @@ export const HairFront: React.FC<{ design: CharacterDesign; sway: number }> = ({
           <path d="M96,-4 L92,26 L84,0 Z" fill={design.hair} />
         </g>
       );
-    case "linhLong": {
+    case "trinhLong": {
       const s = sway * 4;
       return (
         <g>

@@ -1,0 +1,51 @@
+{
+  "$comment": "Bộ tham chiếu mới: Kiên = voice_kien_02.mp4, Trinh = voice_trinh.mp4, Sếp = voice_sep.mp4 (config/voice-refs.json). Lời thoại và thứ tự lấy nguyên từ dialogue-01.json. Thiết lập giữ như các lần trước, chỉ thêm ref_denoise=false (bắt buộc cho clone). Trạng thái: tham chiếu mới, chờ duyệt kết quả.",
+  "campaign": "vieneu-dialogue-03",
+  "voices": {
+    "kien": {
+      "reference": "kien"
+    },
+    "trinh": {
+      "reference": "trinh"
+    },
+    "sep": {
+      "reference": "sep"
+    }
+  },
+  "settings": {
+    "temperature": 0.8,
+    "top_k": 25,
+    "top_p": 0.95,
+    "repetition_penalty": 1.2,
+    "max_chars": 256,
+    "silence_p": 0.15,
+    "crossfade_p": 0,
+    "apply_watermark": false,
+    "ref_denoise": false
+  },
+  "mix": {
+    "targetLufs": -18,
+    "maxTruePeakDb": -1.5,
+    "defaultGapSec": 0.22
+  },
+  "lines": [
+    {
+      "role": "kien",
+      "text": "Dạ anh, em làm xong hết rồi. Hôm nay em về đúng giờ nha?"
+    },
+    {
+      "role": "sep",
+      "text": "Tốt. Vậy em làm giùm phần của Trinh luôn đi."
+    },
+    {
+      "role": "trinh",
+      "text": "Em cảm ơn anh Kiên nha. Nhờ anh mà hôm nay em về đúng giờ."
+    },
+    {
+      "role": "kien",
+      "text": "Ủa, người làm xong là em mà?",
+      "gapBeforeSec": 0.55,
+      "gapNote": "nhịp nghỉ có chủ ý trước câu chốt"
+    }
+  ]
+}

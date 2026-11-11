@@ -1,0 +1,2 @@
+# Isolated environment for Edge TTS (see README, section TTS).
+edge-tts==7.3.1

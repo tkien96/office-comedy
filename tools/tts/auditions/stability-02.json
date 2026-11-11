@@ -1,0 +1,38 @@
+{
+  "$comment": "ĐÃ THAY bằng dialogue-03 / stability-03 (người dùng đổi nguồn Kiên và Sếp ngày 2026-11-11). Giữ lại làm lịch sử, không chạy. Câu mới ngoài đoạn mẫu để kiểm tra độ ổn định của giọng tham chiếu Kiên/Trinh. Tránh xưng hô Trinh–Kiên (đang chờ người dùng chốt). CHƯA DUYỆT.",
+  "campaign": "vieneu-stability-02",
+  "voices": {
+    "kien": {
+      "reference": "kien"
+    },
+    "trinh": {
+      "reference": "trinh"
+    }
+  },
+  "settings": {
+    "temperature": 0.8,
+    "top_k": 25,
+    "top_p": 0.95,
+    "repetition_penalty": 1.2,
+    "max_chars": 256,
+    "silence_p": 0.15,
+    "crossfade_p": 0,
+    "apply_watermark": false,
+    "ref_denoise": false
+  },
+  "mix": {
+    "targetLufs": -18,
+    "maxTruePeakDb": -1.5,
+    "defaultGapSec": 0.22
+  },
+  "lines": [
+    {
+      "role": "kien",
+      "text": "Trời ơi, cái file này sửa tới bản thứ bảy rồi mà vẫn bị trả về nữa."
+    },
+    {
+      "role": "trinh",
+      "text": "Thôi để tui coi giùm cho. Mà xong rồi nhớ bao tui ly cà phê nha."
+    }
+  ]
+}

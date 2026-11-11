@@ -1,0 +1,21 @@
+{
+  "$comment": "Khoảng lặng (gap) tính từ hết lời lượt trước tới đầu lời lượt sau. Hội thoại thử để đánh giá bộ giọng ứng viên (CHƯA DUYỆT). Voice ID và thiết lập lấy từ log mẫu, không lấy từ tên file. Không người kể, không nhạc, không tiếng cười.",
+  "campaign": "vieneu-dialogue-01",
+  "voicesFromSamples": {
+    "summary": "out/tts-vieneu/vieneu-samples-01/summary.json",
+    "kien": "04_kien__thai-son.wav",
+    "trinh": "06_trinh__my-duyen.wav",
+    "sep": "08_sep__duc-tri.wav"
+  },
+  "mix": {
+    "targetLufs": -18,
+    "maxTruePeakDb": -1.5,
+    "defaultGapSec": 0.22
+  },
+  "lines": [
+    { "role": "kien", "text": "Dạ anh, em làm xong hết rồi. Hôm nay em về đúng giờ nha?" },
+    { "role": "sep", "text": "Tốt. Vậy em làm giùm phần của Trinh luôn đi." },
+    { "role": "trinh", "text": "Em cảm ơn anh Kiên nha. Nhờ anh mà hôm nay em về đúng giờ." },
+    { "role": "kien", "text": "Ủa, người làm xong là em mà?", "gapBeforeSec": 0.55, "gapNote": "nhịp nghỉ có chủ ý trước câu chốt" }
+  ]
+}

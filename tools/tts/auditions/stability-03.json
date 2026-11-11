@@ -1,0 +1,38 @@
+{
+  "$comment": "Câu mới, không có trong âm thanh tham chiếu, để kiểm tra độ ổn định giọng clone của Kiên và Sếp. Tiếng Việt miền Nam, xưng hô sếp–nhân viên: anh/em. Trạng thái: tham chiếu mới, chờ duyệt kết quả.",
+  "campaign": "vieneu-stability-03",
+  "voices": {
+    "kien": {
+      "reference": "kien"
+    },
+    "sep": {
+      "reference": "sep"
+    }
+  },
+  "settings": {
+    "temperature": 0.8,
+    "top_k": 25,
+    "top_p": 0.95,
+    "repetition_penalty": 1.2,
+    "max_chars": 256,
+    "silence_p": 0.15,
+    "crossfade_p": 0,
+    "apply_watermark": false,
+    "ref_denoise": false
+  },
+  "mix": {
+    "targetLufs": -18,
+    "maxTruePeakDb": -1.5,
+    "defaultGapSec": 0.22
+  },
+  "lines": [
+    {
+      "role": "kien",
+      "text": "Trời ơi, cái file này sửa tới bản thứ bảy rồi mà vẫn bị trả về nữa."
+    },
+    {
+      "role": "sep",
+      "text": "Số liệu tháng này đẹp đó. Nhưng em làm cho đúng quy trình rồi hẵng báo cáo nha."
+    }
+  ]
+}

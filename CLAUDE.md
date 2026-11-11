@@ -64,7 +64,7 @@ src/
   Root.tsx              đăng ký các Composition / Still
   design/               tokens (khung hình, vùng an toàn, dải phụ đề), font
   lib/timeline.ts       keyframe, nội suy, hash tất định
-  characters/           rig SVG dùng chung + thiết kế Nam/Linh/Sếp
+  characters/           rig SVG dùng chung + thiết kế Kiên/Trinh/Sếp
   backgrounds/          văn phòng, phòng họp, pantry, bàn phía trước
   ui/                   phụ đề, thẻ thông báo, chữ sốc, overlay vùng an toàn
   scenes/ScriptedScene  bộ dựng chung: đọc dữ liệu cảnh rồi vẽ
@@ -76,6 +76,68 @@ assets/LICENSES.md      nguồn và giấy phép mọi tài nguyên
 out/                    video và ảnh xuất ra (không đưa vào Git)
 ```
 
+## Nhân vật
+
+Nguồn dữ liệu chính: `src/characters/designs.ts` (thiết kế + `CHARACTER_BIOS`). ID nội bộ dùng trong dữ liệu tập (`character`, `speaker`).
+
+| Tên hiển thị | ID nội bộ | Hồ sơ |
+|---|---|---|
+| Kiên | `kien` | Nhân viên nam ~30 tuổi, áo xanh. Cả nể, muốn làm việc hiệu quả nhưng hay tự đưa mình vào thế khó. |
+| Trinh | `trinh` | Đồng nghiệp nữ ~28 tuổi, áo cam. Nhanh trí, thực tế, lúc giúp Kiên lúc vì lợi ích riêng. |
+| Sếp | `sep` | 45–50 tuổi, sơ mi sáng. Mê số liệu và quy trình, không mặc định là người xấu. |
+
+- Kiên và Trinh trước đây tên Nam và Linh (đổi ngày 2026-11-11). Không dùng lại tên cũ.
+- Mã giọng `vi-VN-NamMinhNeural` của Microsoft là tên giọng TTS, không liên quan tên nhân vật.
+
+### Định hướng giọng và phân vai (`config/casting.json`)
+
+Đây là mục tiêu tuyển chọn giọng, không phải tham số model hỗ trợ.
+
+| Vai | Định hướng | Giọng **đã duyệt 2026-11-11** (`config/casting.json` → `approved`) |
+|---|---|---|
+| Người kể | Nam trưởng thành, miền Nam, trầm vừa, rõ lời, kể tỉnh bơ có duyên, không đọc như quảng cáo | **Chưa chọn** |
+| Kiên | Nam ~30, miền Nam, thân thiện, hơi cả nể; ngỡ ngàng tự nhiên | `ref:806c4f55…` (tham chiếu `voice_kien_02.mp4`, đoạn 7,50–11,86 s) |
+| Trinh | Nữ ~28, miền Nam, lanh lẹ, dí dỏm; không the thé, không cố dễ thương | `ref:b07ad222…` (tham chiếu `voice_trinh.mp4`, đoạn 16,26–23,98 s) |
+| Sếp | Nam miền Nam, **trên 50 tuổi**, trầm vừa, có độ dày, chắc lời, điềm tĩnh, dứt khoát; không gằn, không giả già yếu, không hạ pitch hay kéo chậm để giả tuổi | `ref:f19ba795…` (tham chiếu `voice_sep.mp4`, đoạn 38,70–43,76 s). Nguồn ghi nhãn "nam miền Bắc"; người dùng đã nghe và vẫn duyệt |
+
+- **Giọng cố định:**
+  - Tạo âm thanh cho các vai trên luôn dùng đúng voice ID, file tham chiếu, model `vieneu@3.8.4/v3turbo-onnx-fp32` (kèm revision) và thiết lập ghi trong `approved`.
+  - Không đổi giọng giữa các cảnh.
+  - Không đổi model hay thiết lập khi chưa hỏi người dùng.
+- **Clone** chỉ chạy khi `rights.confirmed = true` trong `config/voice-refs.json`.
+
+Quy tắc phân vai:
+
+- **Ứng viên lấy theo metadata chính thức** của gói (`region = "Nam"`, đúng `gender`). Metadata không có tuổi, nên độ tuổi phải xác định bằng cách nghe.
+- **Không đoán vùng giọng từ tên.** Không gán giọng vùng khác rồi ghi là miền Nam.
+- **Khi người dùng duyệt:** ghi `approved` trong `config/casting.json` và bảng trên. Mỗi vai một voice ID cố định cho mọi cảnh; không đổi voice ID để thể hiện cảm xúc.
+- **Hai vai không dùng chung một voice ID**, trừ người kể khi người dùng đồng ý dùng chung giọng Kiên.
+
+### Giọng tham chiếu (voice cloning, `config/voice-refs.json`)
+
+- **Chỉ clone khi người dùng đã xác nhận quyền.** `rights.confirmed` phải là `true`, và chỉ người dùng mới được đặt giá trị này. Code (`tools/tts/cli/vieneu-dialogue.ts`) từ chối clone nếu chưa xác nhận.
+- **Chỉ dùng nguồn sạch** (`usable: true`): một người nói, không nhạc nền hay tiếng ù, không clip.
+  - Nếu nguồn bẩn thì báo người dùng và xin bản thu khác.
+  - Không khử nhiễu mạnh để cứu nguồn, vì làm đổi âm sắc. Dự án dùng `ref_denoise: false`.
+- **Đoạn tham chiếu:**
+  - Dài 3–8 s; VieNeu v3 Turbo tự cắt ở 8,0 s.
+  - Cắt ở chỗ nghỉ tự nhiên, không cắt ngang từ.
+  - Giữ nguyên file gốc, chỉ trích sang `cache/voice-refs/` (không đưa vào Git).
+- **Không cần transcript** với v3 Turbo; nếu sau này model yêu cầu thì chép đúng lời, không bịa.
+- **Định danh giọng clone:** voice ID dạng `ref:<sha256 của file tham chiếu>`. Cache gắn theo nội dung audio, không theo tên file.
+- **Không hứa giống 100%** giọng hay cách diễn của bản gốc.
+- **Không suy ra tuổi giọng** từ tên preset hay chỉ từ cao độ. Số đo trong `tools/tts/vieneu/voice_metrics.py` chỉ để sàng lọc trước khi nghe.
+
+## Ngôn ngữ kịch bản (tiếng Việt miền Nam, thiên Sài Gòn)
+
+- Câu ngắn, đời thường, nói lên nghe tự nhiên. Phù hợp môi trường công sở.
+- Dùng "tụi mình", "thiệt", "nè", "nha", "trời ơi" khi hợp ngữ cảnh. Không lạm dụng từ địa phương.
+- Viết đúng chính tả chuẩn; không viết sai để ép giọng (giọng do TTS và diễn đọc).
+- Nhân viên nói với sếp xưng "em", gọi "anh/chị". Sếp gọi nhân viên "em", xưng "anh".
+- Đồng nghiệp xưng hô theo mức thân thiết và giữ nhất quán trong từng cặp. Hiện tại Trinh gọi Kiên là "ông", tức thân, hơi trêu.
+- Hài đến từ tình huống, phản ứng và nhịp thoại, không đến từ chọc ghẹo vùng miền.
+- Không tự thêm tiếng cười hay nhạc nền vào giọng đọc. Thẻ cảm xúc VieNeu (`[cười]`, `[thở dài]`, `[hắng giọng]`) đang ở mức thử nghiệm, chỉ dùng ở bước tinh chỉnh.
+
 ## Quy tắc bộ hình ảnh
 
 - Nhân vật chỉ được điều khiển qua `CharacterState` (pose, expression, lookX/lookY, talking, lean, seated, laptop), đặt bằng keyframe trong dữ liệu tập. Không vẽ nhân vật mới cho từng cảnh.
@@ -83,6 +145,41 @@ out/                    video và ảnh xuất ra (không đưa vào Git)
 - Mọi chuyển động phải là hàm của frame. Cấm `Math.random`, `Date`, `performance.now`. Cần biến thiên thì dùng `hash01(seed)`.
 - Phụ đề nằm trong `SUBTITLE_ZONE` và tối đa 2 dòng (render báo lỗi nếu vượt). Cằm nhân vật phải ở trên dải phụ đề (`assertClearOfSubtitles`). Thẻ thông báo và chữ sốc đặt ở nửa trên khung hình.
 - Rig 400x800 đơn vị, chân ở y=780. Khi ngồi có laptop, mặt bàn ở `y + 690 * scale`.
+
+## TTS (tools/tts)
+
+- Mọi nhà cung cấp đều theo interface `TtsProvider` (`tools/tts/types.ts`), tách khỏi bộ dựng video.
+- **Đang dùng: VieNeu-TTS chạy cục bộ** (`tools/tts/vieneu.ts`, helper `tools/tts/vieneu/vieneu_synth.py`).
+  - Gói `vieneu==3.8.4`, môi trường riêng `tools/tts/vieneu/.venv`.
+  - Model v3 Turbo, ONNX, CPU, fp32 (CPU không có VNNI nên không dùng int8). Model tải về `cache/hf`.
+  - Không dùng VieNeu v4 hay vieneu.io (dịch vụ trả phí, mã nguồn đóng).
+  - Không dùng 0.3B GGUF (giấy phép CC BY-NC, cấm thương mại).
+  - Không có `seed`, nên mỗi lần tạo có thể khác nhau; cache giữ bản đã tạo.
+  - Không có timestamp.
+  - `style` không có tác dụng trên Turbo; không có tham số speed hay pitch.
+- **Đối chiếu:** Edge TTS (`tools/tts/edge.ts`), giữ lại, chưa xoá.
+- **Tạm hoãn:** ElevenLabs (`tools/tts/elevenlabs.ts`), trả phí.
+- Cache key gồm model, phiên bản gói, revision model, giọng, nội dung và toàn bộ thiết lập.
+- **Căn phụ đề** (VieNeu không có timestamp):
+  - Tạo mỗi câu hoặc mỗi cue phụ đề thành một file riêng, rồi đo thời lượng thật bằng ffprobe. Mốc cue là tổng các thời lượng đó, nên chính xác ở mức câu.
+  - Muốn mốc theo từng từ thì phải căn bằng ASR hoặc forced aligner.
+  - Không chia đều thời gian cho từng từ rồi gọi là đồng bộ chính xác.
+- **Kiểm tra kỹ thuật** (`tools/tts/qc.ts`, ffmpeg) chỉ là tín hiệu:
+  - Khoảng lặng bất thường.
+  - Cắt cuối câu.
+  - Clip.
+  - Tốc độ âm tiết bất thường.
+  - Không thay được việc nghe. Không kết luận "đạt giọng miền Nam" hay "diễn cảm tốt" chỉ vì file tạo thành công.
+- ElevenLabs: key lấy từ `ELEVENLABS_API_KEY` trong `.env`. Không bao giờ in key, ghi key vào log hay yêu cầu người dùng dán key vào chat.
+- Mọi lần gọi trả phí đều phải đi qua `synthesize()`:
+  - Cache trước.
+  - Kiểm tra ngân sách trước mỗi lần thử.
+  - Tối đa `maxAttempts` lần thử.
+  - Ghi sổ `cache/tts/ledger.jsonl`.
+  - Lỗi và timeout vẫn tính vào ngân sách.
+- Chỉ tạo âm thanh trong ngân sách đã thống nhất với người dùng. Chưa tạo âm thanh cho cả tập khi người dùng chưa chốt giọng.
+- Không giả định quy đổi ký tự ra giây hay ra USD. Thời lượng phải đo bằng ffprobe; credit đo bằng `/v1/user/subscription`.
+- Giọng nhóm Default của ElevenLabs ngừng ngày 31/12/2026, không dùng.
 
 ## Quy trình làm việc
 

@@ -1,0 +1,145 @@
+{
+  "$comment": "Giọng tham chiếu để clone bằng VieNeu (v3 Turbo: tối đa 8,0 s, không cần transcript). Audio nằm trong cache/voice-refs/ (không đưa vào Git). Code từ chối clone khi rights.confirmed != true hoặc usable != true. CHỈ người dùng được đặt rights.confirmed = true.",
+  "engineRequirements": {
+    "package": "vieneu==3.8.4",
+    "maxRefSeconds": 8,
+    "recommendedSeconds": "3–8",
+    "transcriptUsed": false,
+    "denoiseDefault": true,
+    "denoiseNote": "denoise=True chạy bộ khử nhiễu neural và đổi sang 44,1 kHz; dự án dùng ref_denoise=false để không đổi âm sắc"
+  },
+  "refs": {
+    "kien": {
+      "status": "tham chiếu mới, chờ xác nhận quyền rồi mới clone",
+      "replaces": "kien_v1",
+      "source": {
+        "path": "D:/Download/voice_kien_02.mp4",
+        "sha256": "7c0ad211fe2eb0dc423be8d31c027506e6047d36daa742992d73a07654423c29",
+        "description": "Video dọc 1080x1920 của kênh @vieneu (tin về một nghệ sĩ), có waveform và phụ đề. Người dùng cho biết đã lọc tạp âm. Giọng người dẫn của bên thứ ba, có thể là giọng tổng hợp",
+        "audio": "AAC 48 kHz mono, 41,0 s"
+      },
+      "extracted": {
+        "file": "cache/voice-refs/kien-02/ref_7.50-11.86.wav",
+        "sha256": "806c4f559c3a4cf0d30045b650044c008d565ae95ae7d8df94f27c5b953b5712",
+        "fromSec": 7.5,
+        "toSec": 11.86,
+        "durationSec": 4.36,
+        "format": "WAV PCM16 48 kHz mono, không xử lý thêm (không khử nhiễu, không chuẩn hoá)"
+      },
+      "quality": {
+        "singleSpeaker": "có vẻ một giọng nam (F0 trung vị nguồn 158 Hz, đoạn 136–180 Hz; đoạn trích 157 Hz); chưa có công cụ phân tách người nói",
+        "background": "sạch: khoảng nghỉ là lặng số tuyệt đối (−120 dB, 17% mẫu = 0) → dấu vết noise gate; không thấy nhạc",
+        "clipping": "không (đỉnh −3,41 dBFS, 0 mẫu > −1 dBFS)",
+        "bandwidth": "~10,5 kHz (bản cũ 12,8 kHz): có thể do bước làm sạch hoặc do nguồn",
+        "reverb": "thấp (đuôi tắt −20 dB trong ~0,08 s)"
+      },
+      "usable": true,
+      "usableReason": "Đạt về kỹ thuật. Giọng miền nào phải nghe mới biết; gate có thể làm cụt hơi thở/đuôi âm ở chỗ khác trong nguồn.",
+      "rights": {
+        "confirmed": true,
+        "confirmedAt": "2026-11-11",
+        "confirmedBy": "người dùng (trả lời trong phiên Claude Code)",
+        "statement": "Người dùng xác nhận có quyền dùng giọng trong voice_kien_02.mp4 để clone cho nhân vật này.",
+        "previousNote": "Chưa có xác nhận quyền dùng giọng trong voice_kien_02.mp4 (nội dung của kênh @vieneu)"
+      }
+    },
+    "sep": {
+      "status": "tham chiếu mới, chờ xác nhận quyền và quyết định về vùng giọng",
+      "replaces": "preset Adam / Đức Trí (ứng viên trước)",
+      "source": {
+        "path": "D:/Download/voice_sep.mp4",
+        "sha256": "59c04b27d9b3894d4d2e08971049890c3559900fe859d98eb98400e954f30b82",
+        "description": "Quay màn hình VieNeu-TTS Studio (backbone SafeTensor GPU, codec NeuCodec Standard, bản cũ). Ô 'Giọng mẫu' ghi 'Bình (nam miền Bắc)' tại 2 s, 30 s, 46 s; văn bản là đoạn giới thiệu Hà Nội. Âm thanh nhiều khả năng là preset miền Bắc do máy tạo",
+        "audio": "AAC 48 kHz stereo (thực chất mono), 48,1 s; tạo 2025-12-10 theo metadata"
+      },
+      "extracted": {
+        "file": "cache/voice-refs/sep/ref_38.70-43.76.wav",
+        "sha256": "f19ba79593237254d45e8b7bc91595b51af2ca685765eecce63ab53ad5e16230",
+        "fromSec": 38.7,
+        "toSec": 43.76,
+        "durationSec": 5.06,
+        "format": "WAV PCM16 48 kHz mono (trung bình 2 kênh), không xử lý thêm"
+      },
+      "quality": {
+        "singleSpeaker": "có vẻ một giọng nam (F0 trung vị nguồn 107 Hz; đoạn trích 105 Hz); chưa có công cụ phân tách người nói",
+        "background": "sạch: khoảng nghỉ −85 dB, không thấy nhạc",
+        "clipping": "không có đỉnh phẳng, nhưng mức rất nóng: đỉnh −0,04 dBFS, 242 mẫu > −0,5 dBFS",
+        "bandwidth": "~10,7 kHz",
+        "reverb": "thấp"
+      },
+      "accentConflict": "Nhãn trong giao diện nguồn là 'nam miền Bắc'; yêu cầu của vai Sếp là miền Nam. Clone giữ đặc trưng tham chiếu nên có thể mang giọng Bắc. Cần người dùng quyết định.",
+      "usable": true,
+      "usableReason": "Đạt về kỹ thuật; vướng xung đột vùng giọng (xem accentConflict).",
+      "rights": {
+        "confirmed": true,
+        "confirmedAt": "2026-11-11",
+        "confirmedBy": "người dùng (trả lời trong phiên Claude Code)",
+        "statement": "Người dùng xác nhận có quyền dùng giọng trong voice_sep.mp4 để clone cho nhân vật này.",
+        "previousNote": "Chưa có xác nhận quyền dùng giọng trong voice_sep.mp4 (preset của bản VieNeu cũ, giấy phép model bản đó chưa đối chiếu)"
+      },
+      "accentDecision": {
+        "decidedAt": "2026-11-11",
+        "decision": "Vẫn thử để nghe",
+        "note": "Người dùng chọn clone từ nguồn ghi nhãn nam miền Bắc để tự nghe đánh giá; kết quả phải ghi rõ điều này."
+      }
+    },
+    "trinh": {
+      "status": "giữ nguyên, chờ xác nhận quyền",
+      "source": {
+        "path": "D:/Download/voice_trinh.mp4",
+        "sha256": "9699f641ee1185eafbf4ca7b1134e7d4826c01f5a699d23c277681a6d2f31129",
+        "description": "Quay màn hình VieNeu-TTS Studio (bản 0.3B) đang chạy voice cloning; âm thanh nhiều khả năng là audio do máy tạo từ một giọng mẫu không rõ chủ sở hữu",
+        "audio": "AAC 48 kHz stereo (thực chất mono), 33,4 s; tạo lúc 2026-01-09 theo metadata"
+      },
+      "extracted": {
+        "file": "cache/voice-refs/trinh/ref_candidate_16.26-23.98.wav",
+        "sha256": "b07ad2220f15db399ce12bda426919582de6093a7c5fd29f5390b87e602a3011",
+        "fromSec": 16.26,
+        "toSec": 23.98,
+        "durationSec": 7.72,
+        "format": "WAV PCM16 48 kHz mono (trung bình 2 kênh), không xử lý thêm"
+      },
+      "quality": {
+        "singleSpeaker": "có vẻ một giọng nữ (F0 trung vị 229 Hz, các đoạn 203–257 Hz); chưa có công cụ phân tách người nói",
+        "background": "sạch: khoảng nghỉ −50 đến −240 dB, không thấy nhạc",
+        "clipping": "không (đỉnh −2,6 dBFS)",
+        "reverb": "thấp (đuôi tắt −20 dB trong ~0,07 s)"
+      },
+      "usable": true,
+      "usableReason": "Đạt về kỹ thuật. Nhiều khả năng là giọng tổng hợp (clone lại một bản clone); chất lượng miền Nam phải nghe mới biết.",
+      "rights": {
+        "confirmed": true,
+        "confirmedAt": "2026-11-11",
+        "confirmedBy": "người dùng (trả lời trong phiên Claude Code)",
+        "statement": "Người dùng xác nhận có quyền dùng giọng trong voice_trinh.mp4 để clone cho nhân vật này.",
+        "previousNote": "Chưa có xác nhận quyền; giọng gốc trong bản demo không rõ là ai"
+      }
+    },
+    "kien_v1": {
+      "status": "đã thay bằng 'kien' (voice_kien_02.mp4); giữ lại làm lịch sử, KHÔNG dùng",
+      "source": {
+        "path": "D:/Download/voice_kien.mp4",
+        "sha256": "552a96f37ce0befd9385e401bf90ef53de746e40f96a64e26302a65644a11b02",
+        "description": "Video giải thích khoa học về Edward Lorenz, có logo kênh và phụ đề; giọng người dẫn chuyện của bên thứ ba",
+        "audio": "AAC 44,1 kHz stereo (thực chất mono), 40,4 s"
+      },
+      "extracted": {
+        "file": "cache/voice-refs/kien/ref_candidate_23.94-30.64.wav",
+        "sha256": "1828489ff9946c3819eeca95497afe38aa404147343648b815c0484308f25016",
+        "fromSec": 23.94,
+        "toSec": 30.64,
+        "durationSec": 6.7,
+        "format": "WAV PCM16 44,1 kHz mono, không xử lý thêm"
+      },
+      "quality": {
+        "background": "nền liên tục −46 đến −50 dB (~100–105 Hz, có cao độ) → nhạc nền/tiếng ù, chỉ thấp hơn lời ~24 dB"
+      },
+      "usable": false,
+      "usableReason": "Nguồn không đủ sạch (nhạc nền/ù). Đã được người dùng thay bằng voice_kien_02.mp4.",
+      "rights": {
+        "confirmed": false,
+        "note": "Chưa có thông tin quyền"
+      }
+    }
+  }
+}

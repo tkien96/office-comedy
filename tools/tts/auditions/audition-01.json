@@ -1,0 +1,28 @@
+{
+  "campaign": "audition-01",
+  "budgetChars": 2000,
+  "maxAttemptsPerItem": 2,
+  "timeoutMs": 120000,
+  "modelId": "eleven_v4",
+  "languageCode": "vi",
+  "outputFormat": "mp3_44100_128",
+  "seed": 20261110,
+  "text": "Sếp bảo công ty mình là một gia đình. Nghe cũng ấm lòng. Hôm qua tôi xin nghỉ một hôm, sếp nhìn tôi hỏi: ai cho em bỏ nhà đi? [surprised] Hả? Bỏ nhà á? Tôi đứng im ba giây. Rồi tôi hiểu. Nhà này không có ngày nghỉ. Chỉ có ngày lương.",
+  "voices": [
+    { "label": "giong-1", "voiceId": "", "name": "", "note": "Chọn sau khi chạy npm run tts:voices" },
+    { "label": "giong-2", "voiceId": "", "name": "", "note": "" },
+    { "label": "giong-3", "voiceId": "", "name": "", "note": "" }
+  ],
+  "presets": [
+    {
+      "label": "on-dinh",
+      "note": "Ổn định, ấm, rõ lời",
+      "settings": { "stability": 0.6, "similarity_boost": 0.8 }
+    },
+    {
+      "label": "bieu-cam",
+      "note": "Biểu cảm hơn cho đoạn ngỡ ngàng",
+      "settings": { "stability": 0.35, "similarity_boost": 0.8 }
+    }
+  ]
+}

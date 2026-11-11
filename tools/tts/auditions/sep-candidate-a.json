@@ -1,0 +1,30 @@
+{
+  "$comment": "Ứng viên giọng Sếp (preset Adam, metadata region Nam). Câu lấy nguyên từ dialogue-01. CHƯA DUYỆT. Không khẳng định độ tuổi.",
+  "campaign": "vieneu-sep-candidate-a",
+  "voices": {
+    "sep": {
+      "preset": "Adam"
+    }
+  },
+  "settings": {
+    "temperature": 0.8,
+    "top_k": 25,
+    "top_p": 0.95,
+    "repetition_penalty": 1.2,
+    "max_chars": 256,
+    "silence_p": 0.15,
+    "crossfade_p": 0,
+    "apply_watermark": false
+  },
+  "mix": {
+    "targetLufs": -18,
+    "maxTruePeakDb": -1.5,
+    "defaultGapSec": 0.22
+  },
+  "lines": [
+    {
+      "role": "sep",
+      "text": "Tốt. Vậy em làm giùm phần của Trinh luôn đi."
+    }
+  ]
+}

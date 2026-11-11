@@ -1,0 +1,51 @@
+{
+  "$comment": "ĐÃ THAY bằng dialogue-03 / stability-03 (người dùng đổi nguồn Kiên và Sếp ngày 2026-11-11). Giữ lại làm lịch sử, không chạy. So sánh bộ giọng: Kiên và Trinh dùng giọng tham chiếu (config/voice-refs.json), Sếp dùng preset Đức Trí. Lời thoại và thứ tự lấy nguyên từ tools/tts/auditions/dialogue-01.json. CHƯA DUYỆT. Sếp ứng viên 2.",
+  "campaign": "vieneu-dialogue-02b",
+  "voices": {
+    "kien": {
+      "reference": "kien"
+    },
+    "trinh": {
+      "reference": "trinh"
+    },
+    "sep": {
+      "preset": "Đức Trí"
+    }
+  },
+  "settings": {
+    "temperature": 0.8,
+    "top_k": 25,
+    "top_p": 0.95,
+    "repetition_penalty": 1.2,
+    "max_chars": 256,
+    "silence_p": 0.15,
+    "crossfade_p": 0,
+    "apply_watermark": false,
+    "ref_denoise": false
+  },
+  "mix": {
+    "targetLufs": -18,
+    "maxTruePeakDb": -1.5,
+    "defaultGapSec": 0.22
+  },
+  "lines": [
+    {
+      "role": "kien",
+      "text": "Dạ anh, em làm xong hết rồi. Hôm nay em về đúng giờ nha?"
+    },
+    {
+      "role": "sep",
+      "text": "Tốt. Vậy em làm giùm phần của Trinh luôn đi."
+    },
+    {
+      "role": "trinh",
+      "text": "Em cảm ơn anh Kiên nha. Nhờ anh mà hôm nay em về đúng giờ."
+    },
+    {
+      "role": "kien",
+      "text": "Ủa, người làm xong là em mà?",
+      "gapBeforeSec": 0.55,
+      "gapNote": "nhịp nghỉ có chủ ý trước câu chốt"
+    }
+  ]
+}

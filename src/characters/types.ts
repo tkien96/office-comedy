@@ -11,9 +11,9 @@ export type Expression = (typeof EXPRESSIONS)[number];
 export const POSES = ["standing", "computer", "phone", "pointing"] as const;
 export type Pose = (typeof POSES)[number];
 
-export type CharacterId = "nam" | "linh" | "sep";
+export type CharacterId = "kien" | "trinh" | "sep";
 
-export type HairStyle = "namShort" | "linhLong" | "sepReceding";
+export type HairStyle = "kienShort" | "trinhLong" | "sepReceding";
 
 /** Visual identity of a character. Same rig, different design. */
 export type CharacterDesign = {

@@ -1,10 +1,10 @@
 import type { SceneScript } from "./types";
 
-// Demo (10 s): Nam gets a message, reads it, goes from happy to stunned;
-// Linh looks over and reacts. Data only — rendered by ScriptedScene.
+// Demo (10 s): Kiên gets a message, reads it, goes from happy to stunned;
+// Trinh looks over and reacts. Data only — rendered by ScriptedScene.
 
-const NAM_X = 40;
-const LINH_X = 540;
+const KIEN_X = 40;
+const TRINH_X = 540;
 const ROW_Y = 420;
 const SCALE = 1.25;
 // Desk surface lines up with the rig's laptop base: ROW_Y + 690 * SCALE.
@@ -21,8 +21,8 @@ export const demoNotification: SceneScript = {
   ],
   cast: [
     {
-      character: "nam",
-      x: NAM_X,
+      character: "kien",
+      x: KIEN_X,
       y: ROW_Y,
       scale: SCALE,
       base: { pose: "computer", seated: true, laptop: true, lookY: 0.35 },
@@ -36,8 +36,8 @@ export const demoNotification: SceneScript = {
       ],
     },
     {
-      character: "linh",
-      x: LINH_X,
+      character: "trinh",
+      x: TRINH_X,
       y: ROW_Y,
       scale: SCALE,
       base: { pose: "computer", seated: true, laptop: true, lookY: 0.35 },
@@ -87,13 +87,13 @@ export const demoNotification: SceneScript = {
     { kind: "shake", from: 140, to: 158, amplitude: 14 },
   ],
   subtitles: [
-    { from: 0, to: 44, text: "Chiều thứ Sáu. Nam chỉ còn chờ giờ về." },
-    { from: 50, to: 118, text: "Tin nhắn từ Sếp. Nam mừng ra mặt." },
+    { from: 0, to: 44, text: "Chiều thứ Sáu. Kiên chỉ còn chờ giờ về." },
+    { from: 50, to: 118, text: "Tin nhắn từ Sếp. Kiên mừng ra mặt." },
     { from: 122, to: 198, text: "…cho đến khi đọc tới dòng thứ hai." },
     {
       from: 214,
       to: 296,
-      speaker: "linh",
+      speaker: "trinh",
       text: "Chúc mừng nha! Dự án đó ba người trước đều xin nghỉ rồi.",
     },
   ],

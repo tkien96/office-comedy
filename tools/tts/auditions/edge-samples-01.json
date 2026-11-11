@@ -1,0 +1,9 @@
+{
+  "campaign": "edge-samples-01",
+  "locale": "vi-VN",
+  "budgetChars": 5000,
+  "maxAttemptsPerItem": 3,
+  "timeoutMs": 90000,
+  "text": "Sếp bảo công ty mình là một gia đình. Nghe cũng ấm lòng. Hôm qua tôi xin nghỉ một hôm, sếp nhìn tôi hỏi: ai cho em bỏ nhà đi? Hả? Bỏ nhà á? Tôi đứng im ba giây. Rồi tôi hiểu. Nhà này không có ngày nghỉ. Chỉ có ngày lương.",
+  "settings": { "rate": "+0%", "volume": "+0%", "pitch": "+0Hz", "boundary": "SentenceBoundary" }
+}

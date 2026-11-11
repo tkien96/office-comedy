@@ -18,6 +18,7 @@
   },
   "devDependencies": {
     "@remotion/eslint-config-flat": "4.0.542",
+    "@types/node": "24.19.2",
     "@types/react": "19.3.0",
     "@types/web": "0.0.166",
     "eslint": "10.12.0",
@@ -28,11 +29,20 @@
     "dev": "remotion studio",
     "build": "remotion bundle",
     "upgrade": "remotion upgrade",
-    "lint": "eslint src && tsc",
+    "lint": "eslint src && tsc && tsc -p tools",
     "render:test": "remotion render TechCheck out/tech-check.mp4 --codec=h264 --audio-codec=aac --concurrency=2",
     "probe:test": "ffprobe -v error -show_entries stream=codec_type,codec_name,width,height,r_frame_rate,nb_frames,pix_fmt -show_entries format=duration -of compact out/tech-check.mp4",
     "render:demo": "remotion render DemoNotification out/demo-notification.mp4 --concurrency=3",
-    "render:sheets": "remotion still CharacterSheet out/character-sheet.png && remotion still BackgroundSheet out/background-sheet.png"
+    "render:sheets": "remotion still CharacterSheet out/character-sheet.png && remotion still BackgroundSheet out/background-sheet.png",
+    "tts:check": "node --env-file-if-exists=.env tools/tts/cli/check.ts",
+    "tts:voices": "node --env-file-if-exists=.env tools/tts/cli/voices.ts",
+    "tts:audition": "node --env-file-if-exists=.env tools/tts/cli/audition.ts",
+    "tts:ledger": "node tools/tts/cli/ledger.ts",
+    "tts:edge:voices": "node tools/tts/cli/edge-voices.ts",
+    "tts:edge:samples": "node tools/tts/cli/edge-samples.ts",
+    "tts:vieneu:voices": "node tools/tts/cli/vieneu-voices.ts",
+    "tts:vieneu:samples": "node tools/tts/cli/vieneu-samples.ts",
+    "tts:vieneu:dialogue": "node tools/tts/cli/vieneu-dialogue.ts"
   },
   "allowScripts": {
     "esbuild": false

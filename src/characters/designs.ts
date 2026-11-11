@@ -2,14 +2,14 @@ import type { CharacterDesign, CharacterId } from "./types";
 
 // One fixed design per character, reused in every scene and every episode.
 
-export const NAM: CharacterDesign = {
-  id: "nam",
-  displayName: "Nam",
+export const KIEN: CharacterDesign = {
+  id: "kien",
+  displayName: "Kiên",
   skin: "#f6c9a0",
   skinShade: "#e3ab7d",
   hair: "#22201f",
   hairShade: "#3a3532",
-  hairStyle: "namShort",
+  hairStyle: "kienShort",
   shirt: "#3b82f6",
   shirtShade: "#2563eb",
   collar: "#dbeafe",
@@ -23,14 +23,14 @@ export const NAM: CharacterDesign = {
   hairClip: null,
 };
 
-export const LINH: CharacterDesign = {
-  id: "linh",
-  displayName: "Linh",
+export const TRINH: CharacterDesign = {
+  id: "trinh",
+  displayName: "Trinh",
   skin: "#f8d2b0",
   skinShade: "#e8b48b",
   hair: "#3b2418",
   hairShade: "#55352a",
-  hairStyle: "linhLong",
+  hairStyle: "trinhLong",
   shirt: "#f97316",
   shirtShade: "#ea580c",
   collar: "#ffedd5",
@@ -66,13 +66,13 @@ export const SEP: CharacterDesign = {
 };
 
 export const CHARACTERS: Record<CharacterId, CharacterDesign> = {
-  nam: NAM,
-  linh: LINH,
+  kien: KIEN,
+  trinh: TRINH,
   sep: SEP,
 };
 
 export const CHARACTER_BIOS: Record<CharacterId, string> = {
-  nam: "~30 tuổi · áo xanh · cả nể, muốn làm hiệu quả nhưng hay tự đưa mình vào thế khó",
-  linh: "~28 tuổi · áo cam · nhanh trí, thực tế, lúc giúp Nam lúc vì lợi ích riêng",
+  kien: "~30 tuổi · áo xanh · cả nể, muốn làm hiệu quả nhưng hay tự đưa mình vào thế khó",
+  trinh: "~28 tuổi · áo cam · nhanh trí, thực tế, lúc giúp Kiên lúc vì lợi ích riêng",
   sep: "45–50 tuổi · sơ mi sáng · mê số liệu và quy trình, không mặc định là người xấu",
 };

@@ -1,0 +1,161 @@
+{
+  "$comment": "Phân vai giọng. Đã duyệt 2026-11-11: Kiên, Trinh, Sếp dùng giọng tham chiếu (clone) theo roles.<vai>.approved. Giữ cố định voice ID cho mọi cảnh; không đổi voice ID để thể hiện cảm xúc. Người kể chưa chọn. Ứng viên preset là lịch sử.",
+  "provider": "vieneu-local",
+  "language": "vi-VN, miền Nam (Sài Gòn)",
+  "roles": {
+    "narrator": {
+      "displayName": "Người kể",
+      "direction": "Nam trưởng thành, miền Nam, trầm vừa, rõ lời, kể tỉnh bơ có duyên, không đọc như quảng cáo.",
+      "candidatesFrom": "kien",
+      "approved": null,
+      "sampleText": "Ở công ty tôi, ai làm nhanh thì được thưởng. Thưởng gì hả? Thưởng thêm việc."
+    },
+    "kien": {
+      "displayName": "Kiên",
+      "direction": "Nam khoảng 30 tuổi, miền Nam, thân thiện, hơi cả nể; phản ứng ngỡ ngàng tự nhiên.",
+      "approved": {
+        "voiceId": "ref:806c4f559c3a4cf0d30045b650044c008d565ae95ae7d8df94f27c5b953b5712",
+        "type": "reference",
+        "ref": "kien",
+        "referenceFile": "cache/voice-refs/kien-02/ref_7.50-11.86.wav",
+        "referenceSha256": "806c4f559c3a4cf0d30045b650044c008d565ae95ae7d8df94f27c5b953b5712",
+        "source": "D:/Download/voice_kien_02.mp4",
+        "sourceSha256": "7c0ad211fe2eb0dc423be8d31c027506e6047d36daa742992d73a07654423c29",
+        "model": "vieneu@3.8.4/v3turbo-onnx-fp32/pnnbao-ump/VieNeu-TTS-v3-Turbo@61b85e3d937fbbacb387714180e8182823512523/OpenMOSS-Team/MOSS-Audio-Tokenizer-Nano-ONNX@ceff0d0749bfb3fa2d61149794ec6feef0d1e1ae",
+        "settings": {
+          "temperature": 0.8,
+          "top_k": 25,
+          "top_p": 0.95,
+          "repetition_penalty": 1.2,
+          "max_chars": 256,
+          "silence_p": 0.15,
+          "crossfade_p": 0,
+          "apply_watermark": false,
+          "ref_denoise": false
+        },
+        "approvedAt": "2026-11-11",
+        "approvedBy": "người dùng",
+        "basedOn": "out/tts-vieneu/vieneu-dialogue-03 + vieneu-stability-03"
+      },
+      "candidates": [
+        {
+          "voiceId": "Adam",
+          "status": "chưa duyệt",
+          "metadata": "male · region Nam · style tu_nhien · 'Nam · Nam · Giọng đọc tự nhiên'"
+        },
+        {
+          "voiceId": "Thái Sơn",
+          "status": "chưa duyệt",
+          "metadata": "male · region Nam · style doc_truyen · 'Nam · Nam · Phong cách kể chuyện'"
+        }
+      ],
+      "sampleText": "Ủa anh, em làm xong sớm để về đúng giờ mà. Sao giờ phần của người khác cũng qua em luôn vậy?",
+      "reference": {
+        "ref": "kien",
+        "source": "voice_kien_02.mp4",
+        "status": "đã duyệt 2026-11-11"
+      },
+      "candidatesNote": "Ứng viên preset bên dưới là lịch sử (người dùng chưa hài lòng); vai này đang thử giọng tham chiếu."
+    },
+    "trinh": {
+      "displayName": "Trinh",
+      "direction": "Nữ khoảng 28 tuổi, miền Nam, lanh lẹ, dí dỏm; không the thé hoặc cố dễ thương.",
+      "approved": {
+        "voiceId": "ref:b07ad2220f15db399ce12bda426919582de6093a7c5fd29f5390b87e602a3011",
+        "type": "reference",
+        "ref": "trinh",
+        "referenceFile": "cache/voice-refs/trinh/ref_candidate_16.26-23.98.wav",
+        "referenceSha256": "b07ad2220f15db399ce12bda426919582de6093a7c5fd29f5390b87e602a3011",
+        "source": "D:/Download/voice_trinh.mp4",
+        "sourceSha256": "9699f641ee1185eafbf4ca7b1134e7d4826c01f5a699d23c277681a6d2f31129",
+        "model": "vieneu@3.8.4/v3turbo-onnx-fp32/pnnbao-ump/VieNeu-TTS-v3-Turbo@61b85e3d937fbbacb387714180e8182823512523/OpenMOSS-Team/MOSS-Audio-Tokenizer-Nano-ONNX@ceff0d0749bfb3fa2d61149794ec6feef0d1e1ae",
+        "settings": {
+          "temperature": 0.8,
+          "top_k": 25,
+          "top_p": 0.95,
+          "repetition_penalty": 1.2,
+          "max_chars": 256,
+          "silence_p": 0.15,
+          "crossfade_p": 0,
+          "apply_watermark": false,
+          "ref_denoise": false
+        },
+        "approvedAt": "2026-11-11",
+        "approvedBy": "người dùng",
+        "basedOn": "out/tts-vieneu/vieneu-dialogue-03 + vieneu-stability-03"
+      },
+      "candidates": [
+        {
+          "voiceId": "Thùy Dung",
+          "status": "chưa duyệt",
+          "metadata": "female · region Nam · style tin_tuc · 'Nữ · Nam · Phong cách tin tức'"
+        },
+        {
+          "voiceId": "Mỹ Duyên",
+          "status": "chưa duyệt",
+          "metadata": "female · region Nam · style doc_truyen · 'Nữ · Nam · Phong cách đọc truyện'"
+        }
+      ],
+      "reserve": [
+        "Thục Đoan",
+        "Kim Thanh"
+      ],
+      "sampleText": "Ông làm nhanh quá chi. Giờ nguyên phòng được về sớm, còn ông ở lại làm tiếp.",
+      "reference": {
+        "ref": "trinh",
+        "source": "voice_trinh.mp4",
+        "status": "đã duyệt 2026-11-11"
+      },
+      "candidatesNote": "Ứng viên preset bên dưới là lịch sử (người dùng chưa hài lòng); vai này đang thử giọng tham chiếu."
+    },
+    "sep": {
+      "displayName": "Sếp",
+      "direction": "Nam miền Nam, trên 50 tuổi, trầm vừa, có độ dày, chắc lời, điềm tĩnh, dứt khoát, như người quản lý lâu năm; không quá trẻ, không gằn, không giả già yếu; không tạo tuổi bằng hạ pitch hoặc kéo chậm.",
+      "approved": {
+        "voiceId": "ref:f19ba79593237254d45e8b7bc91595b51af2ca685765eecce63ab53ad5e16230",
+        "type": "reference",
+        "ref": "sep",
+        "referenceFile": "cache/voice-refs/sep/ref_38.70-43.76.wav",
+        "referenceSha256": "f19ba79593237254d45e8b7bc91595b51af2ca685765eecce63ab53ad5e16230",
+        "source": "D:/Download/voice_sep.mp4",
+        "sourceSha256": "59c04b27d9b3894d4d2e08971049890c3559900fe859d98eb98400e954f30b82",
+        "model": "vieneu@3.8.4/v3turbo-onnx-fp32/pnnbao-ump/VieNeu-TTS-v3-Turbo@61b85e3d937fbbacb387714180e8182823512523/OpenMOSS-Team/MOSS-Audio-Tokenizer-Nano-ONNX@ceff0d0749bfb3fa2d61149794ec6feef0d1e1ae",
+        "settings": {
+          "temperature": 0.8,
+          "top_k": 25,
+          "top_p": 0.95,
+          "repetition_penalty": 1.2,
+          "max_chars": 256,
+          "silence_p": 0.15,
+          "crossfade_p": 0,
+          "apply_watermark": false,
+          "ref_denoise": false
+        },
+        "approvedAt": "2026-11-11",
+        "approvedBy": "người dùng",
+        "basedOn": "out/tts-vieneu/vieneu-dialogue-03 + vieneu-stability-03",
+        "note": "Nguồn ghi nhãn \"Bình (nam miền Bắc)\"; người dùng nghe và vẫn duyệt."
+      },
+      "candidates": [
+        {
+          "voiceId": "Minh Triết",
+          "status": "chưa duyệt",
+          "metadata": "male · region Nam · style tin_tuc · 'Nam · Nam · Phong cách tin tức'"
+        },
+        {
+          "voiceId": "Đức Trí",
+          "status": "chưa duyệt",
+          "metadata": "male · region Nam · style doc_truyen · 'Nam · Nam · Phong cách đọc truyện'"
+        }
+      ],
+      "sampleText": "Anh giao vì anh tin em. Việc càng khó, anh càng thấy em là người phù hợp.",
+      "reference": {
+        "ref": "sep",
+        "source": "voice_sep.mp4",
+        "status": "đã duyệt 2026-11-11",
+        "warning": "nguồn ghi nhãn nam miền Bắc"
+      },
+      "candidatesNote": "Ứng viên preset bên dưới là lịch sử (người dùng chưa hài lòng); vai này đang thử giọng tham chiếu."
+    }
+  }
+}
