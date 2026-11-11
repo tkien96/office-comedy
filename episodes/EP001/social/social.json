@@ -1,0 +1,57 @@
+{
+  "$comment": "Nội dung social NHÁP cho EP001. Mỗi nền tảng được duyệt riêng; duyệt gắn với hash nội dung của nền tảng đó (episode.json → approvals.social.<nền tảng>). Sửa chữ sau khi duyệt → cần duyệt lại. Nhá hàng không tiết lộ câu chốt. Không ghi ngày/giờ ra mắt khi chưa có lịch xác nhận.",
+  "episode": "EP001",
+  "language": "vi",
+  "spoilerGuard": {
+    "punchlineMustNotAppear": ["bảy tiếng", "7 tiếng", "bảy buổi", "7 buổi", "giải thích nó tốn"],
+    "note": "Câu chốt: công cụ tiết kiệm 3 tiếng nhưng giải thích nó tốn 7 tiếng. Không đưa vào nhá hàng, tiêu đề hay mô tả."
+  },
+  "platforms": {
+    "youtube": {
+      "status": "draft",
+      "video": {
+        "title": "Làm công cụ tiết kiệm 3 tiếng mỗi tuần… rồi hối hận | Hài công sở",
+        "description": "Kiên viết một công cụ tự làm báo cáo, mỗi tuần đỡ được ba tiếng. Sếp nghe xong rất vui… và giao thêm một việc nhỏ.\n\nPhim hoạt hình hài công sở, lồng tiếng Việt.",
+        "hashtags": ["#haicongso", "#vanphong", "#Shorts", "#hoathinh"],
+        "madeForKids": false,
+        "privacyAtUpload": "private",
+        "thumbnail": "thumbnails/thumb-9x16.png"
+      },
+      "teaser": {
+        "supportedByApi": false,
+        "note": "YouTube Data API không có endpoint đăng bài cộng đồng/ảnh. Nếu cần nhá hàng trên YouTube thì đăng thủ công trong YouTube Studio.",
+        "text": "Tiết kiệm được ba tiếng mỗi tuần. Nghe thì sướng… cho tới khi sếp biết chuyện. 🎬 Tập mới sắp lên kênh."
+      }
+    },
+    "facebook": {
+      "status": "draft",
+      "video": {
+        "kind": "reel",
+        "description": "Kiên vừa làm xong công cụ tự động hoá báo cáo. Bấm một cái là xong. Quá hợp lý… phải không? 😅\n\n#haicongso #vanphong #congso",
+        "hashtags": ["#haicongso", "#vanphong", "#congso"],
+        "coverImage": "thumbnails/thumb-9x16.png"
+      },
+      "teaser": {
+        "kind": "photo",
+        "image": "thumbnails/teaser-1x1.png",
+        "text": "Bạn sẽ làm gì nếu tiết kiệm được ba tiếng mỗi tuần? Kiên thì… hơi hối hận. Tập mới sắp lên Page."
+      }
+    },
+    "tiktok": {
+      "status": "draft",
+      "video": {
+        "caption": "Tiết kiệm 3 tiếng mỗi tuần là sai lầm lớn nhất đời tôi 😶 #haicongso #congso #vanphong #hoathinh",
+        "hashtags": ["#haicongso", "#congso", "#vanphong", "#hoathinh"],
+        "coverTimestampMs": 1500,
+        "postingMode": "manual",
+        "note": "TikTok: API không có hẹn giờ; client chưa audit chỉ đăng riêng tư (SELF_ONLY); hướng dẫn nêu công cụ đăng cho tài khoản của chính mình là không được chấp nhận khi audit. Chuẩn bị bản xuất để đăng thủ công."
+      },
+      "teaser": {
+        "kind": "photo",
+        "image": "thumbnails/teaser-1x1.png",
+        "text": "Ba tiếng mỗi tuần. Đổi lại cái gì? 👀",
+        "postingMode": "manual"
+      }
+    }
+  }
+}

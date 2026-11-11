@@ -1,4 +1,4 @@
-// npm run episode:audio -- episodes/EP001/ep001.json [--dry-run]
+// npm run episode:audio -- EP001 [--dry-run]
 // Builds the full-episode dialogue preview on a DYNAMIC timeline:
 // 1) every line with the APPROVED voice of its role (config/casting.json),
 //    cached by content/voice/model/settings (exact match only);
@@ -16,6 +16,7 @@ import { qcAudio } from "../qc.ts";
 import { synthesize } from "../synthesize.ts";
 import type { VoiceSettings } from "../types.ts";
 import { VieneuProvider } from "../vieneu.ts";
+import { resolveEpisode } from "../../episode/paths.ts";
 
 type Beat = {
   id: string;
@@ -40,9 +41,10 @@ type Approved = { voiceId: string; referenceFile: string; referenceSha256: strin
 
 const args = process.argv.slice(2);
 const dryRun = args.includes("--dry-run");
-const file = args.find((a) => !a.startsWith("--")) ?? "episodes/EP001/ep001.json";
+const P = resolveEpisode(args.find((a) => !a.startsWith("--")) ?? "EP001");
+const file = P.script;
 const ep = JSON.parse(readFileSync(file, "utf8")) as Episode;
-const epDir = join("episodes", ep.id);
+const epDir = P.root;
 const MIX = { targetLufs: -18, maxTruePeakDb: -1.5 };
 const r3 = (x: number) => Math.round(x * 1000) / 1000;
 
@@ -70,7 +72,7 @@ const main = async () => {
   const modelId = provider.modelId();
   for (const r of roles) if (voices[r].model !== modelId) throw new Error(`Model đang chạy khác model đã duyệt cho vai ${r}.`);
 
-  const linesDir = join(epDir, "lines");
+  const linesDir = P.linesDir;
   mkdirSync(join(linesDir, "raw"), { recursive: true });
   type Gen = { beat: Beat; raw: string; cacheKey: string; fromCache: boolean; createdAt: string };
   const gens: Gen[] = [];
@@ -198,7 +200,8 @@ const main = async () => {
   // audio and video end together; never pad to reach a target length.
   const frameTail = Math.round(frameAlignedSec * SR) - samplesSoFar;
   const full = concat(frameTail > 0 ? [...parts, new Float32Array(frameTail)] : parts);
-  const preview = join(epDir, "dialogue-preview.wav");
+  const preview = P.preview;
+  mkdirSync(P.audioDir, { recursive: true });
   encodeWav(full, preview);
   rmSync(tmp, { force: true });
   const fullLoud = loudness(preview);
@@ -231,7 +234,7 @@ const main = async () => {
     breakdown: { lineClipsSec: r3(lineSec), actionSec: r3(actionSec), gapsSec: r3(contentEnd - lineSec - actionSec), frameAlignTailSec: r3(frameAlignedSec - contentEnd), gapNotes: notes },
     items,
   };
-  writeFileSync(join(epDir, "timeline.json"), JSON.stringify(timeline, null, 2) + "\n");
+  writeFileSync(P.timeline, JSON.stringify(timeline, null, 2) + "\n");
 
   // 5) Captions: one cue per line, speech start → speech end (sentence-level).
   const fmt = (t: number) => {
@@ -241,7 +244,8 @@ const main = async () => {
   };
   const cues = items.filter((i) => i.kind === "line") as { speechStartSec: number; speechEndSec: number; text: string; role: string }[];
   const srt = cues.map((c, i) => `${i + 1}\n${fmt(c.speechStartSec)} --> ${fmt(c.speechEndSec)}\n${c.text}\n`).join("\n");
-  writeFileSync(join(epDir, "captions.srt"), srt, "utf8");
+  mkdirSync(P.exportsDir, { recursive: true });
+  writeFileSync(P.captions, srt, "utf8");
 
   console.log(`\nTimeline: nội dung kết thúc ở ${r3(contentEnd)} s → ${durationInFrames} khung hình (${r3(frameAlignedSec)} s) · ${status}`);
   console.log(`  clip lời ${r3(lineSec)} s · hành động ${r3(actionSec)} s · khoảng lặng giữa câu ${r3(contentEnd - lineSec - actionSec)} s`);

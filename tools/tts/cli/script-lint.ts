@@ -1,7 +1,8 @@
-// npm run script:lint -- episodes/EP001/ep001.json
+// npm run script:lint -- EP001
 // Static checks of an episode script against the project's language rules
 // (CLAUDE.md). Offline; prints problems and a rough duration estimate.
 import { readFileSync } from "node:fs";
+import { resolveEpisode } from "../../episode/paths.ts";
 
 type Beat = { id: string; scene: string; kind: "line" | "action"; role?: string; text?: string; sec?: number; sameTurn?: boolean };
 type Ep = {
@@ -11,7 +12,7 @@ type Ep = {
   duration: { minSec: number; targetRangeSec: [number, number] };
 };
 
-const file = process.argv[2] ?? "episodes/EP001/ep001.json";
+const file = resolveEpisode(process.argv[2] ?? "EP001").script;
 const ep = JSON.parse(readFileSync(file, "utf8")) as Ep;
 const problems: string[] = [];
 const notes: string[] = [];

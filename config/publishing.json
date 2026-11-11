@@ -1,0 +1,42 @@
+{
+  "$comment": "Cấu hình đăng đa nền tảng. KHÔNG chứa token/key: chỉ ghi TÊN biến môi trường (giá trị đặt trong .env hoặc kho bí mật ngoài repo). Tài khoản đích còn null = chưa được cung cấp. Khả năng nền tảng lấy từ tài liệu chính thức đọc ngày 2026-11-11 (xem docs/publishing-platforms.md).",
+  "timezone": "Asia/Ho_Chi_Minh",
+  "utcOffset": "+07:00",
+  "missedGraceMinutes": 15,
+  "maxAttempts": 3,
+  "targets": {
+    "youtube.main": {
+      "platform": "youtube",
+      "label": "Kênh YouTube chính",
+      "channelId": null,
+      "credentialEnv": ["YOUTUBE_CLIENT_ID", "YOUTUBE_CLIENT_SECRET", "YOUTUBE_REFRESH_TOKEN"]
+    },
+    "facebook.page": {
+      "platform": "facebook",
+      "label": "Facebook Page",
+      "pageId": null,
+      "credentialEnv": ["FACEBOOK_PAGE_ACCESS_TOKEN"]
+    },
+    "tiktok.main": {
+      "platform": "tiktok",
+      "label": "Tài khoản TikTok",
+      "username": null,
+      "credentialEnv": []
+    }
+  },
+  "capabilities": {
+    "youtube": {
+      "video": { "api": true, "schedule": true, "minLeadMinutes": 1, "maxAheadDays": null, "maxDurationSec": 180, "note": "Shorts: khung dọc/vuông, ≤ 3 phút. Hẹn giờ bằng privacyStatus=private + publishAt." },
+      "teaser_text": { "api": false, "note": "Không có API bài cộng đồng." },
+      "teaser_photo": { "api": false, "note": "Không có API bài ảnh." }
+    },
+    "facebook": {
+      "video": { "api": true, "schedule": true, "minLeadMinutes": 10, "maxAheadDays": 29, "minDurationSec": 3, "maxDurationSec": 90, "note": "Reels qua /{page-id}/video_reels, video_state=SCHEDULED; 30 bài API/24 giờ." },
+      "teaser_photo": { "api": true, "schedule": true, "minLeadMinutes": 10, "maxAheadDays": null, "note": "Phạm vi hẹn giờ ảnh chưa nêu rõ trong tài liệu; bài feed 10 phút–75 ngày." }
+    },
+    "tiktok": {
+      "video": { "api": false, "schedule": false, "maxDurationSec": 600, "note": "API không có hẹn giờ; client chưa audit chỉ SELF_ONLY; công cụ đăng cho tài khoản của mình không được chấp nhận khi audit → đăng thủ công." },
+      "teaser_photo": { "api": false, "schedule": false, "note": "Như trên → đăng thủ công." }
+    }
+  }
+}

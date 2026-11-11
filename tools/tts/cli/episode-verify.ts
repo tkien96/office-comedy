@@ -1,16 +1,18 @@
-// npm run episode:verify -- episodes/EP001/ep001.json out/EP001.mp4
+// npm run episode:verify -- EP001 [video.mp4]  (mặc định: exports/EPxxx.mp4 của tập)
 // Checks a rendered episode against its timeline (CLAUDE.md rules):
 // ≥ min duration, frame count = timeline durationInFrames, 1080x1920@30,
 // h264/yuv420p + aac, audio matches the approved preview, last speech and
 // last caption fit inside the video, no black frames or long freezes.
 import { spawnSync } from "node:child_process";
 import { readFileSync } from "node:fs";
-import { join } from "node:path";
+import { resolveEpisode } from "../../episode/paths.ts";
 
-const [epFile = "episodes/EP001/ep001.json", video = "out/EP001.mp4"] = process.argv.slice(2);
+const P = resolveEpisode(process.argv[2] ?? "EP001");
+const video = process.argv[3] ?? P.video;
+const epFile = P.script;
 const ep = JSON.parse(readFileSync(epFile, "utf8")) as { id: string; duration: { minSec: number; targetRangeSec: [number, number] } };
-const dir = join("episodes", ep.id);
-const tl = JSON.parse(readFileSync(join(dir, "timeline.json"), "utf8")) as {
+
+const tl = JSON.parse(readFileSync(P.timeline, "utf8")) as {
   durationInFrames: number;
   fps: number;
   contentEndSec: number;
@@ -48,7 +50,7 @@ const lufs = (f: string) => {
   const m = s.slice(s.lastIndexOf("Summary:")).match(/I:\s+(-?[\d.]+) LUFS/);
   return m ? parseFloat(m[1]) : NaN;
 };
-const prev = join(dir, "dialogue-preview.wav");
+const prev = P.preview;
 const lv = lufs(video);
 const lp = lufs(prev);
 add("Âm thanh khớp bản đã duyệt (độ to)", Math.abs(lv - lp) <= 0.5, `video ${lv} LUFS · preview ${lp} LUFS`);

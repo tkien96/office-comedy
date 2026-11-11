@@ -1,0 +1,190 @@
+{
+  "episode": "EP001",
+  "dryRun": true,
+  "note": "Không upload, không đặt lịch, không sửa job.",
+  "checkedAt": "2026-11-11T07:38:05.433Z",
+  "readyCount": 0,
+  "total": 6,
+  "results": [
+    {
+      "job": "EP001-youtube-video",
+      "state": "draft",
+      "mode": "api",
+      "ready": false,
+      "findings": [
+        {
+          "level": "BLOCK",
+          "msg": "captions: chưa duyệt."
+        },
+        {
+          "level": "BLOCK",
+          "msg": "thumbnail: chưa có (episodes/EP001/thumbnails/thumb-9x16.png)."
+        },
+        {
+          "level": "BLOCK",
+          "msg": "Nội dung social youtube: chưa duyệt."
+        },
+        {
+          "level": "BLOCK",
+          "msg": "Tài khoản đích \"Kênh YouTube chính\" chưa có channelId."
+        },
+        {
+          "level": "BLOCK",
+          "msg": "Thiếu biến môi trường: YOUTUBE_CLIENT_ID, YOUTUBE_CLIENT_SECRET, YOUTUBE_REFRESH_TOKEN (không in giá trị)."
+        },
+        {
+          "level": "BLOCK",
+          "msg": "Chưa có lịch đăng được xác nhận."
+        }
+      ],
+      "idempotencyKey": "64b8a7ec36884c41b054c492dc2991ca",
+      "scheduleUtc": null
+    },
+    {
+      "job": "EP001-youtube-teaser_text",
+      "state": "draft",
+      "mode": "manual",
+      "ready": false,
+      "findings": [
+        {
+          "level": "INFO",
+          "msg": "Đăng THỦ CÔNG: Không có API bài cộng đồng."
+        },
+        {
+          "level": "BLOCK",
+          "msg": "Nội dung social youtube: chưa duyệt."
+        },
+        {
+          "level": "WARN",
+          "msg": "Tài khoản đích \"Kênh YouTube chính\" chưa có channelId."
+        },
+        {
+          "level": "WARN",
+          "msg": "Chưa có lịch đăng được xác nhận."
+        }
+      ],
+      "idempotencyKey": "dfd8e1519d56b5e6c055454b9cc466bd",
+      "scheduleUtc": null
+    },
+    {
+      "job": "EP001-facebook-video",
+      "state": "draft",
+      "mode": "api",
+      "ready": false,
+      "findings": [
+        {
+          "level": "BLOCK",
+          "msg": "captions: chưa duyệt."
+        },
+        {
+          "level": "BLOCK",
+          "msg": "cover: chưa có (episodes/EP001/thumbnails/thumb-9x16.png)."
+        },
+        {
+          "level": "BLOCK",
+          "msg": "Nội dung social facebook: chưa duyệt."
+        },
+        {
+          "level": "BLOCK",
+          "msg": "Tài khoản đích \"Facebook Page\" chưa có pageId."
+        },
+        {
+          "level": "BLOCK",
+          "msg": "Thiếu biến môi trường: FACEBOOK_PAGE_ACCESS_TOKEN (không in giá trị)."
+        },
+        {
+          "level": "BLOCK",
+          "msg": "Chưa có lịch đăng được xác nhận."
+        }
+      ],
+      "idempotencyKey": "05ad68187b3ecca1f9029306a8e7c371",
+      "scheduleUtc": null
+    },
+    {
+      "job": "EP001-facebook-teaser_photo",
+      "state": "draft",
+      "mode": "api",
+      "ready": false,
+      "findings": [
+        {
+          "level": "BLOCK",
+          "msg": "image: chưa có (episodes/EP001/thumbnails/teaser-1x1.png)."
+        },
+        {
+          "level": "BLOCK",
+          "msg": "Nội dung social facebook: chưa duyệt."
+        },
+        {
+          "level": "BLOCK",
+          "msg": "Tài khoản đích \"Facebook Page\" chưa có pageId."
+        },
+        {
+          "level": "BLOCK",
+          "msg": "Thiếu biến môi trường: FACEBOOK_PAGE_ACCESS_TOKEN (không in giá trị)."
+        },
+        {
+          "level": "BLOCK",
+          "msg": "Chưa có lịch đăng được xác nhận."
+        }
+      ],
+      "idempotencyKey": "59f0ac4e093c458cb08b1948979b19d5",
+      "scheduleUtc": null
+    },
+    {
+      "job": "EP001-tiktok-video",
+      "state": "draft",
+      "mode": "manual",
+      "ready": false,
+      "findings": [
+        {
+          "level": "INFO",
+          "msg": "Đăng THỦ CÔNG: API không có hẹn giờ; client chưa audit chỉ SELF_ONLY; công cụ đăng cho tài khoản của mình không được chấp nhận khi audit → đăng thủ công."
+        },
+        {
+          "level": "BLOCK",
+          "msg": "Nội dung social tiktok: chưa duyệt."
+        },
+        {
+          "level": "WARN",
+          "msg": "Tài khoản đích \"Tài khoản TikTok\" chưa có username."
+        },
+        {
+          "level": "WARN",
+          "msg": "Chưa có lịch đăng được xác nhận."
+        }
+      ],
+      "idempotencyKey": "0a1227555960c4a9b90a34aab5a733db",
+      "scheduleUtc": null
+    },
+    {
+      "job": "EP001-tiktok-teaser_photo",
+      "state": "draft",
+      "mode": "manual",
+      "ready": false,
+      "findings": [
+        {
+          "level": "INFO",
+          "msg": "Đăng THỦ CÔNG: Như trên → đăng thủ công."
+        },
+        {
+          "level": "BLOCK",
+          "msg": "image: chưa có (episodes/EP001/thumbnails/teaser-1x1.png)."
+        },
+        {
+          "level": "BLOCK",
+          "msg": "Nội dung social tiktok: chưa duyệt."
+        },
+        {
+          "level": "WARN",
+          "msg": "Tài khoản đích \"Tài khoản TikTok\" chưa có username."
+        },
+        {
+          "level": "WARN",
+          "msg": "Chưa có lịch đăng được xác nhận."
+        }
+      ],
+      "idempotencyKey": "c5c8736f2876e2bca4679aa9b43825ef",
+      "scheduleUtc": null
+    }
+  ]
+}

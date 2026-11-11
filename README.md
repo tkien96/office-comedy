@@ -115,6 +115,30 @@ Ràng buộc trong code:
 - **Cache theo nội dung:** khoá cache gồm text, model, voice, ngôn ngữ, toàn bộ thiết lập giọng, seed và định dạng. Cache nằm ở `cache/tts/` và không đưa vào Git.
 - **Ghi lại đầy đủ:** mỗi bản lưu audio, alignment theo ký tự, thời lượng thực đo bằng ffprobe, và số credit đo được từ `/v1/user/subscription`.
 
+## Quản lý tập
+
+Mỗi tập nằm trong `episodes/EPxxx/` gồm `episode.json`, `script/`, `audio/`, `assets/`, `exports/`, `thumbnails/`, `social/`, `publishing/`, `reports/`. Chi tiết trong CLAUDE.md, mục "Cấu trúc thư mục".
+
+| Lệnh | Tác dụng |
+|---|---|
+| `npm run episode:new -- "Tiêu đề"` | Cấp mã tập mới (không trùng kể cả khi chạy đồng thời), tạo khung thư mục |
+| `npm run episode:status -- EP001` | Trạng thái sản xuất và duyệt, tính lại hash để phát hiện phần cần duyệt lại |
+| `npm run script:lint -- EP001` | Rà soát kịch bản (xưng hô, vùng giọng, độ dài câu, số người nói mỗi cảnh) |
+| `npm run episode:audio -- EP001` | Tạo hoặc dựng lại âm thanh theo timeline tự nhiên (dùng cache) |
+| `npm run episode:docs -- EP001` | Xuất `script/script.md` với mốc thời gian thật |
+| `npm run episode:stage-audio -- EP001` | Chép âm thanh đã duyệt sang `public/` để render (từ chối nếu hash khác) |
+| `npm run render:ep001` | Render ra `episodes/EP001/exports/EP001.mp4` |
+| `npm run episode:verify -- EP001` | Kiểm tra video cuối (thời lượng, khung hình, codec, âm thanh, khung đen, hình đứng im) |
+
+## Đăng bài (mới có dry-run)
+
+| Lệnh | Tác dụng |
+|---|---|
+| `npm run publish:dry-run -- EP001` | Kiểm tra file, hash, duyệt, tài khoản đích, token (chỉ báo có hay không), lịch, giới hạn nền tảng, lộ câu chốt, job trùng. **Không upload.** Báo cáo ở `reports/publish-dry-run.json` |
+| `npm run publish:plan -- EP001 <jobId> "YYYY-MM-DD HH:mm"` | Đặt lịch **trong dự án** theo giờ Việt Nam (lưu kèm UTC). Không gửi gì lên nền tảng |
+
+Khả năng từng nền tảng và thông tin tài khoản còn thiếu: [docs/publishing-platforms.md](docs/publishing-platforms.md). Token đặt trong `.env`; `.env.example` chỉ có tên biến.
+
 ## Lệnh khác
 
 | Lệnh | Tác dụng |

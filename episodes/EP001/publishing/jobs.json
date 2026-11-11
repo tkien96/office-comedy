@@ -1,0 +1,263 @@
+{
+  "$comment": "Mỗi job = một bài trên một nền tảng/tài khoản. Đường dẫn media tương đối với thư mục tập. Trạng thái: draft/planned/uploading/processing/scheduled/published/failed/cancelled/missed (xem tools/publish/jobs.ts).",
+  "episode": "EP001",
+  "jobs": [
+    {
+      "id": "EP001-youtube-video",
+      "episodeId": "EP001",
+      "contentVersion": 1,
+      "platform": "youtube",
+      "target": "youtube.main",
+      "type": "video",
+      "mode": "api",
+      "media": [
+        {
+          "role": "video",
+          "path": "exports/EP001.mp4"
+        },
+        {
+          "role": "captions",
+          "path": "exports/EP001.srt"
+        },
+        {
+          "role": "thumbnail",
+          "path": "thumbnails/thumb-9x16.png"
+        }
+      ],
+      "content": {
+        "ref": "platforms.youtube.video"
+      },
+      "schedule": {
+        "local": null,
+        "timezone": "Asia/Ho_Chi_Minh",
+        "utc": null
+      },
+      "state": "draft",
+      "idempotencyKey": null,
+      "remote": {
+        "id": null,
+        "url": null,
+        "platformStatus": null,
+        "lastCheckedAt": null
+      },
+      "attempts": 0,
+      "lastError": null,
+      "history": [
+        {
+          "at": "2026-11-11T00:00:00.000Z",
+          "from": null,
+          "to": "draft",
+          "note": "Tạo job nháp; chưa có lịch xác nhận."
+        }
+      ]
+    },
+    {
+      "id": "EP001-youtube-teaser_text",
+      "episodeId": "EP001",
+      "contentVersion": 1,
+      "platform": "youtube",
+      "target": "youtube.main",
+      "type": "teaser_text",
+      "mode": "manual",
+      "media": [],
+      "content": {
+        "ref": "platforms.youtube.teaser"
+      },
+      "schedule": {
+        "local": null,
+        "timezone": "Asia/Ho_Chi_Minh",
+        "utc": null
+      },
+      "state": "draft",
+      "idempotencyKey": null,
+      "remote": {
+        "id": null,
+        "url": null,
+        "platformStatus": null,
+        "lastCheckedAt": null
+      },
+      "attempts": 0,
+      "lastError": null,
+      "history": [
+        {
+          "at": "2026-11-11T00:00:00.000Z",
+          "from": null,
+          "to": "draft",
+          "note": "Tạo job nháp; chưa có lịch xác nhận."
+        }
+      ]
+    },
+    {
+      "id": "EP001-facebook-video",
+      "episodeId": "EP001",
+      "contentVersion": 1,
+      "platform": "facebook",
+      "target": "facebook.page",
+      "type": "video",
+      "mode": "api",
+      "media": [
+        {
+          "role": "video",
+          "path": "exports/EP001.mp4"
+        },
+        {
+          "role": "captions",
+          "path": "exports/EP001.srt"
+        },
+        {
+          "role": "cover",
+          "path": "thumbnails/thumb-9x16.png"
+        }
+      ],
+      "content": {
+        "ref": "platforms.facebook.video"
+      },
+      "schedule": {
+        "local": null,
+        "timezone": "Asia/Ho_Chi_Minh",
+        "utc": null
+      },
+      "state": "draft",
+      "idempotencyKey": null,
+      "remote": {
+        "id": null,
+        "url": null,
+        "platformStatus": null,
+        "lastCheckedAt": null
+      },
+      "attempts": 0,
+      "lastError": null,
+      "history": [
+        {
+          "at": "2026-11-11T00:00:00.000Z",
+          "from": null,
+          "to": "draft",
+          "note": "Tạo job nháp; chưa có lịch xác nhận."
+        }
+      ]
+    },
+    {
+      "id": "EP001-facebook-teaser_photo",
+      "episodeId": "EP001",
+      "contentVersion": 1,
+      "platform": "facebook",
+      "target": "facebook.page",
+      "type": "teaser_photo",
+      "mode": "api",
+      "media": [
+        {
+          "role": "image",
+          "path": "thumbnails/teaser-1x1.png"
+        }
+      ],
+      "content": {
+        "ref": "platforms.facebook.teaser"
+      },
+      "schedule": {
+        "local": null,
+        "timezone": "Asia/Ho_Chi_Minh",
+        "utc": null
+      },
+      "state": "draft",
+      "idempotencyKey": null,
+      "remote": {
+        "id": null,
+        "url": null,
+        "platformStatus": null,
+        "lastCheckedAt": null
+      },
+      "attempts": 0,
+      "lastError": null,
+      "history": [
+        {
+          "at": "2026-11-11T00:00:00.000Z",
+          "from": null,
+          "to": "draft",
+          "note": "Tạo job nháp; chưa có lịch xác nhận."
+        }
+      ]
+    },
+    {
+      "id": "EP001-tiktok-video",
+      "episodeId": "EP001",
+      "contentVersion": 1,
+      "platform": "tiktok",
+      "target": "tiktok.main",
+      "type": "video",
+      "mode": "manual",
+      "media": [
+        {
+          "role": "video",
+          "path": "exports/EP001.mp4"
+        }
+      ],
+      "content": {
+        "ref": "platforms.tiktok.video"
+      },
+      "schedule": {
+        "local": null,
+        "timezone": "Asia/Ho_Chi_Minh",
+        "utc": null
+      },
+      "state": "draft",
+      "idempotencyKey": null,
+      "remote": {
+        "id": null,
+        "url": null,
+        "platformStatus": null,
+        "lastCheckedAt": null
+      },
+      "attempts": 0,
+      "lastError": null,
+      "history": [
+        {
+          "at": "2026-11-11T00:00:00.000Z",
+          "from": null,
+          "to": "draft",
+          "note": "Tạo job nháp; chưa có lịch xác nhận."
+        }
+      ]
+    },
+    {
+      "id": "EP001-tiktok-teaser_photo",
+      "episodeId": "EP001",
+      "contentVersion": 1,
+      "platform": "tiktok",
+      "target": "tiktok.main",
+      "type": "teaser_photo",
+      "mode": "manual",
+      "media": [
+        {
+          "role": "image",
+          "path": "thumbnails/teaser-1x1.png"
+        }
+      ],
+      "content": {
+        "ref": "platforms.tiktok.teaser"
+      },
+      "schedule": {
+        "local": null,
+        "timezone": "Asia/Ho_Chi_Minh",
+        "utc": null
+      },
+      "state": "draft",
+      "idempotencyKey": null,
+      "remote": {
+        "id": null,
+        "url": null,
+        "platformStatus": null,
+        "lastCheckedAt": null
+      },
+      "attempts": 0,
+      "lastError": null,
+      "history": [
+        {
+          "at": "2026-11-11T00:00:00.000Z",
+          "from": null,
+          "to": "draft",
+          "note": "Tạo job nháp; chưa có lịch xác nhận."
+        }
+      ]
+    }
+  ]
+}

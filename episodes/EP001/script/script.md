@@ -1,6 +1,6 @@
 # EP001 — Công cụ tiết kiệm thời gian
 
-**Trạng thái:** đã duyệt (kịch bản + âm thanh + video) · **Thời lượng:** 63.27 s thực tế (1899 khung hình @30 fps), trong khoảng mục tiêu 60–90 s · **Dữ liệu nguồn:** `episodes/EP001/ep001.json`
+**Trạng thái:** script đã duyệt, audio đã duyệt, video đã duyệt (xem `npm run episode:status -- EP001`) · **Thời lượng:** 63.27 s thực tế (1899 khung hình @30 fps), trong khoảng mục tiêu 60–90 s · **Dữ liệu nguồn:** `episodes/EP001/script/script.json`
 
 **Ý tưởng:** Kiên làm công cụ giúp tiết kiệm thời gian làm báo cáo. Sếp yêu cầu báo cáo về thời gian tiết kiệm được, rồi tổ chức họp để giải thích báo cáo đó.
 

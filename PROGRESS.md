@@ -4,17 +4,51 @@ Ghi lại tiến độ để tiếp tục được khi phiên làm việc bị g
 
 ## Trạng thái hiện tại
 
+- **2026-11-11: QUẢN LÝ TẬP + CHUẨN BỊ ĐĂNG ĐA NỀN TẢNG. Phần "ngay bây giờ" đã xong. Chưa upload, đăng hay đặt lịch thật.**
+  - **Đã chạy và đã kiểm tra:**
+    - Cấu trúc `episodes/EPxxx/{episode.json, script/, audio/, assets/, exports/, thumbnails/, social/, publishing/, reports/}`. Đường dẫn chỉ định nghĩa ở `tools/episode/paths.ts`.
+    - EP001 đã chuyển sang cấu trúc mới. Render lại từ cấu trúc mới **trùng từng byte** với video đã duyệt (sha256 `8e4da809…`, 1899/1899 khung giống hệt).
+    - `episode.json` với duyệt gắn hash; `episode:status` phát hiện "cần duyệt lại".
+    - `episode:new`: thử 4 tiến trình chạy đồng thời (trong thư mục tạm), cấp EP002–EP005 không trùng.
+    - `episode:stage-audio`.
+    - Dry-run trên EP001 thật: 0/6 job sẵn sàng. Lý do đúng thực tế:
+      - phụ đề chưa duyệt;
+      - thumbnail 9:16 và ảnh nhá hàng 1:1 chưa có;
+      - social chưa duyệt;
+      - tài khoản đích và token chưa có;
+      - chưa có lịch.
+    - Giả lập trên bản sao (thư mục tạm, đã xoá), các nhánh đều đúng:
+      - đặt lịch giờ VN đổi sang UTC;
+      - từ chối giờ đã qua và ngày không tồn tại;
+      - tranh khóa giữa hai tiến trình;
+      - Facebook hẹn quá 29 ngày bị chặn;
+      - job lỡ giờ chuyển missed;
+      - job trùng khóa chống trùng bị chặn;
+      - sửa tiêu đề sau khi duyệt chuyển thành "cần duyệt lại";
+      - log ghi đủ.
+  - **Mới chỉ thiết kế (chưa có code):**
+    - Bộ thực thi upload và đặt lịch thật (adapter YouTube, Facebook).
+    - Đối chiếu trạng thái trên nền tảng sau timeout.
+    - Bộ lập lịch tự chuyển job sang missed khi chạy.
+    - Tạo thumbnail 9:16 và ảnh nhá hàng 1:1.
+    - Gói xuất cho TikTok để đăng thủ công.
+  - **Đề xuất:** tích hợp YouTube trước, Facebook Page sau; TikTok đăng thủ công (xem `docs/publishing-platforms.md`).
+  - **Chờ người dùng:**
+    - Tài khoản và quyền truy cập (bảng trong `docs/publishing-platforms.md`).
+    - Duyệt social và phụ đề.
+    - Quyết định làm thumbnail và ảnh nhá hàng.
+    - Lịch đăng đã xác nhận.
 - **Quy tắc thời lượng mới (2026-11-11):** tối thiểu 60 s, mục tiêu 60–90 s, được vượt nếu diễn biến cần. Thời lượng tính từ timeline thực tế, `durationInFrames = ceil(contentEndSec × fps)`. Đã bỏ quy tắc "đúng 60 s / 1800 khung hình".
-- **EP001: VIDEO ĐÃ DUYỆT 2026-11-11** (`out/EP001.mp4`, sha256 `8e4da809…`, ghi trong `ep001.json` → `videoApproval`). Không tự đăng lên mạng xã hội.
+- **EP001: VIDEO ĐÃ DUYỆT 2026-11-11** (`episodes/EP001/exports/EP001.mp4`, bản gốc vẫn ở `out/EP001.mp4`; sha256 `8e4da809…`; duyệt ghi trong `episodes/EP001/episode.json` → `approvals.video`). Không tự đăng lên mạng xã hội.
   - Bước tiếp theo: chờ người dùng giao việc (ví dụ tập EP002).
   - 63,317 s, 1899 khung hình, 1080x1920 @30, h264 yuv420p + aac.
   - `npm run episode:verify` đạt cả 10 mục.
   - Dựng lại: `npm run render:ep001`.
-- **EP001: kịch bản và âm thanh 63,27 s (1899 khung hình) ĐÃ DUYỆT 2026-11-11.** Ghi trong `ep001.json` → `approval`, kèm cache key của từng câu đã duyệt.
+- **EP001: kịch bản và âm thanh 63,27 s (1899 khung hình) ĐÃ DUYỆT 2026-11-11.** Ghi trong `episodes/EP001/episode.json` → `approvals` (âm thanh kèm cache key của từng câu đã duyệt.
   - **Không tạo lại** các câu đã duyệt. Nếu sửa lời thì chỉ tạo lại đúng câu đó và báo người dùng.
   - Phong cách hình ảnh: bộ rig SVG 2D hiện có, chưa có quyết định thay đổi.
-  - Thư mục `episodes/EP001/`: `script.md`, `ep001.json` (nguồn), `dialogue-preview.wav`, `lines/`, `timeline.json`, `captions.srt`, `qa-report.md`.
-  - Dựng lại âm thanh từ cache: `npm run episode:audio -- episodes/EP001/ep001.json`. Xuất lại `script.md`: `npm run episode:docs -- episodes/EP001/ep001.json`. Rà soát kịch bản: `npm run script:lint -- episodes/EP001/ep001.json`.
+  - Thư mục theo cấu trúc mới (xem CLAUDE.md, mục "Cấu trúc thư mục").
+  - Dựng lại âm thanh từ cache: `npm run episode:audio -- EP001`. Xuất lại `script.md`: `npm run episode:docs -- EP001`. Rà soát kịch bản: `npm run script:lint -- EP001`.
 - **Người kể = giọng Kiên** (lời dẫn của Kiên, ngôi thứ nhất), chốt 2026-11-11, ghi trong `config/casting.json` và CLAUDE.md.
 - **Tối đa hai nhân vật có thoại trong mỗi cảnh** (thay quy tắc cũ "mỗi tập"), chốt 2026-11-11.
 - Phong cách hình ảnh đang lưu: hoạt hình 2D, rig SVG phẳng. Không có quyết định Ghibli nào.
@@ -39,6 +73,24 @@ Ghi lại tiến độ để tiếp tục được khi phiên làm việc bị g
 - **Chưa thay giọng chính thức, chưa tạo lại video.**
 
 ## Nhật ký
+
+### 2026-11-11 — Quản lý tập và chuẩn bị đăng đa nền tảng
+
+- [x] Chuyển EP001 sang cấu trúc thư mục mới:
+  - Dùng `git mv` cho các file đã theo dõi.
+  - Video đã duyệt được **sao chép** sang `exports/` (bản `out/EP001.mp4` vẫn giữ); hash trước và sau trùng nhau.
+  - Đường dẫn trong `timeline.json` và `qa-report.md` đã cập nhật.
+  - Trạng thái duyệt chuyển từ `script.json` sang `episode.json`; hash nội dung kịch bản không đổi.
+- [x] Công cụ mới:
+  - `tools/episode/{paths,manifest}.ts` và các lệnh `new`, `status`, `stage-audio`.
+  - `tools/publish/jobs.ts`: trạng thái và chuyển trạng thái hợp lệ, khóa xử lý, khóa chống trùng, log che bí mật, đổi giờ VN sang UTC, quy tắc missed.
+  - Lệnh `publish:plan` và `publish:dry-run`.
+- [x] Dữ liệu mới:
+  - `config/publishing.json`: tài khoản đích còn null, chỉ ghi tên biến môi trường; khả năng từng nền tảng.
+  - `episodes/EP001/social/social.json`: nháp, có `spoilerGuard`.
+  - `episodes/EP001/publishing/jobs.json`: 6 job ở trạng thái draft, chưa có lịch.
+  - `docs/publishing-platforms.md`.
+- [x] Kiểm tra: render lại trùng từng byte; dry-run chạy trên dữ liệu thật và trên bản giả lập; lint sạch.
 
 ### 2026-11-11 — Dựng video EP001
 

@@ -35,9 +35,13 @@ tmp
 **/.venv
 __pycache__
 
-# Episode audio (regenerable, voice clones): keep scripts/timeline/captions in Git
-episodes/*/*.wav
-episodes/*/lines/
+# Episode media (voice clones, large binaries): keep metadata/scripts/timeline/captions/social in Git
+episodes/*/audio/
+episodes/*/exports/*.mp4
+episodes/*/thumbnails/*.png
+episodes/*/thumbnails/*.jpg
+episodes/*/publishing/.lock
+episodes/*/publishing/log.jsonl
 
 # Episode audio copied for rendering (voice clones)
 public/audio/episodes/

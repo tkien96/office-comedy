@@ -1,7 +1,7 @@
 import { Composition, Still } from "remotion";
 import { VIDEO } from "./design/tokens";
-import ep001Script from "../episodes/EP001/ep001.json";
-import ep001Timeline from "../episodes/EP001/timeline.json";
+import ep001Script from "../episodes/EP001/script/script.json";
+import ep001Timeline from "../episodes/EP001/script/timeline.json";
 import { EpisodeVideo, type EpScript, type Timeline } from "./episode/EpisodeVideo";
 import { demoNotification } from "./episodes/demo-notification";
 import { ep001Staging } from "./episodes/ep001-staging";

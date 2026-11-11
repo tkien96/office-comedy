@@ -82,11 +82,11 @@ Thời lượng từng cảnh (theo nội dung, không chia đều):
 
 ## 6. File bàn giao
 
-- `episodes/EP001/script.md`: lời thoại, hành động, biểu cảm, mốc thời gian thật.
-- `episodes/EP001/dialogue-preview.wav`: bản nghe 63,3 s, không nhạc, không tiếng cười.
-- `episodes/EP001/lines/`: 26 câu đã cân âm lượng (`01_n01_narrator.wav` … `26_n05_narrator.wav`). `lines/raw/` là bản thô.
-- `episodes/EP001/timeline.json`:
+- `episodes/EP001/script/script.md`: lời thoại, hành động, biểu cảm, mốc thời gian thật.
+- `episodes/EP001/audio/dialogue-preview.wav`: bản nghe 63,3 s, không nhạc, không tiếng cười.
+- `episodes/EP001/audio/lines/`: 26 câu đã cân âm lượng (`01_n01_narrator.wav` … `26_n05_narrator.wav`). `lines/raw/` là bản thô.
+- `episodes/EP001/script/timeline.json`:
   - `contentEndSec`, `durationInFrames`, `durationStatus`.
   - Mốc từng câu và nhịp (giây, khung hình), voice ID, loudness, QC.
-- `episodes/EP001/captions.srt`: phụ đề theo câu, theo timeline mới.
-- `episodes/EP001/ep001.json`: dữ liệu nguồn của kịch bản (`duration.minSec = 60`, `targetRangeSec = [60, 90]`).
+- `episodes/EP001/exports/EP001.srt`: phụ đề theo câu, theo timeline mới.
+- `episodes/EP001/script/script.json`: dữ liệu nguồn của kịch bản (`duration.minSec = 60`, `targetRangeSec = [60, 90]`).

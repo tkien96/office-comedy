@@ -1,7 +1,7 @@
 import type { EpisodeStaging } from "../episode/types";
 
 // EP001 staging (data only). Script and timing come from the approved
-// episodes/EP001/ep001.json + timeline.json; this file only says where
+// episodes/EP001/script/script.json + script/timeline.json; this file only says where
 // characters stand and which on-screen cards support the story.
 // Layout rules: faces above the subtitle band, cards in the top half.
 

@@ -94,8 +94,18 @@ src/
   test/                 composition kiểm tra kỹ thuật
 public/audio/           giọng đọc, nhạc, SFX (sau này)
 assets/LICENSES.md      nguồn và giấy phép mọi tài nguyên
-episodes/EPxxx/         mỗi tập: script.md, <id>.json (dữ liệu kịch bản + nhịp), timeline.json,
-                        captions.srt, qa-report.md; audio (*.wav, lines/) không đưa vào Git
+episodes/EPxxx/         mỗi tập (đường dẫn định nghĩa duy nhất trong tools/episode/paths.ts):
+  episode.json          metadata, phiên bản, trạng thái sản xuất, DUYỆT gắn hash
+  script/               script.json (nguồn), script.md, timeline.json
+  audio/                dialogue-preview.wav, lines/            (không đưa vào Git)
+  assets/               tài nguyên riêng của tập (tài nguyên chung để ngoài)
+  exports/              EPxxx.mp4 (không đưa vào Git), EPxxx.srt
+  thumbnails/           thumb-9x16.png, teaser-1x1.png          (ảnh không đưa vào Git)
+  social/               social.json (nội dung từng nền tảng)
+  publishing/           jobs.json; log.jsonl, .lock              (không đưa vào Git)
+  reports/              qa-report.md, publish-dry-run.json
+config/publishing.json  tài khoản đích (chỉ TÊN biến môi trường), khả năng nền tảng
+docs/publishing-platforms.md  bảng khả năng đăng bài theo tài liệu chính thức
 out/                    video và ảnh xuất ra (không đưa vào Git)
 ```
 
@@ -190,19 +200,57 @@ Khi sửa xưng hô, sửa theo từng câu và từng quan hệ. **Không tìm�
 
 ## Dựng video tập
 
-- Composition tập (ví dụ `EP001` trong `src/Root.tsx`) nhập trực tiếp `episodes/EPxxx/<id>.json` và `timeline.json`.
+- Composition tập (ví dụ `EP001` trong `src/Root.tsx`) nhập trực tiếp `episodes/EPxxx/script/script.json` và `script/timeline.json`.
   - `durationInFrames` lấy từ timeline, không ghi cứng.
-  - Âm thanh là bản đã duyệt, chép sang `public/audio/episodes/EPxxx/dialogue.wav` (không đưa vào Git).
+  - Âm thanh là bản đã duyệt, chép sang `public/audio/episodes/EPxxx/dialogue.wav` bằng `npm run episode:stage-audio -- EPxxx` (lệnh từ chối nếu hash khác bản duyệt; thư mục không đưa vào Git).
+  - Render ra `episodes/EPxxx/exports/EPxxx.mp4` (ví dụ `npm run render:ep001`).
 - Biểu cảm và tư thế lấy từ gợi ý `expression`/`pose` của câu thoại. Nhịp hành động chỉ có mô tả chữ, nên biểu cảm của chúng ghi ở `cues` trong file dàn cảnh, bám đúng mô tả.
 - Người nói có `talking` trong khoảng lời của họ; người nghe tự nhìn về phía người nói. Lời dẫn (narrator) là giọng đọc ngoài hình: Kiên không mấp máy môi.
 - Phụ đề lấy từ timeline (khoảng lời của từng câu).
   - Cỡ chữ 58 px, tự thu tối đa xuống 48 px để giữ ≤ 2 dòng; vẫn quá thì render báo lỗi.
   - Có nhãn tên người nói; lời dẫn không có nhãn.
-- Sau khi render: `npm run episode:verify -- episodes/EPxxx/<id>.json out/EPxxx.mp4`. Kiểm tra:
+- Sau khi render: `npm run episode:verify -- EPxxx` (mặc định kiểm `exports/EPxxx.mp4`). Kiểm tra:
   - thời lượng ≥ 60 s và số khung hình = timeline;
   - codec;
   - âm thanh khớp bản duyệt;
   - không cắt cụt, không khung đen, không hình đứng im ≥ 2 s.
+
+## Quản lý tập
+
+- **Mã tập:** chỉ cấp bằng `npm run episode:new -- "Tiêu đề"`.
+  - Lệnh dùng `mkdir` không đệ quy làm khóa nguyên tử, nên chạy lại hay chạy đồng thời cũng không trùng mã.
+  - Không tự đặt tên thư mục tập bằng tay.
+- **Duyệt gắn hash** (`episode.json` → `approvals`):
+  - Mỗi phần có hash riêng: kịch bản (hash nội dung), âm thanh, video, phụ đề, thumbnail 9:16, ảnh nhá hàng 1:1, và social của từng nền tảng.
+  - Duyệt chỉ có giá trị khi hash hiện tại khớp hash lúc duyệt. Thay file hoặc chữ thì phần đó thành "cần duyệt lại".
+  - **Không đăng bằng duyệt cũ.**
+  - Chỉ người dùng mới duyệt; mình không tự đặt `approved`.
+- **Trạng thái:** `npm run episode:status -- EPxxx` tính lại toàn bộ hash. Những gì chưa tạo thì ghi "chưa có", không ghi là hoàn thành.
+- **Tài nguyên dùng chung** (rig, nền, UI, model TTS, cấu hình giọng) để ngoài thư mục tập. `episode.json` ghi hash phiên bản (`voiceConfigHash`, `sharedAssetsHash`, commit) lúc sản xuất.
+
+## Đăng bài đa nền tảng (`tools/publish`, `config/publishing.json`)
+
+- **Hiện tại chỉ có dry-run.** Chưa có code upload hay đặt lịch thật. Không đăng hoặc đặt lịch khi người dùng chưa yêu cầu rõ ràng.
+- **Job:** mỗi job là một bài trên một nền tảng và một tài khoản (`publishing/jobs.json`).
+  - Trạng thái: `draft` → `planned` (lịch chỉ có trong dự án) → `uploading`/`processing` → `scheduled` (nền tảng đã xác nhận giữ lịch) → `published` (đã kiểm tra là công khai). Ngoài ra có `failed`, `cancelled`, `missed`.
+  - HTTP thành công hay upload xong **không** có nghĩa là đã đăng công khai.
+- **Giờ:** ghi theo Asia/Ho_Chi_Minh (UTC+7, không có giờ mùa hè), lưu kèm UTC.
+  - `npm run publish:plan -- EPxxx <jobId> "YYYY-MM-DD HH:mm"` chỉ đặt lịch trong dự án.
+  - Chỉ dùng giờ người dùng đã xác nhận.
+- **Chống trùng và khôi phục:**
+  - Khóa `publishing/.lock` khi xử lý.
+  - `idempotencyKey` = hash của tập, phiên bản, nền tảng, tài khoản đích, loại bài, media và nội dung.
+  - Lưu remote ID ngay khi nhận được.
+  - Job đã có remote ID hoặc đang dở thì phải đối chiếu trạng thái trên nền tảng trước, không gửi lại.
+  - Retry tối đa `maxAttempts`, có ghi `log.jsonl` (bí mật được che).
+  - Quá giờ cộng thời gian ân hạn mà job chưa chạy thì chuyển `missed`, **không tự đăng dồn**.
+- **Kiểm tra trước khi đăng:** `npm run publish:dry-run -- EPxxx`. Chỉ báo cáo, không upload và không sửa job.
+- **Bí mật:** token chỉ đặt trong `.env` hoặc kho bí mật ngoài repo. `config/publishing.json` chỉ ghi tên biến. Không in token ra log hay chat.
+- **Nội dung social:**
+  - Nhá hàng không lộ câu chốt (`spoilerGuard` trong `social.json`).
+  - Không hứa ngày giờ khi chưa có lịch xác nhận.
+  - Loại bài nền tảng hoặc API không hỗ trợ thì đặt `mode: "manual"` và chuẩn bị bản xuất để đăng tay.
+- **Thứ tự tích hợp đề xuất:** YouTube, rồi Facebook Page. TikTok: đăng thủ công (xem `docs/publishing-platforms.md`).
 
 ## Quy tắc bộ hình ảnh
 

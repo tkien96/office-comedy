@@ -47,7 +47,12 @@
     "episode:audio": "node tools/tts/cli/episode-audio.ts",
     "episode:docs": "node tools/tts/cli/episode-docs.ts",
     "episode:verify": "node tools/tts/cli/episode-verify.ts",
-    "render:ep001": "remotion render EP001 out/EP001.mp4 --concurrency=3"
+    "render:ep001": "remotion render EP001 episodes/EP001/exports/EP001.mp4 --concurrency=3",
+    "episode:new": "node tools/episode/cli/new.ts",
+    "episode:status": "node tools/episode/cli/status.ts",
+    "episode:stage-audio": "node tools/episode/cli/stage-audio.ts",
+    "publish:dry-run": "node --env-file-if-exists=.env tools/publish/cli/dry-run.ts",
+    "publish:plan": "node tools/publish/cli/plan.ts"
   },
   "allowScripts": {
     "esbuild": false

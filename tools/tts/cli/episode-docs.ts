@@ -1,7 +1,8 @@
-// npm run episode:docs -- episodes/EP001/ep001.json
+// npm run episode:docs -- EP001
 // Writes script.md from the episode data + timeline.json (real measured times).
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { checkApproval, currentHashes, readManifest } from "../../episode/manifest.ts";
+import { resolveEpisode } from "../../episode/paths.ts";
 
 type Beat = {
   id: string;
@@ -18,17 +19,17 @@ type Ep = {
   id: string;
   title: string;
   logline: string;
-  status: string;
   duration: { minSec: number; targetRangeSec: [number, number] };
   scenes: { id: string; title: string; location: string; speakers: string[]; note?: string }[];
   beats: Beat[];
 };
 type Item = { id: string; startSec: number; endSec: number; speechStartSec?: number; speechEndSec?: number; durationSec?: number };
 
-const file = process.argv[2] ?? "episodes/EP001/ep001.json";
+const P = resolveEpisode(process.argv[2] ?? "EP001");
+const file = P.script;
 const ep = JSON.parse(readFileSync(file, "utf8")) as Ep;
-const dir = join("episodes", ep.id);
-const tlFile = join(dir, "timeline.json");
+
+const tlFile = P.timeline;
 const tl = existsSync(tlFile)
   ? (JSON.parse(readFileSync(tlFile, "utf8")) as { items: Item[]; contentEndSec: number; durationInFrames: number; durationStatus: string })
   : null;
@@ -45,7 +46,16 @@ out.push(`# ${ep.id} — ${ep.title}`, "");
 const durText = tl
   ? `${tl.contentEndSec.toFixed(2)} s thực tế (${tl.durationInFrames} khung hình @30 fps), ${tl.durationStatus}`
   : `chưa đo (tối thiểu ${ep.duration.minSec} s, mục tiêu ${ep.duration.targetRangeSec.join("–")} s)`;
-out.push(`**Trạng thái:** ${ep.status} · **Thời lượng:** ${durText} · **Dữ liệu nguồn:** \`${file.replace(/\\/g, "/")}\``, "");
+// Approval state lives in episode.json (bound to hashes), never in script.json.
+const statusText = existsSync(P.episodeJson)
+  ? (() => {
+      const m = readManifest(P);
+      const cur = currentHashes(P);
+      const s = (k: "script" | "audio" | "video") => `${k} ${checkApproval(m.approvals[k], cur[k]).status === "approved" ? "đã duyệt" : "chưa duyệt/cần duyệt lại"}`;
+      return [s("script"), s("audio"), s("video")].join(", ");
+    })()
+  : "chưa có episode.json";
+out.push(`**Trạng thái:** ${statusText} (xem \`npm run episode:status -- ${ep.id}\`) · **Thời lượng:** ${durText} · **Dữ liệu nguồn:** \`${file.replace(/\\/g, "/")}\``, "");
 out.push(`**Ý tưởng:** ${ep.logline}`, "");
 out.push("**Vai:** Kiên (miền Nam, kiêm lời dẫn ngôi thứ nhất), Trinh (miền Nam), Sếp (miền Bắc, trên 50). Xưng hô: Kiên/Trinh gọi \"sếp\", xưng \"em\"; Sếp xưng \"anh\"; Kiên–Trinh anh–em.", "");
 out.push(tl ? "Mốc thời gian lấy từ `timeline.json` (đo trên âm thanh thật)." : "Chưa có `timeline.json`: chưa có mốc thời gian.", "");
@@ -72,5 +82,5 @@ for (const s of ep.scenes) {
   }
   out.push("");
 }
-writeFileSync(join(dir, "script.md"), out.join("\n"), "utf8");
-console.log(`Đã ghi ${join(dir, "script.md")}`);
+writeFileSync(P.scriptMd, out.join("\n"), "utf8");
+console.log(`Đã ghi ${P.scriptMd}`);

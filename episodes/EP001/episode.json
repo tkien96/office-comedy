@@ -1,0 +1,130 @@
+{
+  "id": "EP001",
+  "title": "Công cụ tiết kiệm thời gian",
+  "contentVersion": 1,
+  "contentHash": "86a8344ee58bf1912a8126c27fe18f34556da286a2296cbbcef1b486f5b7d222",
+  "createdAt": "2026-11-11",
+  "duration": {
+    "contentEndSec": 63.27,
+    "videoSec": 63.317,
+    "durationInFrames": 1899,
+    "fps": 30
+  },
+  "paths": {
+    "root": "episodes/EP001",
+    "episodeJson": "episodes/EP001/episode.json",
+    "scriptDir": "episodes/EP001/script",
+    "script": "episodes/EP001/script/script.json",
+    "scriptMd": "episodes/EP001/script/script.md",
+    "timeline": "episodes/EP001/script/timeline.json",
+    "audioDir": "episodes/EP001/audio",
+    "preview": "episodes/EP001/audio/dialogue-preview.wav",
+    "linesDir": "episodes/EP001/audio/lines",
+    "assetsDir": "episodes/EP001/assets",
+    "exportsDir": "episodes/EP001/exports",
+    "video": "episodes/EP001/exports/EP001.mp4",
+    "captions": "episodes/EP001/exports/EP001.srt",
+    "thumbnailsDir": "episodes/EP001/thumbnails",
+    "thumbnail9x16": "episodes/EP001/thumbnails/thumb-9x16.png",
+    "teaser1x1": "episodes/EP001/thumbnails/teaser-1x1.png",
+    "socialDir": "episodes/EP001/social",
+    "social": "episodes/EP001/social/social.json",
+    "publishingDir": "episodes/EP001/publishing",
+    "jobs": "episodes/EP001/publishing/jobs.json",
+    "publishLog": "episodes/EP001/publishing/log.jsonl",
+    "publishLock": "episodes/EP001/publishing/.lock",
+    "reportsDir": "episodes/EP001/reports",
+    "qaReport": "episodes/EP001/reports/qa-report.md",
+    "publicAudio": "public/audio/episodes/EP001/dialogue.wav"
+  },
+  "versions": {
+    "voiceConfigHash": "79a5e10c01239a3f242835721c3564a0bef10c5ae134a821bf818bc163ef707f",
+    "sharedAssetsHash": "dbbb624b920fe35d8106e314e87e6d9fce53ae35c75de1838dfa7a7ac68b2524",
+    "gitCommit": "44e92a5",
+    "ttsModel": "vieneu@3.8.4/v3turbo-onnx-fp32/pnnbao-ump/VieNeu-TTS-v3-Turbo@61b85e3d937fbbacb387714180e8182823512523/OpenMOSS-Team/MOSS-Audio-Tokenizer-Nano-ONNX@ceff0d0749bfb3fa2d61149794ec6feef0d1e1ae",
+    "stagingFile": "src/episodes/ep001-staging.ts",
+    "stagingHash": "d38709ca28993e990dfea21078a939d6baa6a427da9d8773a4a599de7b7f9b4f"
+  },
+  "production": {
+    "script": "done",
+    "audio": "done",
+    "video": "done",
+    "captions": "done",
+    "thumbnail9x16": "chưa có",
+    "teaser1x1": "chưa có",
+    "social": "draft"
+  },
+  "checks": {
+    "verify": {
+      "at": "2026-11-11",
+      "tool": "npm run episode:verify -- EP001",
+      "result": "10/10 đạt",
+      "videoSha256": "8e4da8097b0c65788af5711943075c487d6d204ec38ba6ed1f51de898e204547"
+    },
+    "migratedLayout": {
+      "at": "2026-11-11T04:36:29.739Z",
+      "note": "Chuyển sang cấu trúc thư mục mới; hash video và âm thanh trùng bản đã duyệt."
+    }
+  },
+  "approvals": {
+    "script": {
+      "status": "approved",
+      "approvedAt": "2026-11-11",
+      "approvedBy": "người dùng",
+      "sha256": "86a8344ee58bf1912a8126c27fe18f34556da286a2296cbbcef1b486f5b7d222",
+      "note": "Hash nội dung kịch bản (không gồm trường trạng thái)."
+    },
+    "audio": {
+      "status": "approved",
+      "approvedAt": "2026-11-11",
+      "approvedBy": "người dùng",
+      "sha256": "801e4d91e9c190f746d90bcd4c6d13f4e773e8be1b7f203c749cf9afa855ad2f",
+      "lineCacheKeys": [
+        "79b50c37695e6d10a792cc89",
+        "14af7f14ae0a1130a6a5ccf5",
+        "a9034472cfba6c34bf463ce2",
+        "5f3bf6cb786373fa87c23ee2",
+        "0b3b5af0405ea5817ce238e2",
+        "3e166aa121ce104fe4567ec1",
+        "eaa315921618c2b3a6ccc3e0",
+        "164a3273551c9a6007245d4a",
+        "72550cbb668893f7863fbaaa",
+        "99c31440af7dec630105a577",
+        "4680eff9857816e9efef53e8",
+        "f51c19b196c2e47a9eabded9",
+        "578aca24ee1528cbcfd1936e",
+        "af9d6687813fd7a8e76b3166",
+        "1ff31a160511373a5cb3f831",
+        "bb6fc18583c42e60865d5a89",
+        "7155430f407c7b6a8c78b1a9",
+        "fa3e0708dbdb2f64fd66bd2c",
+        "d8870e0484eec70fa0001168",
+        "35b99be4f984289556f7c71c",
+        "0e16ead37d4959726567b12b",
+        "5e12ae424791932dab267fc5",
+        "61cdda6ce4cd2b954e28f102",
+        "2979c63aa9bbd129d4c2fb21",
+        "6eec5a3130aa4d8548f842df",
+        "bcf57c1974f8e02707e93e8f"
+      ]
+    },
+    "video": {
+      "status": "approved",
+      "approvedAt": "2026-11-11",
+      "approvedBy": "người dùng",
+      "sha256": "8e4da8097b0c65788af5711943075c487d6d204ec38ba6ed1f51de898e204547",
+      "note": "Video có phụ đề in sẵn."
+    },
+    "captions": {
+      "status": "not_approved",
+      "note": "File SRT xuất từ cùng timeline với phụ đề trong video đã duyệt, nhưng chưa được duyệt riêng như một file đăng tải."
+    },
+    "thumbnail9x16": {
+      "status": "missing"
+    },
+    "teaser1x1": {
+      "status": "missing"
+    },
+    "social": {}
+  }
+}
