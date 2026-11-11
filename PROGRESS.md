@@ -4,6 +4,26 @@ Ghi lại tiến độ để tiếp tục được khi phiên làm việc bị g
 
 ## Trạng thái hiện tại
 
+- **2026-11-11: OFFICE COMEDY STUDIO (website local) BẢN ĐẦU chạy được. Chưa commit.**
+  - Chạy: `npm run studio` hoặc `Studio.cmd` → http://127.0.0.1:5178. Chi tiết: `docs/studio.md`.
+  - **Chạy thật:**
+    - danh sách tập (tìm, lọc, báo lỗi theo từng tập);
+    - chi tiết 8 tab: xem kịch bản, video có tua, audio, phụ đề theo cue, ảnh, báo cáo;
+    - duyệt và thu hồi duyệt gắn mã phiên bản;
+    - sửa social (chống ghi đè, ghi nguyên tử);
+    - dry-run;
+    - tạo, kiểm tra và tải ZIP delivery (công việc nền);
+    - trang cấu hình an toàn.
+  - **Tách service dùng chung cho CLI và Studio:** `tools/episode/service.ts`, `delivery.ts`, `fsutil.ts`, `tools/publish/dryrun.ts`. Các lệnh cũ giữ nguyên cách dùng.
+  - **Sửa lỗi:** `episode:approve` bỏ qua mã tập khi không có `--note` (lộ ra khi chạy kiểm thử).
+  - **Kiểm thử:**
+    - 35/35 kiểm tra tự động trên bản sao;
+    - giả lập lỗi giữa lúc tạo delivery: bộ cũ giữ nguyên;
+    - junction ra ngoài thư mục bị chặn;
+    - kiểm tra an toàn bằng curl;
+    - kiểm tra giao diện trên trình duyệt tích hợp.
+    - EP001 không bị duyệt hay sửa; hash media không đổi.
+  - **Chưa có:** tạo kịch bản bằng Claude, TTS/render từ giao diện, OAuth, upload, đặt lịch, đăng thật.
 - **2026-11-11: HOÀN THIỆN BỘ SẢN PHẨM EP001 (chờ người dùng duyệt). Chưa upload, đăng hay đặt lịch thật.**
   - **Commit `5dce4dd`:** quản lý tập, metadata, duyệt gắn hash, dry-run. Phần sau commit này chưa commit.
   - **EP001 đã duyệt, giữ nguyên:**
@@ -94,6 +114,20 @@ Ghi lại tiến độ để tiếp tục được khi phiên làm việc bị g
 - **Chưa thay giọng chính thức, chưa tạo lại video.**
 
 ## Nhật ký
+
+### 2026-11-11 — Office Comedy Studio bản đầu
+
+- [x] Đọc hiện trạng: CLI, `episode.json`, social, jobs, dry-run, delivery.
+- [x] Tách nghiệp vụ khỏi CLI thành service dùng chung. CLI cũ chạy lại đúng (status, script:lint, captions --check, social, delivery --check, publish:dry-run).
+- [x] Backend `studio/server`:
+  - `node:http`, chỉ nghe 127.0.0.1;
+  - kiểm Host/Origin, chống CSRF;
+  - media có HTTP Range;
+  - ZIP stream;
+  - công việc nền lưu ở `runtime/studio/`.
+- [x] Frontend `studio/web`: React + esbuild, tiếng Việt, sidebar, thông báo, trạng thái tải/lỗi/rỗng, "Chi tiết kỹ thuật".
+- [x] `Studio.cmd`, các lệnh `npm run studio` / `studio:serve` / `studio:build`. `.gitignore` thêm `studio/dist/`, `runtime/`, `episodes/*/.lock`, `episodes/*/delivery.*/`.
+- [x] Kiểm thử trên bản sao và trình duyệt (xem `docs/studio.md`, mục "Đã kiểm tra").
 
 ### 2026-11-11 — Đẩy lên GitHub
 

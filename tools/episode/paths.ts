@@ -23,6 +23,8 @@ export const episodePaths = (id: string) => {
     id,
     root,
     episodeJson: join(root, "episode.json"),
+    /** Lock for edits to episode.json / social.json / delivery (CLI + Studio). */
+    episodeLock: join(root, ".lock"),
     scriptDir: join(root, "script"),
     script: join(root, "script", "script.json"),
     scriptMd: join(root, "script", "script.md"),

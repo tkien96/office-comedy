@@ -17,6 +17,7 @@
   },
   "exclude": [
     "remotion.config.ts",
-    "tools"
+    "tools",
+    "studio"
   ]
 }

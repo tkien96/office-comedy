@@ -110,6 +110,10 @@ config/publishing.json  tài khoản đích (chỉ TÊN biến môi trường), 
 docs/publishing-platforms.md  bảng khả năng đăng bài và ảnh bìa theo tài liệu chính thức
 docs/youtube-integration-plan.md  kế hoạch tích hợp YouTube (chưa triển khai)
 docs/local-assets.md  tài nguyên chỉ có trên máy (không đưa vào Git), hash và cách khôi phục
+docs/studio.md        website local Office Comedy Studio: kiến trúc, nguồn dữ liệu, an toàn
+studio/               Office Comedy Studio: server/ (Node, node:http), web/ (React), build.mjs → dist/ (không đưa vào Git)
+Studio.cmd            launcher Windows cho Studio
+runtime/              dữ liệu vận hành của Studio (công việc nền), không đưa vào Git
 out/                    video và ảnh xuất ra (không đưa vào Git)
 ```
 
@@ -241,6 +245,18 @@ Khi sửa xưng hô, sửa theo từng câu và từng quan hệ. **Không tìm�
 - **Bộ đăng thủ công:** `npm run episode:delivery -- EPxxx` xoá và tạo lại `delivery/` (video, SRT, 2 ảnh, youtube/facebook/tiktok.md, README, manifest.json có hash và trạng thái duyệt lúc xuất). Xuất không đổi trạng thái duyệt. Kiểm tra: `--check`.
 - **Trạng thái:** `npm run episode:status -- EPxxx` tính lại toàn bộ hash. Những gì chưa tạo thì ghi "chưa có", không ghi là hoàn thành.
 - **Tài nguyên dùng chung** (rig, nền, UI, model TTS, cấu hình giọng) để ngoài thư mục tập. `episode.json` ghi hash phiên bản (`voiceConfigHash`, `sharedAssetsHash`, commit) lúc sản xuất.
+
+## Office Comedy Studio (`studio/`, `docs/studio.md`)
+
+- Chạy: `npm run studio` hoặc `Studio.cmd` → http://127.0.0.1:5178. Chỉ nghe 127.0.0.1.
+- **Một nguồn dữ liệu:** Studio đọc/ghi đúng các file của tập (`episode.json`, `social.json`, `publishing/jobs.json`) qua service dùng chung `tools/episode/service.ts`, `delivery.ts`, `tools/publish/dryrun.ts`. CLI dùng cùng service. Không tạo nguồn trạng thái duyệt thứ hai. `runtime/studio/tasks.json` chỉ là dữ liệu vận hành.
+- Logic mới: viết vào service dùng chung trước, rồi gọi từ CLI và Studio. Không viết lại nghiệp vụ trong `studio/server`.
+- Ghi file: `writeFileAtomic` + khoá `episodes/EPxxx/.lock` (`withFileLockSync`) cho mọi sửa `episode.json`/`social.json`/delivery.
+- Duyệt từ Studio gửi kèm `viewToken` (hash sản phẩm + hash nguồn); máy chủ từ chối bản cũ. Mình không bấm duyệt thay người dùng, kể cả khi thử nghiệm (thử trên bản sao).
+- Việc nặng hoặc lâu chạy bằng công việc nền gọi lệnh CLI trong tiến trình con (`runNodeScript`, đối số cố định, không shell). Không hiển thị phần trăm giả; máy chủ dừng giữa chừng thì công việc là "Bị gián đoạn".
+- An toàn: kiểm Host/Origin + header `X-Studio` cho request thay đổi; API chỉ nhận mã tập và tên cố định; file phục vụ phải nằm trong thư mục cho phép sau khi giải symlink; không gửi bí mật xuống trình duyệt.
+- Nút cho chức năng chưa có backend: khoá và ghi lý do (`Unavailable`). Không tạo trạng thái thành công giả.
+- Giao diện build bằng esbuild (`node studio/build.mjs`); kiểm tra kiểu: `npm run lint` (gồm `tsc -p studio/server` và `tsc -p studio/web`).
 
 ## Đăng bài đa nền tảng (`tools/publish`, `config/publishing.json`)
 

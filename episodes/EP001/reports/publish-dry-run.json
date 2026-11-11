@@ -2,27 +2,29 @@
   "episode": "EP001",
   "dryRun": true,
   "note": "Không upload, không đặt lịch, không sửa job.",
-  "checkedAt": "2026-11-11T08:17:40.150Z",
+  "checkedAt": "2026-11-11T09:41:15.470Z",
   "readyCount": 0,
   "total": 6,
   "results": [
     {
       "job": "EP001-youtube-video",
+      "platform": "youtube",
+      "type": "video",
       "state": "draft",
       "mode": "api",
       "ready": false,
       "findings": [
         {
           "level": "BLOCK",
-          "msg": "captions: chưa duyệt."
+          "msg": "Phụ đề: chưa duyệt."
         },
         {
           "level": "BLOCK",
-          "msg": "thumbnail: chưa duyệt."
+          "msg": "Thumbnail 9:16: chưa duyệt."
         },
         {
           "level": "BLOCK",
-          "msg": "Nội dung social youtube.video: chưa duyệt."
+          "msg": "Social YouTube – video: chưa duyệt."
         },
         {
           "level": "BLOCK",
@@ -38,10 +40,13 @@
         }
       ],
       "idempotencyKey": "749d94a4443eaf56382447e78a7d8b8e",
-      "scheduleUtc": null
+      "scheduleUtc": null,
+      "scheduleLocal": null
     },
     {
       "job": "EP001-youtube-teaser_text",
+      "platform": "youtube",
+      "type": "teaser_text",
       "state": "draft",
       "mode": "manual",
       "ready": false,
@@ -52,7 +57,7 @@
         },
         {
           "level": "BLOCK",
-          "msg": "Nội dung social youtube.teaser: chưa duyệt."
+          "msg": "Social YouTube – bài nhá hàng: chưa duyệt."
         },
         {
           "level": "WARN",
@@ -64,25 +69,28 @@
         }
       ],
       "idempotencyKey": "9f971a752377f832f299833f809a697a",
-      "scheduleUtc": null
+      "scheduleUtc": null,
+      "scheduleLocal": null
     },
     {
       "job": "EP001-facebook-video",
+      "platform": "facebook",
+      "type": "video",
       "state": "draft",
       "mode": "api",
       "ready": false,
       "findings": [
         {
           "level": "BLOCK",
-          "msg": "captions: chưa duyệt."
+          "msg": "Phụ đề: chưa duyệt."
         },
         {
           "level": "BLOCK",
-          "msg": "cover: chưa duyệt."
+          "msg": "Ảnh bìa 9:16: chưa duyệt."
         },
         {
           "level": "BLOCK",
-          "msg": "Nội dung social facebook.video: chưa duyệt."
+          "msg": "Social Facebook – video: chưa duyệt."
         },
         {
           "level": "BLOCK",
@@ -98,21 +106,24 @@
         }
       ],
       "idempotencyKey": "6a029db245af98d10658f8a23b1822c6",
-      "scheduleUtc": null
+      "scheduleUtc": null,
+      "scheduleLocal": null
     },
     {
       "job": "EP001-facebook-teaser_photo",
+      "platform": "facebook",
+      "type": "teaser_photo",
       "state": "draft",
       "mode": "api",
       "ready": false,
       "findings": [
         {
           "level": "BLOCK",
-          "msg": "image: chưa duyệt."
+          "msg": "Ảnh nhá hàng 1:1: chưa duyệt."
         },
         {
           "level": "BLOCK",
-          "msg": "Nội dung social facebook.teaser: chưa duyệt."
+          "msg": "Social Facebook – bài nhá hàng: chưa duyệt."
         },
         {
           "level": "BLOCK",
@@ -128,10 +139,13 @@
         }
       ],
       "idempotencyKey": "36c82abd05b88ad51339ea6f6881d408",
-      "scheduleUtc": null
+      "scheduleUtc": null,
+      "scheduleLocal": null
     },
     {
       "job": "EP001-tiktok-video",
+      "platform": "tiktok",
+      "type": "video",
       "state": "draft",
       "mode": "manual",
       "ready": false,
@@ -142,7 +156,7 @@
         },
         {
           "level": "BLOCK",
-          "msg": "Nội dung social tiktok.video: chưa duyệt."
+          "msg": "Social TikTok – video: chưa duyệt."
         },
         {
           "level": "WARN",
@@ -154,10 +168,13 @@
         }
       ],
       "idempotencyKey": "1d12ca66efcf6909475bd58a0c94dd8a",
-      "scheduleUtc": null
+      "scheduleUtc": null,
+      "scheduleLocal": null
     },
     {
       "job": "EP001-tiktok-teaser_photo",
+      "platform": "tiktok",
+      "type": "teaser_photo",
       "state": "draft",
       "mode": "manual",
       "ready": false,
@@ -168,11 +185,11 @@
         },
         {
           "level": "BLOCK",
-          "msg": "image: chưa duyệt."
+          "msg": "Ảnh nhá hàng 1:1: chưa duyệt."
         },
         {
           "level": "BLOCK",
-          "msg": "Nội dung social tiktok.teaser: chưa duyệt."
+          "msg": "Social TikTok – bài nhá hàng: chưa duyệt."
         },
         {
           "level": "WARN",
@@ -184,7 +201,8 @@
         }
       ],
       "idempotencyKey": "fc97a6cba0bb27e3f62e40271be45681",
-      "scheduleUtc": null
+      "scheduleUtc": null,
+      "scheduleLocal": null
     }
   ]
 }
