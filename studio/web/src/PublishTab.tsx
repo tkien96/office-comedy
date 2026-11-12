@@ -126,6 +126,7 @@ const TASK_STATE: Record<Task["state"], { label: string; tone: string }> = {
   succeeded: { label: "Xong", tone: "ok" },
   failed: { label: "Thất bại", tone: "bad" },
   interrupted: { label: "Bị gián đoạn", tone: "bad" },
+  cancelled: { label: "Đã huỷ", tone: "none" },
 };
 
 const DeliverySection: React.FC<{ d: EpisodeDetail; reload: () => void }> = ({ d, reload }) => {

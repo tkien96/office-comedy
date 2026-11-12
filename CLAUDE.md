@@ -257,6 +257,15 @@ Khi sửa xưng hô, sửa theo từng câu và từng quan hệ. **Không tìm�
 - An toàn: kiểm Host/Origin + header `X-Studio` cho request thay đổi; API chỉ nhận mã tập và tên cố định; file phục vụ phải nằm trong thư mục cho phép sau khi giải symlink; không gửi bí mật xuống trình duyệt.
 - Nút cho chức năng chưa có backend: khoá và ghi lý do (`Unavailable`). Không tạo trạng thái thành công giả.
 - Giao diện build bằng esbuild (`node studio/build.mjs`); kiểm tra kiểu: `npm run lint` (gồm `tsc -p studio/server` và `tsc -p studio/web`).
+- **Viết kịch bản bằng Claude** (`tools/ai/`, `tools/episode/scriptdoc.ts`, `scriptstore.ts`, `studio/server/aijobs.ts`):
+  - Claude chỉ sinh hoặc sửa JSON kịch bản theo schema; không tool, không shell, không quyền sửa code. Backend cấp mã, lưu file, kiểm tra, cập nhật trạng thái.
+  - SDK chính thức `@anthropic-ai/sdk` (khoá phiên bản). Model lấy từ `config/studio.json`, chỉ được chọn trong danh sách đã khai báo. Không đoán tên model. Không tự chuyển nhà cung cấp hay cách tính phí khi lỗi.
+  - Khóa chỉ là `ANTHROPIC_API_KEY` trong `.env`. Không đưa khóa vào prompt, log, giao diện hay Git.
+  - Bản Claude sửa luôn là đề xuất; phiên bản chỉ đổi qua `commitVersion` (kiểm hash bản đang xem). Lịch sử không xoá; phục hồi tạo phiên bản mới. Không tự duyệt.
+  - Không gọi model khi chỉ mở, xem hay duyệt. Timeout hoặc lỗi mạng không tự thử lại (có thể đã tính phí); chỉ 429/529 được thử lại có giới hạn.
+  - Chi phí luôn là ước tính từ số token API trả; thiếu dữ liệu thì ghi "không xác định", không ghi 0.
+  - Mock (`tools/ai/mock.ts`) chỉ chạy khi có cả `STUDIO_TEST=1` và `STUDIO_AI_MOCK`; mọi kết quả mock mang nhãn `[MOCK]`.
+- **`config/publishing.json` → `credentialEnv` chỉ chứa TÊN biến** (dạng `ABC_DEF`). Dry-run và trang Cấu hình không in mục nào không phải tên biến. Giá trị bí mật chỉ đặt trong `.env`.
 
 ## Đăng bài đa nền tảng (`tools/publish`, `config/publishing.json`)
 

@@ -12,7 +12,10 @@ import { idempotencyKey, isMissed, localToUtc, mustReconcileBeforeSend, readJobs
 
 export type Cap = { api: boolean; schedule?: boolean; minLeadMinutes?: number; maxAheadDays?: number | null; minDurationSec?: number; maxDurationSec?: number; note?: string };
 type Target = { platform: string; label: string; credentialEnv: string[]; [k: string]: unknown };
-export type Finding = { level: "BLOCK" | "WARN" | "INFO"; msg: string };
+/** A valid environment variable NAME (upper-case, digits, underscore). Values never match. */
+export const isEnvName = (s: string) => /^[A-Z][A-Z0-9_]{1,63}$/.test(s);
+
+export type Finding ={ level: "BLOCK" | "WARN" | "INFO"; msg: string };
 export type DryRunResult = { job: string; platform: string; type: string; state: string; mode: string; ready: boolean; findings: Finding[]; idempotencyKey: string | null; scheduleUtc: string | null; scheduleLocal: string | null };
 export type DryRunReport = { episode: string; dryRun: true; note: string; checkedAt: string; readyCount: number; total: number; results: DryRunResult[] };
 
@@ -99,9 +102,15 @@ export const runDryRun = (P: EpisodePaths, now: Date = new Date()): DryRunReport
       const idField = TARGET_ID_FIELD[job.platform];
       if (!target[idField]) (job.mode === "api" ? block : warn)(`Tài khoản đích "${target.label}" chưa có ${idField}.`);
       if (job.mode === "api") {
-        const missing = target.credentialEnv.filter((n) => !process.env[n]);
+        // credentialEnv must hold variable NAMES. Anything else may be a pasted secret: never echo it.
+        const bad = target.credentialEnv.filter((n) => !isEnvName(n));
+        if (bad.length)
+          block(
+            `config/publishing.json → targets["${job.target}"].credentialEnv có ${bad.length} mục không phải tên biến môi trường (có thể là giá trị bí mật dán nhầm; không in ra). Chỉ ghi TÊN biến ở đây, đặt giá trị trong .env.`,
+          );
+        const missing = target.credentialEnv.filter(isEnvName).filter((n) => !process.env[n]);
         if (missing.length) block(`Thiếu biến môi trường: ${missing.join(", ")} (không in giá trị).`);
-        else info("Biến môi trường thông tin đăng nhập: có (không in giá trị).");
+        else if (!bad.length) info("Biến môi trường thông tin đăng nhập: có (không in giá trị).");
       }
     }
 

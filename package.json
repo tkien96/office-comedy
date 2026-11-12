@@ -9,6 +9,7 @@
   },
   "private": true,
   "dependencies": {
+    "@anthropic-ai/sdk": "1.8.0",
     "@remotion/cli": "4.0.542",
     "@remotion/google-fonts": "4.0.542",
     "@remotion/layout-utils": "4.0.542",

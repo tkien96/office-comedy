@@ -3,7 +3,8 @@ import { get, type EpisodeDetail as Detail, type PartState } from "./api";
 import { ApprovalPanel } from "./Approval";
 import { PublishTab } from "./PublishTab";
 import { SocialTab } from "./SocialTab";
-import { CaptionsTab, ImagesTab, MediaTab, ReportsTab, ScriptTab } from "./tabs";
+import { ScriptWorkspace } from "./ScriptWorkspace";
+import { CaptionsTab, ImagesTab, MediaTab, ReportsTab } from "./tabs";
 import { ErrorBox, fmtSec, Loading, StatusBadge, TechDetails, useAsync } from "./ui";
 
 const TABS: [string, string][] = [
@@ -51,7 +52,7 @@ export const EpisodeDetail: React.FC<{ id: string; tab: string }> = ({ id, tab }
       {data && data.summary.ok ? (
         <div className="tab-body">
           {current === "tong-quan" ? <Overview d={data} reload={reload} /> : null}
-          {current === "kich-ban" ? <ScriptTab d={data} part={part("script")} reload={reload} /> : null}
+          {current === "kich-ban" ? <ScriptWorkspace episode={id} part={part("script")} reloadEpisode={reload} /> : null}
           {current === "am-thanh-video" ? <MediaTab d={data} audio={part("audio")} video={part("video")} reload={reload} /> : null}
           {current === "phu-de" ? <CaptionsTab d={data} part={part("captions")} reload={reload} /> : null}
           {current === "hinh-anh" ? <ImagesTab d={data} thumb={part("thumbnail9x16")} teaser={part("teaser1x1")} reload={reload} /> : null}

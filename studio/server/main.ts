@@ -14,6 +14,7 @@ import { handleApiError, ROUTES } from "./api.ts";
 import { insideRoot, serveFile } from "./files.ts";
 import { HttpError, SECURITY_HEADERS } from "./http.ts";
 import { loadTasks } from "./tasks.ts";
+import { loadAiConfig } from "../../tools/ai/config.ts";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 process.chdir(ROOT); // tools use paths relative to the project root
@@ -28,7 +29,7 @@ if (!existsSync(join(DIST, "index.html"))) {
   console.error("Chưa có giao diện đã build (studio/dist). Chạy: npm run studio (hoặc npm run studio:build).");
   process.exit(1);
 }
-loadTasks();
+loadTasks({ aiConcurrency: loadAiConfig().maxConcurrentJobs });
 
 const server = createServer(async (req, res) => {
   try {

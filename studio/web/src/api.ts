@@ -91,7 +91,7 @@ export type Task = {
   id: string;
   type: string;
   episode: string;
-  state: "queued" | "running" | "succeeded" | "failed" | "interrupted";
+  state: "queued" | "running" | "succeeded" | "failed" | "interrupted" | "cancelled";
   createdAt: string;
   startedAt: string | null;
   finishedAt: string | null;
@@ -154,4 +154,55 @@ export type EpisodeDetail = {
   reports?: { key: string; label: string; kind: "md" | "json"; exists: boolean }[];
   delivery?: DeliveryCheck;
   tasks?: Task[];
+};
+
+// ---- AI / scripts ---------------------------------------------------------------
+
+export type AiStatus = { provider: "claude" | "mock"; configured: boolean; keyPresent: boolean; model: string; modelKnown: boolean; effort: string; problems: string[]; maxConcurrentJobs: number };
+export type CostEstimate = { kind: "estimated" | "unknown"; usd: number | null; note: string };
+export type AiCall = { purpose: string; model: string | null; usage: { inputTokens: number; outputTokens: number; cacheReadTokens: number } | null; cost: CostEstimate; at: string; outcome: string };
+export type AiTask = Task & { input?: Record<string, unknown>; retryOf?: string; errorKind?: string; mayHaveBeenProcessed?: boolean; aiCalls?: AiCall[] };
+export type Idea = { title: string; premise: string; conflict: string; punchlineDirection: string; characters: string[]; setting: string };
+
+export type ScriptBeatDoc = {
+  id: string;
+  scene: string;
+  kind: "line" | "action";
+  role?: string;
+  text?: string;
+  desc?: string;
+  sec?: number;
+  sameTurn?: boolean;
+  visual?: string;
+  expression?: Record<string, string>;
+  pose?: Record<string, string>;
+  [k: string]: unknown;
+};
+export type ScriptDocT = {
+  id: string;
+  title: string;
+  logline: string;
+  creative?: { premise?: string; punchline?: string };
+  scenes: { id: string; title: string; location: string; speakers: string[]; note?: string; [k: string]: unknown }[];
+  beats: ScriptBeatDoc[];
+  duration: { minSec: number; targetRangeSec: [number, number] };
+  [k: string]: unknown;
+};
+export type CheckResult = { errors: string[]; warnings: string[]; estimateSec: number | null };
+export type VersionMeta = { version: number; createdAt: string; source: "user" | "claude" | "restore" | "import"; note: string; baseVersion: number | null; hash: string; jobId?: string; restoredFrom?: number };
+export type ProposalMeta = { id: string; createdAt: string; jobId: string; kind: "draft" | "revise"; instruction: string; scope: string[]; baseHash: string | null; hash: string; status: "pending" | "accepted" | "discarded" | "conflict"; statusNote?: string; check: CheckResult };
+export type ScriptState = {
+  current: { hash: string; script: ScriptDocT; version: number | null; versionMeta: VersionMeta | null; check: CheckResult } | null;
+  versions: VersionMeta[];
+  proposals: ProposalMeta[];
+  request: { title: string; idea: string; characters: string[]; setting: string; notes: string; duration: { minSec: number; targetRangeSec: [number, number] }; createdAt: string; ideaSource: string } | null;
+  activeTask: AiTask | null;
+  tasks: AiTask[];
+};
+export type BeatDiff = { id: string; scene: string; status: "added" | "removed" | "changed" | "same"; fields: string[]; from: ScriptBeatDoc | null; to: ScriptBeatDoc | null };
+export type ScriptDiff = {
+  meta: { field: string; from: string; to: string }[];
+  scenes: { id: string; status: string; fields: string[] }[];
+  beats: BeatDiff[];
+  summary: { added: number; removed: number; changed: number };
 };

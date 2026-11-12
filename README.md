@@ -121,7 +121,10 @@ Giao diện tiếng Việt để xem từng tập, duyệt sản phẩm, sửa n
 
 - Mở: nhấp đúp `Studio.cmd`, hoặc chạy `npm run studio` trong PowerShell (cần Node 22.18 trở lên và `npm install` một lần trước đó).
 - Chỉ chạy máy chủ (khi đã build): `npm run studio:serve`. Đổi cổng: `$env:STUDIO_PORT=5180`.
-- Chưa có: tạo kịch bản bằng Claude, tạo TTS/render từ giao diện, kết nối tài khoản, upload, đặt lịch, đăng thật. Các nút này bị khoá và có ghi lý do.
+- **Viết kịch bản bằng Claude:** menu "Tạo tập mới" → nhập ý tưởng (hoặc nhờ Claude đề xuất 3 ý tưởng) → tạo tập → Claude viết bản nháp. Tab "Kịch bản" cho sửa tay, nhờ Claude sửa (toàn bộ hoặc theo cảnh), xem khác biệt, chấp nhận, phục hồi phiên bản, duyệt.
+  - Cần `ANTHROPIC_API_KEY` trong `.env` (khóa từ Claude Console, tính phí theo API, tách với gói Claude Code). Không có khóa thì giao diện báo "Chưa cấu hình Claude".
+  - Model và giới hạn nằm trong `config/studio.json` (mặc định `claude-opus-5-5`).
+- Chưa có: tạo TTS/render từ giao diện, kết nối tài khoản, upload, đặt lịch, đăng thật. Các nút này bị khoá và có ghi lý do.
 
 Kiến trúc, nguồn dữ liệu, an toàn và kết quả kiểm tra: [docs/studio.md](docs/studio.md).
 

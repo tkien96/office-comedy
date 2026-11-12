@@ -1,4 +1,5 @@
 import { existsSync, readFileSync } from "node:fs";
+import { isEnvName } from "../../tools/publish/dryrun.ts";
 
 // Read-only, browser-safe view of the project configuration.
 // Never sends secrets: environment variables are reported as present/absent by
@@ -51,13 +52,15 @@ export const configView = () => {
   const integrations = Object.entries(pub?.targets ?? {}).map(([key, t]) => {
     const idField = ID_FIELD[t.platform];
     const hasId = Boolean(t[idField]);
-    const envPresent = t.credentialEnv.map((n) => ({ name: n, present: Boolean(process.env[n]) }));
+    // Only real variable NAMES go to the browser; anything else may be a pasted secret.
+    const badEntries = t.credentialEnv.filter((n) => !isEnvName(n)).length;
+    const envPresent = t.credentialEnv.filter(isEnvName).map((n) => ({ name: n, present: Boolean(process.env[n]) }));
     const implemented = IMPLEMENTED[t.platform] ?? false;
     const manual = t.platform === "tiktok";
     let state: "manual" | "not_implemented" | "not_configured" | "configured_unverified" | "verified";
     if (manual) state = "manual";
     else if (!implemented) state = "not_implemented";
-    else if (!hasId || envPresent.some((e) => !e.present)) state = "not_configured";
+    else if (!hasId || badEntries || envPresent.some((e) => !e.present)) state = "not_configured";
     else state = "configured_unverified"; // "verified" only after a real connection check exists
     return {
       key,
@@ -67,7 +70,8 @@ export const configView = () => {
       idField,
       hasId,
       envPresent,
-      configComplete: hasId && envPresent.every((e) => e.present),
+      badCredentialEntries: badEntries,
+      configComplete: hasId && !badEntries && envPresent.every((e) => e.present),
       plan: PLAN[t.platform] ?? "",
       capabilities: pub?.capabilities?.[t.platform] ?? {},
     };

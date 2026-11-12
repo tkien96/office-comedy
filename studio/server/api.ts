@@ -28,7 +28,9 @@ import { runDryRun, writeDryRunReport } from "../../tools/publish/dryrun.ts";
 import { configView } from "./config.ts";
 import { insideRoot, serveFile } from "./files.ts";
 import { HttpError, readJsonBody, sendError, sendJson, SECURITY_HEADERS, str } from "./http.ts";
-import { getTask, listTasks, runNodeScript, startTask } from "./tasks.ts";
+import { ActiveTaskError, getTask, listTasks, runNodeScript, startTask } from "./tasks.ts";
+import { AiError } from "../../tools/ai/provider.ts";
+import { SCRIPT_ROUTES } from "./scriptapi.ts";
 import { writeZip } from "./zip.ts";
 
 // API routes. Every route takes an episode ID (validated against the folders
@@ -115,7 +117,7 @@ const detail = (P: EpisodePaths) => {
     lastDryRun: existsSync(dryRunFile) ? JSON.parse(readFileSync(dryRunFile, "utf8")) : null,
     reports: Object.entries(REPORTS).map(([key, r]) => ({ key, label: r.label, kind: r.kind, exists: existsSync(r.file(P)) })),
     delivery: checkDelivery(P),
-    tasks: listTasks(P.id),
+    tasks: listTasks({ episode: P.id }),
   };
 };
 
@@ -190,9 +192,16 @@ export const ROUTES: Route[] = [
     handler: (_q, res, m) => {
       const P = episode(m[1]);
       // Same code path as `npm run episode:delivery`, in a child process.
-      const { task, deduped } = startTask("delivery-build", P.id, async () => {
-        const r = await runNodeScript("tools/episode/cli/delivery.ts", [P.id]);
-        return { summary: r.stdout.trim().split("\n")[0] ?? "" };
+      const { task, deduped } = startTask({
+        type: "delivery-build",
+        episode: P.id,
+        exclusiveKey: `delivery:${P.id}`,
+        onActive: "dedupe",
+        queue: "none",
+        run: async () => {
+          const r = await runNodeScript("tools/episode/cli/delivery.ts", [P.id]);
+          return { summary: r.stdout.trim().split("\n")[0] ?? "" };
+        },
       });
       sendJson(res, 202, { task, deduped });
     },
@@ -213,7 +222,7 @@ export const ROUTES: Route[] = [
     re: /^\/api\/tasks$/,
     handler: (req, res) => {
       const ep = new URL(req.url ?? "/", "http://x").searchParams.get("episode") ?? undefined;
-      sendJson(res, 200, { tasks: listTasks(ep && /^EP\d{3,}$/.test(ep) ? ep : undefined) });
+      sendJson(res, 200, { tasks: listTasks(ep && /^EP\d{3,}$/.test(ep) ? { episode: ep } : {}) });
     },
   },
   {
@@ -226,6 +235,7 @@ export const ROUTES: Route[] = [
     },
   },
   { method: "GET", re: /^\/api\/config$/, handler: (_q, res) => sendJson(res, 200, configView()) },
+  ...SCRIPT_ROUTES,
 ];
 
 export const handleApiError = (res: ServerResponse, e: unknown) => {
@@ -237,6 +247,8 @@ export const handleApiError = (res: ServerResponse, e: unknown) => {
   if (e instanceof ConflictError) return sendError(res, 409, e.message, { conflict: true });
   if (e instanceof ValidationError) return sendError(res, 422, e.message);
   if (e instanceof LockBusyError) return sendError(res, 423, e.message);
+  if (e instanceof ActiveTaskError) return sendError(res, 409, e.message, { activeTask: e.task.id });
+  if (e instanceof AiError) return sendError(res, e.kind === "not_configured" ? 503 : 502, e.message, { aiError: e.kind });
   console.error(`[studio] lỗi: ${(e as Error).message}`);
   sendError(res, 500, `Lỗi máy chủ: ${(e as Error).message}`);
 };
