@@ -4,6 +4,14 @@ Ghi lại tiến độ để tiếp tục được khi phiên làm việc bị g
 
 ## Trạng thái hiện tại
 
+- **2026-11-12: KẾT NỐI MẠNG XÃ HỘI TRONG STUDIO, đã kiểm bằng mock. CHƯA kết nối Google/Meta thật.**
+  - Trang Cấu hình → Kết nối mạng xã hội: YouTube (OAuth Desktop app + PKCE, quyền `youtube.readonly`, xác nhận kênh), Facebook (Page ID + Page token, Lưu và kiểm tra qua Graph v27.0 `/me`), TikTok (username/URL, đăng thủ công).
+  - Bí mật: Windows DPAPI (`runtime/connections/secrets.dpapi.json`); metadata riêng (`runtime/connections/connections.json`). Service chung `tools/publish/connections.ts` cho Studio, dry-run, delivery, CLI. `.env` vẫn dùng được, không trộn nguồn.
+  - Job API gắn tài khoản đã xác minh (`account` trong jobs.json); dry-run chặn job chưa gắn/gắn tài khoản khác/kết nối đã gỡ/thiếu quyền đăng.
+  - Kiểm thử: 95/95 tự động (bản sao, nền tảng giả lập, DPAPI thật); luồng OAuth qua trình duyệt với Google giả lập; `npm run lint` sạch.
+  - Chưa commit. Bộ delivery EP001 hiện "lệch nguồn" vì `*.md` có thêm dòng tài khoản đích: chạy lại `npm run episode:delivery -- EP001` khi cần.
+  - **Chờ người dùng:** thiết lập OAuth client trên Google Cloud và tự bấm Kết nối YouTube; nhập Page token Facebook; nhập username TikTok. Hướng dẫn: `docs/social-connections.md`.
+
 - **2026-11-12: VIẾT KỊCH BẢN BẰNG CLAUDE TRÊN STUDIO, đã chạy với mock. CHƯA chạy với khóa thật.**
   - **Commit:**
     - `e3e6530`: đóng bản Studio đầu (kiểm Node, khai báo esbuild, sửa bố cục desktop).

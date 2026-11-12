@@ -124,7 +124,8 @@ Giao diện tiếng Việt để xem từng tập, duyệt sản phẩm, sửa n
 - **Viết kịch bản bằng Claude:** menu "Tạo tập mới" → nhập ý tưởng (hoặc nhờ Claude đề xuất 3 ý tưởng) → tạo tập → Claude viết bản nháp. Tab "Kịch bản" cho sửa tay, nhờ Claude sửa (toàn bộ hoặc theo cảnh), xem khác biệt, chấp nhận, phục hồi phiên bản, duyệt.
   - Cần `ANTHROPIC_API_KEY` trong `.env` (khóa từ Claude Console, tính phí theo API, tách với gói Claude Code). Không có khóa thì giao diện báo "Chưa cấu hình Claude".
   - Model và giới hạn nằm trong `config/studio.json` (mặc định `claude-opus-5-5`).
-- Chưa có: tạo TTS/render từ giao diện, kết nối tài khoản, upload, đặt lịch, đăng thật. Các nút này bị khoá và có ghi lý do.
+- **Kết nối mạng xã hội:** Cấu hình → Kết nối mạng xã hội. Kết nối YouTube bằng đăng nhập Google (chỉ quyền đọc kênh), nhập Page ID + Page token Facebook, lưu username TikTok (đăng thủ công). Bí mật mã hoá bằng Windows DPAPI trong `runtime/connections/`, không cần sửa `.env`. Hướng dẫn đầy đủ: [docs/social-connections.md](docs/social-connections.md).
+- Chưa có: tạo TTS/render từ giao diện, upload, đặt lịch, đăng thật. Các nút này bị khoá và có ghi lý do.
 
 Kiến trúc, nguồn dữ liệu, an toàn và kết quả kiểm tra: [docs/studio.md](docs/studio.md).
 
@@ -161,7 +162,7 @@ Cả hai trạng thái đều chặn đăng. Thư mục `delivery/` là bản xu
 | `npm run publish:dry-run -- EP001` | Kiểm tra file, hash, duyệt, tài khoản đích, token (chỉ báo có hay không), lịch, giới hạn nền tảng, lộ câu chốt, job trùng. **Không upload.** Báo cáo ở `reports/publish-dry-run.json` |
 | `npm run publish:plan -- EP001 <jobId> "YYYY-MM-DD HH:mm"` | Đặt lịch **trong dự án** theo giờ Việt Nam (lưu kèm UTC). Không gửi gì lên nền tảng |
 
-Khả năng từng nền tảng, ảnh bìa và thông tin tài khoản còn thiếu: [docs/publishing-platforms.md](docs/publishing-platforms.md). Kế hoạch tích hợp YouTube (chưa triển khai): [docs/youtube-integration-plan.md](docs/youtube-integration-plan.md). Token đặt trong `.env`; `.env.example` chỉ có tên biến.
+Khả năng từng nền tảng, ảnh bìa và thông tin tài khoản còn thiếu: [docs/publishing-platforms.md](docs/publishing-platforms.md). Kế hoạch tích hợp YouTube (chưa triển khai): [docs/youtube-integration-plan.md](docs/youtube-integration-plan.md). Tài khoản và token quản lý trong Studio (kho DPAPI); `.env` vẫn dùng được như trước (xem quy tắc nguồn trong [docs/social-connections.md](docs/social-connections.md)); `.env.example` chỉ có tên biến.
 
 ## Lệnh khác
 

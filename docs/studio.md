@@ -221,10 +221,14 @@ Sổ token `runtime/studio/ai-usage.jsonl` và lịch sử công việc `runtime
 - **Trên giao diện (trình duyệt, chế độ mock):** tạo tập → bản nháp v1 → yêu cầu sửa cảnh S2 → xem khác biệt → chấp nhận (v2) → duyệt.
 - **Chưa kiểm tra:** chưa chạy lượt nào với **khóa thật và Claude thật** (trên máy chưa có khóa, chưa có ngân sách thử được xác nhận). Chất lượng kịch bản Claude viết thật chưa được đánh giá.
 
+## Kết nối mạng xã hội (thêm ngày 2026-11-12)
+
+Trang Cấu hình → Kết nối mạng xã hội: OAuth YouTube (Desktop app, PKCE, `youtube.readonly`), Page token Facebook (Lưu và kiểm tra), username TikTok (thủ công). Service dùng chung `tools/publish/connections.ts` (Studio, dry-run, delivery, CLI); kho bí mật DPAPI `tools/secrets/dpapi.ts`; API `studio/server/socialapi.ts`; OAuth `studio/server/oauth.ts`. Chi tiết, nguồn cấu hình, bảo vệ và kết quả kiểm tra: [social-connections.md](social-connections.md).
+
 ## Chưa triển khai (nút liên quan bị khoá và có ghi lý do)
 
 - Tạo TTS, render video, tạo ảnh bìa từ giao diện. Hiện dùng các lệnh npm có sẵn.
-- OAuth, kết nối tài khoản, upload, đặt lịch, đăng thật.
+- Upload, đặt lịch, đăng thật. (Kết nối và xác minh tài khoản đã có từ 2026-11-12: [social-connections.md](social-connections.md).)
 - Tạo hoặc đổi trạng thái job, đặt lịch trong dự án (vẫn có `npm run publish:plan`).
 
 ## Bước tiếp theo đề xuất

@@ -15,6 +15,10 @@ import { insideRoot, serveFile } from "./files.ts";
 import { HttpError, SECURITY_HEADERS } from "./http.ts";
 import { loadTasks } from "./tasks.ts";
 import { loadAiConfig } from "../../tools/ai/config.ts";
+import { handleOAuthCallback, isOAuthCallback } from "./oauth.ts";
+import { refreshStoreHealth } from "./socialapi.ts";
+import { referencedSecrets } from "../../tools/publish/connections.ts";
+import { pruneSecrets } from "../../tools/secrets/dpapi.ts";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 process.chdir(ROOT); // tools use paths relative to the project root
@@ -30,6 +34,14 @@ if (!existsSync(join(DIST, "index.html"))) {
   process.exit(1);
 }
 loadTasks({ aiConcurrency: loadAiConfig().maxConcurrentJobs });
+// Secret entries no metadata points to (a crash between the two writes) are removed.
+try {
+  const n = pruneSecrets(referencedSecrets());
+  if (n) console.log(`Đã dọn ${n} bí mật mồ côi trong kho (không còn kết nối nào trỏ tới).`);
+} catch (e) {
+  console.error(`Không dọn được kho bí mật: ${(e as Error).message}`);
+}
+void refreshStoreHealth();
 
 const server = createServer(async (req, res) => {
   try {
@@ -52,6 +64,9 @@ const server = createServer(async (req, res) => {
       await route.handler(req, res, url.pathname.match(route.re)!);
       return;
     }
+
+    // Google OAuth redirect (loopback): protected by one-time state + cookie, not by Origin (it is a cross-site navigation).
+    if (method === "GET" && isOAuthCallback(url)) return await handleOAuthCallback(req, res, url);
 
     if (!["GET", "HEAD"].includes(method)) throw new HttpError(405, "Phương thức không được hỗ trợ.");
     // Static UI: only files inside studio/dist; everything else falls back to index.html (hash routing).

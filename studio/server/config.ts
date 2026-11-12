@@ -1,5 +1,5 @@
 import { existsSync, readFileSync } from "node:fs";
-import { isEnvName } from "../../tools/publish/dryrun.ts";
+import { connectionsView } from "../../tools/publish/connections.ts";
 
 // Read-only, browser-safe view of the project configuration.
 // Never sends secrets: environment variables are reported as present/absent by
@@ -8,11 +8,7 @@ import { isEnvName } from "../../tools/publish/dryrun.ts";
 const readJson = (p: string) => (existsSync(p) ? JSON.parse(readFileSync(p, "utf8")) : null);
 
 type Role = { displayName: string; direction: string; approved?: { voiceId: string; type: string; ref: string; model?: string; settings?: Record<string, unknown>; approvedAt?: string } };
-type Target = { platform: string; label: string; credentialEnv: string[]; [k: string]: unknown };
 
-const ID_FIELD: Record<string, string> = { youtube: "channelId", facebook: "pageId", tiktok: "username" };
-/** Platform adapters that actually exist in code. None yet: only dry-run. */
-const IMPLEMENTED: Record<string, boolean> = { youtube: false, facebook: false, tiktok: false };
 const PLAN: Record<string, string> = {
   youtube: "Có kế hoạch: docs/youtube-integration-plan.md (OAuth trên máy, upload resumable, đối chiếu sau timeout).",
   facebook: "Tích hợp sau YouTube (Reels hẹn giờ qua Graph API).",
@@ -27,7 +23,6 @@ export const configView = () => {
     utcOffset: string;
     missedGraceMinutes: number;
     maxAttempts: number;
-    targets: Record<string, Target>;
     capabilities: Record<string, Record<string, { api: boolean; schedule?: boolean; note?: string }>>;
   } | null;
 
@@ -49,33 +44,18 @@ export const configView = () => {
       : null,
   }));
 
-  const integrations = Object.entries(pub?.targets ?? {}).map(([key, t]) => {
-    const idField = ID_FIELD[t.platform];
-    const hasId = Boolean(t[idField]);
-    // Only real variable NAMES go to the browser; anything else may be a pasted secret.
-    const badEntries = t.credentialEnv.filter((n) => !isEnvName(n)).length;
-    const envPresent = t.credentialEnv.filter(isEnvName).map((n) => ({ name: n, present: Boolean(process.env[n]) }));
-    const implemented = IMPLEMENTED[t.platform] ?? false;
-    const manual = t.platform === "tiktok";
-    let state: "manual" | "not_implemented" | "not_configured" | "configured_unverified" | "verified";
-    if (manual) state = "manual";
-    else if (!implemented) state = "not_implemented";
-    else if (!hasId || badEntries || envPresent.some((e) => !e.present)) state = "not_configured";
-    else state = "configured_unverified"; // "verified" only after a real connection check exists
-    return {
-      key,
-      platform: t.platform,
-      label: t.label,
-      state,
-      idField,
-      hasId,
-      envPresent,
-      badCredentialEntries: badEntries,
-      configComplete: hasId && !badEntries && envPresent.every((e) => e.present),
-      plan: PLAN[t.platform] ?? "",
-      capabilities: pub?.capabilities?.[t.platform] ?? {},
-    };
-  });
+  // Status comes from the shared connections service (same as dry-run and CLI). No network call here.
+  const integrations = connectionsView().targets.map((t) => ({
+    key: t.key,
+    platform: t.platform,
+    label: t.label,
+    source: t.source,
+    status: t.status,
+    identity: t.identity,
+    lastCheckedAt: t.lastCheck?.at ?? null,
+    plan: PLAN[t.platform] ?? "",
+    capabilities: pub?.capabilities?.[t.platform] ?? {},
+  }));
 
   return {
     production: {
@@ -98,9 +78,7 @@ export const configView = () => {
     publishing: pub ? { timezone: pub.timezone, utcOffset: pub.utcOffset, missedGraceMinutes: pub.missedGraceMinutes, maxAttempts: pub.maxAttempts } : null,
     integrations,
     notImplemented: [
-      "Tạo ý tưởng và kịch bản bằng Claude",
       "Tạo giọng (TTS) và render video từ giao diện (dùng lệnh npm hiện có)",
-      "Đăng nhập OAuth với nền tảng",
       "Upload, đặt lịch và đăng thật",
     ],
   };

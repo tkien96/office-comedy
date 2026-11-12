@@ -17,6 +17,8 @@ import { checkApproval, currentHashes, currentSources, gitCommit, hashFile, hash
 import { rel, type EpisodePaths } from "./paths.ts";
 import { ValidationError } from "./service.ts";
 import { platformMd } from "./social.ts";
+import { targetAccountInfo } from "../publish/connections.ts";
+import { readJobs } from "../publish/jobs.ts";
 
 export type Entry = {
   file: string;
@@ -67,6 +69,21 @@ export const planDelivery = (P: EpisodePaths) => {
   const approvalOf = (part: string, hash: string | null) => {
     const a = part.startsWith("social.") ? m.approvals.social[part.slice(7)] : (m.approvals as unknown as Record<string, Parameters<typeof checkApproval>[0]>)[part];
     return checkApproval(a, hash, src);
+  };
+
+  // Target account (non-secret metadata from the shared connections service).
+  const jobTargets = readJobs(P).jobs;
+  const accountLine = (platform: string) => {
+    const key = jobTargets.find((j) => j.platform === platform)?.target;
+    const a = key ? targetAccountInfo(key) : null;
+    if (!a) return "Tài khoản đích: chưa có job cho nền tảng này.";
+    if (platform === "tiktok")
+      return a.tiktok
+        ? `Tài khoản đích: **@${a.tiktok.username}** (${a.tiktok.profileUrl}). Lưu trong Studio để đăng thủ công; **chưa xác minh bằng API**. Đăng nhập đúng tài khoản này trong app TikTok trước khi đăng.`
+        : "Tài khoản đích: **chưa lưu** (Studio → Cấu hình → Kết nối mạng xã hội → TikTok).";
+    if (a.identity && a.status === "verified") return `Tài khoản đích (${a.label}): **${a.identity.name}** (ID \`${a.identity.id}\`), đã xác minh qua API (chỉ danh tính, không phải quyền đăng).`;
+    if (a.identity) return `Tài khoản đích (${a.label}): ${a.identity.name} (ID \`${a.identity.id}\`), kết nối hiện **chưa xác minh lại**.`;
+    return `Tài khoản đích (${a.label}): **chưa xác minh**. Khi đăng tay, kiểm tra đúng kênh/Page trước khi bấm đăng.`;
   };
 
   // Per-platform guides (text generated from social.json + fixed posting notes).
@@ -121,6 +138,8 @@ export const planDelivery = (P: EpisodePaths) => {
   Tạo tự động bằng \`npm run episode:delivery -- ${P.id}\` từ \`social/social.json\`. Không sửa file này.
 
   Trạng thái duyệt lúc xuất: ${states.map((s) => `\`${s.key}\` **${STATUS_VI[s.r.status]}**`).join(" · ")}. Chỉ đăng bài đã duyệt.
+
+  ${accountLine(platform)}
 
   ${GUIDE[platform] ?? ""}
   ${platformMd(social, platform, { mapPath: flat })}`;

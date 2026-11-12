@@ -31,6 +31,9 @@ import { HttpError, readJsonBody, sendError, sendJson, SECURITY_HEADERS, str } f
 import { ActiveTaskError, getTask, listTasks, runNodeScript, startTask } from "./tasks.ts";
 import { AiError } from "../../tools/ai/provider.ts";
 import { SCRIPT_ROUTES } from "./scriptapi.ts";
+import { SOCIAL_ROUTES } from "./socialapi.ts";
+import { SecretStoreError } from "../../tools/secrets/dpapi.ts";
+import { PlatformError } from "../../tools/publish/platforms.ts";
 import { writeZip } from "./zip.ts";
 
 // API routes. Every route takes an episode ID (validated against the folders
@@ -95,6 +98,7 @@ const detail = (P: EpisodePaths) => {
     attempts: j.attempts,
     lastError: j.lastError,
     history: j.history,
+    account: j.account ?? null,
   }));
   const dryRunFile = join(P.reportsDir, "publish-dry-run.json");
   return {
@@ -236,6 +240,7 @@ export const ROUTES: Route[] = [
   },
   { method: "GET", re: /^\/api\/config$/, handler: (_q, res) => sendJson(res, 200, configView()) },
   ...SCRIPT_ROUTES,
+  ...SOCIAL_ROUTES,
 ];
 
 export const handleApiError = (res: ServerResponse, e: unknown) => {
@@ -248,6 +253,8 @@ export const handleApiError = (res: ServerResponse, e: unknown) => {
   if (e instanceof ValidationError) return sendError(res, 422, e.message);
   if (e instanceof LockBusyError) return sendError(res, 423, e.message);
   if (e instanceof ActiveTaskError) return sendError(res, 409, e.message, { activeTask: e.task.id });
+  if (e instanceof SecretStoreError) return sendError(res, 503, e.message, { secretStore: true });
+  if (e instanceof PlatformError) return sendError(res, 502, e.message, { platformError: e.outcome });
   if (e instanceof AiError) return sendError(res, e.kind === "not_configured" ? 503 : 502, e.message, { aiError: e.kind });
   console.error(`[studio] lỗi: ${(e as Error).message}`);
   sendError(res, 500, `Lỗi máy chủ: ${(e as Error).message}`);

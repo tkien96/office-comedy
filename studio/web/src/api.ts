@@ -116,6 +116,7 @@ export type Job = {
   attempts: number;
   lastError: string | null;
   history: { at: string; from: string | null; to: string; note: string }[];
+  account: { connectionId: string; platformAccountId: string; name: string; boundAt: string } | null;
 };
 
 export type Beat = {

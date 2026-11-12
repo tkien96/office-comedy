@@ -1,6 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { ApiError, get, send, type DeliveryCheck, type DryRunReport, type EpisodeDetail, type Task } from "./api";
-import { Badge, ErrorBox, fmtVN, JOB_STATE, PLATFORM, TechDetails, Unavailable, useToast } from "./ui";
+import { ApiError, get, send, type DeliveryCheck, type DryRunReport, type EpisodeDetail, type Job, type Task } from "./api";
+import { Badge, ErrorBox, fmtVN, JOB_STATE, Modal, PLATFORM, TechDetails, Unavailable, useAsync, useToast } from "./ui";
+import { STATUS } from "./SocialConnections";
+
+type TargetLite = { key: string; platform: string; label: string; source: string; status: keyof typeof STATUS; identity: { id: string; name: string } | null; active: { id: string } | null; tiktok: { username: string; profileUrl: string } | null };
 
 // Jobs, dry-run and the manual-posting delivery set. Nothing here uploads,
 // schedules or posts: those controls are shown disabled with the reason.
@@ -27,6 +30,8 @@ export const PublishTab: React.FC<{ d: EpisodeDetail; reload: () => void }> = ({
   };
 
   const jobs = d.jobs ?? [];
+  // Metadata only; never calls a platform.
+  const conns = useAsync(() => get<{ targets: TargetLite[] }>("/api/connections"), []);
   return (
     <div className="stack">
       <h2>Job phát hành</h2>
@@ -41,6 +46,7 @@ export const PublishTab: React.FC<{ d: EpisodeDetail; reload: () => void }> = ({
               <th>Cách đăng</th>
               <th>Trạng thái</th>
               <th>Lịch (giờ Việt Nam)</th>
+              <th>Tài khoản đích</th>
               <th>Liên kết</th>
             </tr>
           </thead>
@@ -62,6 +68,9 @@ export const PublishTab: React.FC<{ d: EpisodeDetail; reload: () => void }> = ({
                     <span className="muted">Chưa có lịch xác nhận</span>
                   )}
                 </td>
+                <td className="small">
+                  <AccountCell job={j} targets={conns.data?.targets ?? null} episode={id} onBound={() => { reload(); conns.reload(); }} />
+                </td>
                 <td>{j.remote.url ? <span className="small">{j.remote.url}</span> : <span className="muted">—</span>}</td>
               </tr>
             ))}
@@ -79,11 +88,74 @@ export const PublishTab: React.FC<{ d: EpisodeDetail; reload: () => void }> = ({
       {report ? <DryRunView report={report} /> : <p className="muted">Chưa chạy dry-run.</p>}
 
       <h2>Đăng và đặt lịch</h2>
-      <Unavailable label="Kết nối tài khoản" reason="Chưa triển khai OAuth. Kế hoạch YouTube: docs/youtube-integration-plan.md." />
+      <p className="small">
+        Tài khoản đích quản lý ở <a href="#/cau-hinh/ket-noi">Cấu hình → Kết nối mạng xã hội</a>. Đổi kết nối ở đó không tự chuyển đích của job đã gắn.
+      </p>
       <Unavailable label="Đặt lịch trên nền tảng" reason="Chưa có code gọi API nền tảng. Không có lịch nào được gửi đi." />
       <Unavailable label="Đăng ngay" reason="Chưa triển khai upload/đăng thật. Dùng bộ delivery để đăng thủ công." />
 
       <DeliverySection d={d} reload={reload} />
+    </div>
+  );
+};
+
+const AccountCell: React.FC<{ job: Job; targets: TargetLite[] | null; episode: string; onBound: () => void }> = ({ job, targets, episode, onBound }) => {
+  const toast = useToast();
+  const [confirm, setConfirm] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const t = targets?.find((x) => x.key === job.target) ?? null;
+  if (job.mode !== "api") {
+    if (t?.tiktok) return <span>@{t.tiktok.username} <span className="muted">(thủ công, chưa xác minh bằng API)</span></span>;
+    return <span className="muted">{t?.label ?? job.target} · thủ công</span>;
+  }
+  const activeId = t ? (t.source === "studio" ? t.active?.id ?? null : t.source === "env" ? `env:${t.key}` : null) : null;
+  const canBind = Boolean(t && t.status === "verified" && t.identity && activeId) && ["draft", "planned", "failed", "missed"].includes(job.state) && !job.remote.id;
+  const differs = Boolean(job.account && t?.identity && job.account.platformAccountId !== t.identity.id);
+  const bind = async (replace: boolean) => {
+    setBusy(true);
+    try {
+      await send("POST", `/api/episodes/${episode}/jobs/${job.id}/account`, { connectionId: activeId, platformAccountId: t!.identity!.id, replace });
+      toast("ok", `Đã gắn job với ${t!.identity!.name}.`);
+      setConfirm(false);
+      onBound();
+    } catch (e) {
+      toast("bad", (e as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  };
+  return (
+    <div>
+      {job.account ? (
+        <div className={differs ? "f-warn" : ""}>
+          {job.account.name} <code>{job.account.platformAccountId}</code>
+          {differs ? <div>Khác tài khoản đang kết nối ({t!.identity!.name}): job không tự chuyển.</div> : null}
+        </div>
+      ) : (
+        <div className="f-warn">Chưa gắn tài khoản đã xác minh</div>
+      )}
+      {!t || t.status !== "verified" ? <div className="muted">Tài khoản đích: {t ? STATUS[t.status].label.toLowerCase() : "không có"}</div> : null}
+      {canBind && (!job.account || differs) ? (
+        <button type="button" className="btn btn-small" disabled={busy} onClick={() => (job.account ? setConfirm(true) : bind(false))}>
+          {job.account ? `Đổi sang ${t!.identity!.name}…` : `Gắn với ${t!.identity!.name}`}
+        </button>
+      ) : null}
+      {confirm ? (
+        <Modal
+          title="Đổi tài khoản đích của job"
+          onClose={() => setConfirm(false)}
+          actions={
+            <>
+              <button type="button" className="btn" onClick={() => setConfirm(false)}>Huỷ</button>
+              <button type="button" className="btn btn-primary" disabled={busy} onClick={() => bind(true)}>Đổi tài khoản</button>
+            </>
+          }
+        >
+          <p>
+            Job <code>{job.id}</code> đang gắn với <strong>{job.account?.name}</strong> ({job.account?.platformAccountId}). Đổi sang <strong>{t?.identity?.name}</strong> ({t?.identity?.id})? Đây là tài khoản khác, không chỉ là thay token.
+          </p>
+        </Modal>
+      ) : null}
     </div>
   );
 };
