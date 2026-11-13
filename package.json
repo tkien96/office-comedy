@@ -5,10 +5,11 @@
   "repository": {},
   "license": "UNLICENSED",
   "engines": {
-    "node": "^20.19.0 || ^22.13.0 || >=24"
+    "node": ">=22.18.0"
   },
   "private": true,
   "dependencies": {
+    "@anthropic-ai/sdk": "1.8.0",
     "@remotion/cli": "4.0.542",
     "@remotion/google-fonts": "4.0.542",
     "@remotion/layout-utils": "4.0.542",
@@ -21,6 +22,7 @@
     "@types/node": "24.19.2",
     "@types/react": "19.3.0",
     "@types/web": "0.0.166",
+    "esbuild": "0.28.1",
     "eslint": "10.12.0",
     "prettier": "3.8.1",
     "typescript": "5.9.3"
@@ -58,9 +60,9 @@
     "episode:social": "node tools/episode/cli/social.ts",
     "episode:thumbnails": "node tools/episode/cli/thumbnails.ts",
     "episode:delivery": "node tools/episode/cli/delivery.ts",
-    "studio": "node studio/build.mjs && node --env-file-if-exists=.env studio/server/main.ts",
+    "studio": "node studio/build.mjs && node --env-file-if-exists=.env studio/start.mjs",
     "studio:build": "node studio/build.mjs",
-    "studio:serve": "node --env-file-if-exists=.env studio/server/main.ts"
+    "studio:serve": "node --env-file-if-exists=.env studio/start.mjs"
   },
   "allowScripts": {
     "esbuild": false

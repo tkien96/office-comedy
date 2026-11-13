@@ -7,8 +7,8 @@
   "targets": {
     "youtube.main": {
       "platform": "youtube",
-      "label": "Kênh YouTube chính",
-      "channelId": null,
+      "label": "AI Đi Làm",
+      "channelId": "UCVgRoK70UdVnNxZH7-kxqXw",
       "credentialEnv": ["YOUTUBE_CLIENT_ID", "YOUTUBE_CLIENT_SECRET", "YOUTUBE_REFRESH_TOKEN"]
     },
     "facebook.page": {

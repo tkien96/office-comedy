@@ -1,0 +1,21 @@
+{
+  "$comment": "Cấu hình Studio (không chứa bí mật). Khóa API đặt trong .env: ANTHROPIC_API_KEY. Model chỉ được chọn trong danh sách 'pricingUsdPerMTok' (ID chính thức, bảng giá công bố tra ngày 2026-11-11). Giá chỉ dùng để ƯỚC TÍNH chi phí từ số token API trả về; hoá đơn thật xem ở Claude Console. Thiếu giá cho loại token nào thì chi phí ghi 'không xác định', không ghi 0.",
+  "claude": {
+    "model": "claude-opus-5-5",
+    "effort": "medium",
+    "maxTokens": 16000,
+    "timeoutMs": 300000,
+    "maxRateLimitRetries": 2,
+    "maxRepairAttempts": 1,
+    "maxConcurrentJobs": 1,
+    "fallbacks": "default",
+    "pricingAsOf": "2026-11-03",
+    "pricingUsdPerMTok": {
+      "claude-opus-5-5": { "input": 4, "output": 20, "cacheRead": 0.2 },
+      "claude-opus-5": { "input": 5, "output": 25 },
+      "claude-opus-4-8": { "input": 5, "output": 25 },
+      "claude-sonnet-5-5": { "input": 2, "output": 10, "cacheRead": 0.1 },
+      "claude-haiku-5-5": { "input": 0.1, "output": 0.5 }
+    }
+  }
+}

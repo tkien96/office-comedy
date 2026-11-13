@@ -1,18 +1,11 @@
 import React from "react";
-import { get, type Task } from "./api";
+import { get, type AiTask } from "./api";
+import { AiTaskPanel, costText, TASK_STATE, TASK_TYPE } from "./AiTaskPanel";
 import { Badge, Empty, ErrorBox, fmtVN, Loading, useAsync } from "./ui";
 
-const STATE: Record<Task["state"], { label: string; tone: string }> = {
-  queued: { label: "Đang chờ", tone: "wait" },
-  running: { label: "Đang chạy", tone: "wait" },
-  succeeded: { label: "Xong", tone: "ok" },
-  failed: { label: "Thất bại", tone: "bad" },
-  interrupted: { label: "Bị gián đoạn", tone: "bad" },
-};
-const TYPE: Record<string, string> = { "delivery-build": "Tạo bộ delivery" };
-
 export const TasksPage: React.FC = () => {
-  const { data, error, loading, reload } = useAsync(() => get<{ tasks: Task[] }>("/api/tasks"), []);
+  const { data, error, loading, reload } = useAsync(() => get<{ tasks: AiTask[] }>("/api/tasks"), []);
+  const active = (data?.tasks ?? []).filter((t) => t.state === "queued" || t.state === "running");
   return (
     <section className="stack">
       <header className="page-head">
@@ -22,10 +15,14 @@ export const TasksPage: React.FC = () => {
         </button>
       </header>
       <p className="muted small">
-        Công việc chạy trong máy chủ Studio, vẫn tiếp tục khi bạn đóng tab. Nếu máy chủ dừng giữa chừng, công việc được ghi "Bị gián đoạn" và kết quả không được coi là thành công.
+        Công việc chạy trong máy chủ Studio, vẫn tiếp tục khi bạn đóng tab. Mặc định chỉ một công việc AI chạy cùng lúc; các việc khác chờ lượt. Nếu máy chủ dừng giữa chừng, công việc được ghi "Bị
+        gián đoạn", không được coi là thành công và không tự gọi lại Claude.
       </p>
       {loading && !data ? <Loading /> : null}
       {error ? <ErrorBox message={error} onRetry={reload} /> : null}
+      {active.map((t) => (
+        <AiTaskPanel key={t.id} task={t} now={Date.now()} onChanged={reload} />
+      ))}
       {data && !data.tasks.length ? <Empty>Chưa có công việc nào.</Empty> : null}
       {data && data.tasks.length ? (
         <div className="table-wrap">
@@ -37,21 +34,21 @@ export const TasksPage: React.FC = () => {
                 <th>Trạng thái</th>
                 <th>Bắt đầu (giờ VN)</th>
                 <th>Kết thúc</th>
+                <th>Chi phí</th>
                 <th>Ghi chú</th>
               </tr>
             </thead>
             <tbody>
               {data.tasks.map((t) => (
                 <tr key={t.id}>
-                  <td>{TYPE[t.type] ?? t.type}</td>
+                  <td>{TASK_TYPE[t.type] ?? t.type}</td>
+                  <td>{t.episode ? <a href={`#/tap/${t.episode}/${t.type.startsWith("ai-") ? "kich-ban" : "phat-hanh"}`}>{t.episode}</a> : <span className="muted">—</span>}</td>
                   <td>
-                    <a href={`#/tap/${t.episode}/phat-hanh`}>{t.episode}</a>
-                  </td>
-                  <td>
-                    <Badge tone={STATE[t.state].tone}>{STATE[t.state].label}</Badge>
+                    <Badge tone={TASK_STATE[t.state].tone}>{TASK_STATE[t.state].label}</Badge>
                   </td>
                   <td>{fmtVN(t.createdAt)}</td>
                   <td>{fmtVN(t.finishedAt)}</td>
+                  <td className="small">{t.type.startsWith("ai-") ? costText(t) : "—"}</td>
                   <td className="small">{t.message ?? ""}</td>
                 </tr>
               ))}

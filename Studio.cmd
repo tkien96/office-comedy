@@ -14,14 +14,19 @@ if not exist "node_modules\esbuild\package.json" (
   exit /b 1
 )
 if "%STUDIO_PORT%"=="" set STUDIO_PORT=5178
+node studio\start.mjs --check-node
+if errorlevel 1 (
+  pause
+  exit /b 1
+)
 node studio\build.mjs
 if errorlevel 1 (
   pause
   exit /b 1
 )
 rem Open the browser shortly after the server starts.
-start "" /b cmd /c "timeout /t 2 /nobreak >nul & start "" http://127.0.0.1:%STUDIO_PORT%"
-node --env-file-if-exists=.env studio\server\main.ts
+start "" /b cmd /c ""%SystemRoot%\System32\timeout.exe" /t 2 /nobreak >nul & start "" http://127.0.0.1:%STUDIO_PORT%"
+node --env-file-if-exists=.env studio\start.mjs
 echo.
 echo Studio da dung.
 pause

@@ -111,9 +111,10 @@ docs/publishing-platforms.md  bảng khả năng đăng bài và ảnh bìa theo
 docs/youtube-integration-plan.md  kế hoạch tích hợp YouTube (chưa triển khai)
 docs/local-assets.md  tài nguyên chỉ có trên máy (không đưa vào Git), hash và cách khôi phục
 docs/studio.md        website local Office Comedy Studio: kiến trúc, nguồn dữ liệu, an toàn
+docs/social-connections.md  kết nối YouTube/Facebook/TikTok trong Studio, kho bí mật, nguồn cấu hình
 studio/               Office Comedy Studio: server/ (Node, node:http), web/ (React), build.mjs → dist/ (không đưa vào Git)
 Studio.cmd            launcher Windows cho Studio
-runtime/              dữ liệu vận hành của Studio (công việc nền), không đưa vào Git
+runtime/              dữ liệu vận hành của Studio (công việc nền; connections/: metadata kết nối + bí mật DPAPI), không đưa vào Git
 out/                    video và ảnh xuất ra (không đưa vào Git)
 ```
 
@@ -257,6 +258,24 @@ Khi sửa xưng hô, sửa theo từng câu và từng quan hệ. **Không tìm�
 - An toàn: kiểm Host/Origin + header `X-Studio` cho request thay đổi; API chỉ nhận mã tập và tên cố định; file phục vụ phải nằm trong thư mục cho phép sau khi giải symlink; không gửi bí mật xuống trình duyệt.
 - Nút cho chức năng chưa có backend: khoá và ghi lý do (`Unavailable`). Không tạo trạng thái thành công giả.
 - Giao diện build bằng esbuild (`node studio/build.mjs`); kiểm tra kiểu: `npm run lint` (gồm `tsc -p studio/server` và `tsc -p studio/web`).
+- **Viết kịch bản bằng Claude** (`tools/ai/`, `tools/episode/scriptdoc.ts`, `scriptstore.ts`, `studio/server/aijobs.ts`):
+  - Claude chỉ sinh hoặc sửa JSON kịch bản theo schema; không tool, không shell, không quyền sửa code. Backend cấp mã, lưu file, kiểm tra, cập nhật trạng thái.
+  - SDK chính thức `@anthropic-ai/sdk` (khoá phiên bản). Model lấy từ `config/studio.json`, chỉ được chọn trong danh sách đã khai báo. Không đoán tên model. Không tự chuyển nhà cung cấp hay cách tính phí khi lỗi.
+  - Khóa chỉ là `ANTHROPIC_API_KEY` trong `.env`. Không đưa khóa vào prompt, log, giao diện hay Git.
+  - Bản Claude sửa luôn là đề xuất; phiên bản chỉ đổi qua `commitVersion` (kiểm hash bản đang xem). Lịch sử không xoá; phục hồi tạo phiên bản mới. Không tự duyệt.
+  - Không gọi model khi chỉ mở, xem hay duyệt. Timeout hoặc lỗi mạng không tự thử lại (có thể đã tính phí); chỉ 429/529 được thử lại có giới hạn.
+  - Chi phí luôn là ước tính từ số token API trả; thiếu dữ liệu thì ghi "không xác định", không ghi 0.
+  - Mock (`tools/ai/mock.ts`) chỉ chạy khi có cả `STUDIO_TEST=1` và `STUDIO_AI_MOCK`; mọi kết quả mock mang nhãn `[MOCK]`.
+- **`config/publishing.json` → `credentialEnv` chỉ chứa TÊN biến** (dạng `ABC_DEF`). Dry-run và trang Cấu hình không in mục nào không phải tên biến. Giá trị bí mật đặt trong kho DPAPI của Studio hoặc `.env`.
+
+- **Kết nối mạng xã hội** (`docs/social-connections.md`, `tools/publish/connections.ts`, `tools/secrets/dpapi.ts`, `studio/server/oauth.ts`, `socialapi.ts`):
+  - Metadata (`runtime/connections/connections.json`) tách khỏi bí mật (`runtime/connections/secrets.dpapi.json`, Windows DPAPI CurrentUser). Kho không mở được thì báo lỗi; **không** lưu plaintext thay thế, không tự chế mã hoá có khoá nằm cạnh dữ liệu.
+  - API đọc chỉ trả metadata + "đã lưu bí mật". Ô bí mật trống khi mở lại; để trống = giữ; không nhận chuỗi che. Không đưa bí mật vào frontend, storage trình duyệt, URL, log, báo cáo, delivery, prompt AI.
+  - Nguồn có hiệu lực theo tài khoản đích: kết nối Studio, hoặc toàn bộ từ `.env` (cách cũ). **Không trộn.** Gỡ khỏi Studio thì tắt `.env` của tài khoản đó, không tự dùng lại. Không tự sửa/xoá `.env`.
+  - "Đã xác minh" = chứng minh được danh tính bằng lệnh đọc; không phải quyền đăng. Lỗi mạng ≠ token hết hạn. TikTok luôn là "Đăng thủ công", không bao giờ "đã xác minh".
+  - YouTube: client Desktop app, PKCE S256, redirect `http://127.0.0.1:<cổng>/`, state một lần + cookie, quyền tối thiểu `youtube.readonly`. Kết nối mới chỉ thay kết nối cũ sau khi người dùng xác nhận kênh. Facebook: Graph API v27.0 `/me`, token ở header; chưa xác minh quyền đăng (cần App token).
+  - Job API gắn `account` (connectionId + platformAccountId) do người dùng gắn; không tự gán, đổi kết nối không tự chuyển đích job. Mình không bấm kết nối/cấp quyền thay người dùng.
+  - Kiểm thử: mock nền tảng chỉ khi `STUDIO_TEST=1` + `STUDIO_SOCIAL_MOCK_BASE` (loopback); kiểm trên bản sao, không trên dữ liệu thật.
 
 ## Đăng bài đa nền tảng (`tools/publish`, `config/publishing.json`)
 
