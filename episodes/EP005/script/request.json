@@ -1,0 +1,22 @@
+{
+  "createdAt": "2026-11-19T07:36:31.464Z",
+  "requestToken": "cc-eae3c766-c0c4-4306-b315-e2785ba1e6e5",
+  "ideaSource": "user",
+  "title": "Một phút thôi",
+  "idea": "Trinh nhờ Kiên \"giúp em một phút thôi\": đổi màu một ô trong bảng tính. Kiên vừa xong thì Trinh lại thêm một việc nhỏ (căn lề, thêm biểu đồ, sửa tiêu đề…). Lời dẫn đếm số phút tăng dần, đồng hồ treo tường quay nhanh. Kiên cả nể, không dám từ chối.",
+  "punchlineDirection": "Sếp đi ngang khen báo cáo đẹp, Trinh nhanh nhảu nhận. Sếp giao thêm ba trang; Trinh quay sang Kiên: giúp em một phút nữa thôi.",
+  "characters": [
+    "kien",
+    "trinh",
+    "sep"
+  ],
+  "setting": "office",
+  "notes": "Làm rõ tính lúc giúp lúc vì lợi ích riêng của Trinh. Đồng hồ treo tường chạy nhanh (montage).",
+  "duration": {
+    "minSec": 60,
+    "targetRangeSec": [
+      60,
+      90
+    ]
+  }
+}

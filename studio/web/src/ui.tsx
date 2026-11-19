@@ -1,32 +1,6 @@
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
-import type { ApprovalStatus } from "./api";
 
 // Shared UI pieces: badges, toasts, modal, copy button, loading/error states.
-
-export const STATUS: Record<ApprovalStatus, { label: string; tone: string; explain: string }> = {
-  approved: { label: "Đã duyệt", tone: "ok", explain: "Bạn đã duyệt đúng bản này và nguồn của nó chưa đổi." },
-  not_approved: { label: "Chờ duyệt", tone: "wait", explain: "Đã có sản phẩm nhưng bạn chưa duyệt." },
-  needs_reapproval: { label: "Cần duyệt lại", tone: "bad", explain: "File hoặc nội dung đã thay đổi sau khi bạn duyệt. Bản đang có không phải bản bạn đã duyệt." },
-  needs_recheck: {
-    label: "Cần kiểm tra lại",
-    tone: "warn",
-    explain: "File vẫn đúng bản bạn đã duyệt, nhưng nguồn tạo ra nó (kịch bản, timeline, âm thanh…) đã đổi. Kiểm tra xem còn khớp không rồi duyệt lại.",
-  },
-  missing: { label: "Chưa có", tone: "none", explain: "Sản phẩm chưa được tạo hoặc file không tìm thấy." },
-};
-
-export const JOB_STATE: Record<string, { label: string; tone: string }> = {
-  draft: { label: "Nháp", tone: "none" },
-  planned: { label: "Có lịch trong dự án (chưa gửi)", tone: "wait" },
-  uploading: { label: "Đang tải lên", tone: "wait" },
-  processing: { label: "Nền tảng đang xử lý", tone: "wait" },
-  scheduled: { label: "Nền tảng đã giữ lịch", tone: "ok" },
-  published: { label: "Đã đăng (đã kiểm tra)", tone: "ok" },
-  failed: { label: "Lỗi", tone: "bad" },
-  cancelled: { label: "Đã huỷ", tone: "none" },
-  missed: { label: "Lỡ giờ (không tự đăng)", tone: "bad" },
-  none: { label: "Không có job", tone: "none" },
-};
 
 export const PLATFORM: Record<string, string> = { youtube: "YouTube", facebook: "Facebook", tiktok: "TikTok" };
 export const POST_NAME: Record<string, string> = { video: "Video", teaser: "Bài nhá hàng" };
@@ -37,11 +11,8 @@ export const Badge: React.FC<{ tone: string; children: React.ReactNode; title?: 
   </span>
 );
 
-export const StatusBadge: React.FC<{ status: ApprovalStatus }> = ({ status }) => (
-  <Badge tone={STATUS[status].tone} title={STATUS[status].explain}>
-    {STATUS[status].label}
-  </Badge>
-);
+/** Whether a product of the episode exists right now. */
+export const PartBadge: React.FC<{ exists: boolean }> = ({ exists }) => <Badge tone={exists ? "ok" : "none"}>{exists ? "Có" : "Chưa có"}</Badge>;
 
 export const Loading: React.FC<{ text?: string }> = ({ text = "Đang tải…" }) => <div className="state state-loading">{text}</div>;
 export const Empty: React.FC<{ children: React.ReactNode }> = ({ children }) => <div className="state state-empty">{children}</div>;

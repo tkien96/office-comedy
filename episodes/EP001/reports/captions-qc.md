@@ -1,6 +1,6 @@
 # Phụ đề EP001: kiểm tra
 
-File: `episodes/EP001/exports/EP001.srt` · hash `94bcd2c6987fec85` · trạng thái duyệt: **chưa duyệt**
+File: `episodes/EP001/exports/EP001.srt` · hash `94bcd2c6987fec85`
 
 Tạo bằng `npm run episode:captions -- EP001` từ `episodes/EP001/script/timeline.json` (khoảng lời đo trên âm thanh thật của từng câu). Chữ đúng nguyên văn câu đã tạo giọng; chỉ thêm ngắt dòng.
 
@@ -13,14 +13,14 @@ Tạo bằng `npm run episode:captions -- EP001` từ `episodes/EP001/script/tim
   - mốc nằm trong thời lượng video; không chồng cue; độ dài cue;
   - ngắt dòng; Unicode NFC; khoảng trắng và dấu câu;
   - tên Kiên/Trinh; xưng hô theo quan hệ;
-  - tiếng nói trong âm thanh của video đã duyệt nằm trong cue, không có đoạn nói nào thiếu phụ đề.
+  - tiếng nói trong âm thanh của video nằm trong cue, không có đoạn nói nào thiếu phụ đề.
 
 - **GHI CHÚ** (cue 5): Lời dài 0.77 s; giữ chữ trên màn hình 0.80 s (kéo vào khoảng lặng sau câu, không chồng câu sau).
 - **GHI CHÚ** (cue 7): Lời dài 0.47 s; giữ chữ trên màn hình 0.80 s (kéo vào khoảng lặng sau câu, không chồng câu sau).
 - **CẢNH BÁO** (cue 16): Tốc độ đọc 20.5 ký tự/giây > 20.
 - **CẢNH BÁO** (cue 22): Tốc độ đọc 20.5 ký tự/giây > 20.
 - **CẢNH BÁO** (cue 26): Tốc độ đọc 20.5 ký tự/giây > 20.
-- **GHI CHÚ**: Âm thanh lấy từ video đã duyệt (episodes/EP001/exports/EP001.mp4, 63.31 s). Cue cuối kết thúc 62.070 s; video dài 63.300 s.
+- **GHI CHÚ**: Âm thanh lấy từ video (episodes/EP001/exports/EP001.mp4, 63.31 s). Cue cuối kết thúc 62.070 s; video dài 63.300 s.
 
 ## Xưng hô (để đối chiếu nhanh)
 
@@ -80,5 +80,3 @@ Tạo bằng `npm run episode:captions -- EP001` từ `episodes/EP001/script/tim
 - [ ] Ngắt dòng đọc tự nhiên, không tách cụm từ.
 - [ ] Mở `episodes/EP001/exports/EP001.mp4` bằng một trình phát (ví dụ VLC: Phụ đề → Thêm file phụ đề), nạp SRT, xem phụ đề hiện và ẩn đúng lúc.
 - [ ] SRT không có nhãn người nói (video đã in phụ đề kèm nhãn). Quyết định có cần nhãn trong SRT không.
-
-Duyệt sau khi xem: `npm run episode:approve -- EP001 captions`

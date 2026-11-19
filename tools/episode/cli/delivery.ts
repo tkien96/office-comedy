@@ -1,7 +1,7 @@
 // npm run episode:delivery -- EP001          build episodes/EP001/delivery/
 // npm run episode:delivery -- EP001 --check  only verify the package against current sources
-// Logic in tools/episode/delivery.ts (shared with the Studio). Never changes approvals.
-import { buildDelivery, checkDelivery, STATUS_VI } from "../delivery.ts";
+// Logic in tools/episode/delivery.ts (shared with the Studio).
+import { buildDelivery, checkDelivery } from "../delivery.ts";
 import { rel, resolveEpisode } from "../paths.ts";
 
 const args = process.argv.slice(2);
@@ -23,8 +23,7 @@ if (args.includes("--check")) {
 try {
   const r = buildDelivery(P);
   console.log(`Đã tạo ${rel(P.deliveryDir)}/ (${r.files} file):`);
-  for (const e of r.entries) console.log(`  ${e.file.padEnd(18)} ${STATUS_VI[e.approval].padEnd(16)} ← ${e.source}`);
-  console.log("Không thay đổi trạng thái duyệt nào.");
+  for (const e of r.entries) console.log(`  ${e.file.padEnd(18)} ← ${e.source}`);
 } catch (e) {
   console.error((e as Error).message);
   process.exit(1);

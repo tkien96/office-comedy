@@ -1,0 +1,540 @@
+{
+  "$comment": "Dữ liệu kịch bản EP002 (nguồn duy nhất cho âm thanh và video). Mỗi beat là câu thoại (line) hoặc nhịp hành động không lời (action, \"sec\" theo nội dung hành động). Hành động diễn ra trong lúc có thoại ghi ở \"visual\" của câu đó, không cộng thêm thời gian.",
+  "id": "EP002",
+  "title": "Lỡ bấm Trả lời tất cả",
+  "logline": "Kiên định than với Trinh về cuộc họp ba tiếng nhưng bấm Trả lời tất cả. Mỗi thư cứu vãn lại tệ hơn, và Sếp có cách trả lời của riêng mình.",
+  "creative": {
+    "premise": "Một lời than gửi nhầm cho cả phòng, kèm Sếp.",
+    "punchline": "Sếp rút họp của cả phòng còn 15 phút, nhưng xếp riêng cho Kiên một buổi ba tiếng về cách viết thư nội bộ."
+  },
+  "fps": 30,
+  "timing": {
+    "turnGapSec": 0.22,
+    "sameTurnGapSec": 0.2,
+    "leadInSec": 0.25
+  },
+  "scenes": [
+    {
+      "id": "S1",
+      "title": "Mở đầu",
+      "location": "office",
+      "speakers": [
+        "narrator"
+      ],
+      "note": "Câu móc trong 3 giây đầu, rồi kể nhanh lý do."
+    },
+    {
+      "id": "S2",
+      "title": "Phát hiện",
+      "location": "office",
+      "speakers": [
+        "trinh",
+        "kien"
+      ]
+    },
+    {
+      "id": "S3",
+      "title": "Cứu vãn",
+      "location": "office",
+      "speakers": [
+        "trinh",
+        "kien"
+      ],
+      "note": "Mỗi thư gửi thêm hiện thành thẻ thông báo ở nửa trên khung hình."
+    },
+    {
+      "id": "S4",
+      "title": "Sếp ghé bàn",
+      "location": "office",
+      "speakers": [
+        "sep",
+        "kien"
+      ],
+      "note": "Trinh ở bàn bên, không nói."
+    },
+    {
+      "id": "S5",
+      "title": "Pantry",
+      "location": "pantry",
+      "speakers": [
+        "trinh",
+        "kien"
+      ],
+      "note": "Lời dẫn chốt là của Kiên, không đọc chồng lên thoại."
+    }
+  ],
+  "beats": [
+    {
+      "id": "n01",
+      "scene": "S1",
+      "kind": "line",
+      "role": "narrator",
+      "text": "Tôi chỉ định than với đúng một người.",
+      "visual": "Cận mặt Kiên trước laptop, ngón tay lơ lửng trên chuột.",
+      "expression": {
+        "kien": "neutral"
+      },
+      "pose": {
+        "kien": "computer"
+      }
+    },
+    {
+      "id": "n02",
+      "scene": "S1",
+      "kind": "line",
+      "role": "narrator",
+      "sameTurn": true,
+      "text": "Nhưng tôi lại bấm Trả lời tất cả.",
+      "visual": "Con trỏ bấm nút; hình đứng khựng.",
+      "expression": {
+        "kien": "surprised"
+      }
+    },
+    {
+      "id": "n03",
+      "scene": "S1",
+      "kind": "line",
+      "role": "narrator",
+      "text": "Sếp vừa gửi lịch họp sáng thứ Hai: ba tiếng.",
+      "visual": "Thẻ thư: \"Lịch họp tuần – thứ Hai 8:00–11:00\". Kiên thở dài.",
+      "expression": {
+        "kien": "annoyed"
+      }
+    },
+    {
+      "id": "n04",
+      "scene": "S1",
+      "kind": "line",
+      "role": "narrator",
+      "sameTurn": true,
+      "text": "Tôi trả lời: họp gì mà dài như phim bộ.",
+      "visual": "Kiên gõ nhanh, cười khoái chí với câu của mình.",
+      "expression": {
+        "kien": "happy"
+      }
+    },
+    {
+      "id": "a01",
+      "scene": "S1",
+      "kind": "action",
+      "desc": "Thẻ thông báo: \"Đã gửi tới: Cả phòng (12 người)\". Kiên đứng hình. Trinh ở bàn bên giật mình nhìn điện thoại.",
+      "sec": 1.4
+    },
+    {
+      "id": "t01",
+      "scene": "S2",
+      "kind": "line",
+      "role": "trinh",
+      "text": "Anh Kiên! Anh trả lời tất cả rồi kìa!",
+      "visual": "Trinh lao sang bàn Kiên, giơ điện thoại.",
+      "expression": {
+        "trinh": "surprised",
+        "kien": "surprised"
+      },
+      "pose": {
+        "trinh": "phone"
+      }
+    },
+    {
+      "id": "k01",
+      "scene": "S2",
+      "kind": "line",
+      "role": "kien",
+      "text": "Hả? Anh gửi cho em mà.",
+      "expression": {
+        "kien": "suspicious"
+      }
+    },
+    {
+      "id": "t02",
+      "scene": "S2",
+      "kind": "line",
+      "role": "trinh",
+      "text": "Cả phòng nhận hết rồi. Có sếp luôn đó.",
+      "expression": {
+        "trinh": "annoyed"
+      }
+    },
+    {
+      "id": "k02",
+      "scene": "S2",
+      "kind": "line",
+      "role": "kien",
+      "text": "Thu hồi! Thu hồi thư liền!",
+      "visual": "Kiên quay lại laptop.",
+      "expression": {
+        "kien": "surprised"
+      },
+      "pose": {
+        "kien": "computer"
+      }
+    },
+    {
+      "id": "a02",
+      "scene": "S2",
+      "kind": "action",
+      "desc": "Kiên bấm loạn trên laptop. Trinh nín thở nhìn màn hình.",
+      "sec": 1.1
+    },
+    {
+      "id": "k03",
+      "scene": "S2",
+      "kind": "line",
+      "role": "kien",
+      "text": "Thu hồi được mười một người.",
+      "expression": {
+        "kien": "happy"
+      }
+    },
+    {
+      "id": "k04",
+      "scene": "S2",
+      "kind": "line",
+      "role": "kien",
+      "sameTurn": true,
+      "text": "Trừ sếp. Sếp đọc rồi.",
+      "visual": "Nụ cười của Kiên tắt dần.",
+      "expression": {
+        "kien": "embarrassed"
+      }
+    },
+    {
+      "id": "a03",
+      "scene": "S2",
+      "kind": "action",
+      "desc": "Trinh ôm đầu. Kiên gục xuống bàn phím.",
+      "sec": 0.9
+    },
+    {
+      "id": "t03",
+      "scene": "S3",
+      "kind": "line",
+      "role": "trinh",
+      "text": "Bình tĩnh. Anh gửi thêm thư giải thích đi.",
+      "expression": {
+        "trinh": "neutral",
+        "kien": "embarrassed"
+      }
+    },
+    {
+      "id": "t04",
+      "scene": "S3",
+      "kind": "line",
+      "role": "trinh",
+      "sameTurn": true,
+      "text": "Nói là anh đang bàn về phim bộ tối qua.",
+      "visual": "Trinh chỉ vào màn hình.",
+      "expression": {
+        "trinh": "happy"
+      },
+      "pose": {
+        "trinh": "pointing"
+      }
+    },
+    {
+      "id": "k05",
+      "scene": "S3",
+      "kind": "line",
+      "role": "kien",
+      "text": "Ý hay nè. Gửi liền.",
+      "expression": {
+        "kien": "happy"
+      },
+      "pose": {
+        "kien": "computer"
+      }
+    },
+    {
+      "id": "a04",
+      "scene": "S3",
+      "kind": "action",
+      "desc": "Thẻ thư thứ hai gửi cả phòng: \"Ý em là phim bộ tối qua dài quá ạ.\" Kiên gật gù hài lòng.",
+      "sec": 1.2
+    },
+    {
+      "id": "t05",
+      "scene": "S3",
+      "kind": "line",
+      "role": "trinh",
+      "text": "Khoan. Vậy là anh coi phim trong giờ làm hả?",
+      "expression": {
+        "trinh": "suspicious",
+        "kien": "surprised"
+      }
+    },
+    {
+      "id": "k06",
+      "scene": "S3",
+      "kind": "line",
+      "role": "kien",
+      "text": "Trời ơi. Để anh gửi thêm một thư nữa.",
+      "expression": {
+        "kien": "embarrassed"
+      }
+    },
+    {
+      "id": "t06",
+      "scene": "S3",
+      "kind": "line",
+      "role": "trinh",
+      "text": "Thôi anh! Mỗi thư là thêm một tội đó.",
+      "expression": {
+        "trinh": "annoyed"
+      }
+    },
+    {
+      "id": "a05",
+      "scene": "S3",
+      "kind": "action",
+      "desc": "Đã muộn. Thẻ thư thứ ba: \"Nhưng họp với sếp thì dài mấy cũng vui ạ.\" Trinh che mặt.",
+      "sec": 1.4
+    },
+    {
+      "id": "n05",
+      "scene": "S3",
+      "kind": "line",
+      "role": "narrator",
+      "text": "Trong năm phút, tôi gửi cho cả phòng ba thư.",
+      "visual": "Ba thẻ thư xếp chồng lên nhau phía trên đầu Kiên.",
+      "expression": {
+        "kien": "embarrassed"
+      }
+    },
+    {
+      "id": "n06",
+      "scene": "S3",
+      "kind": "line",
+      "role": "narrator",
+      "sameTurn": true,
+      "text": "Thư sau tôi viết còn tệ hơn thư trước.",
+      "expression": {
+        "kien": "embarrassed"
+      }
+    },
+    {
+      "id": "a06",
+      "scene": "S4",
+      "kind": "action",
+      "desc": "Sếp đi tới bàn Kiên, tay cầm tách trà. Trinh lặng lẽ trượt ghế về bàn mình.",
+      "sec": 1.3
+    },
+    {
+      "id": "s01",
+      "scene": "S4",
+      "kind": "line",
+      "role": "sep",
+      "text": "Kiên này, anh đọc cả ba thư rồi.",
+      "expression": {
+        "sep": "neutral",
+        "kien": "surprised"
+      }
+    },
+    {
+      "id": "k07",
+      "scene": "S4",
+      "kind": "line",
+      "role": "kien",
+      "text": "Dạ… em xin lỗi sếp ạ.",
+      "visual": "Kiên đứng bật dậy.",
+      "expression": {
+        "kien": "embarrassed"
+      },
+      "pose": {
+        "kien": "standing"
+      }
+    },
+    {
+      "id": "s02",
+      "scene": "S4",
+      "kind": "line",
+      "role": "sep",
+      "text": "Không sao. Em nói đúng đấy.",
+      "expression": {
+        "sep": "happy"
+      }
+    },
+    {
+      "id": "s03",
+      "scene": "S4",
+      "kind": "line",
+      "role": "sep",
+      "sameTurn": true,
+      "text": "Từ tuần sau, họp chỉ mười lăm phút thôi nhé.",
+      "expression": {
+        "sep": "neutral",
+        "kien": "surprised"
+      }
+    },
+    {
+      "id": "k08",
+      "scene": "S4",
+      "kind": "line",
+      "role": "kien",
+      "text": "Dạ? Thiệt hả sếp?",
+      "expression": {
+        "kien": "happy"
+      }
+    },
+    {
+      "id": "a07",
+      "scene": "S4",
+      "kind": "action",
+      "desc": "Kiên thở phào, cười toe. Phía sau, Trinh giơ ngón cái.",
+      "sec": 0.8
+    },
+    {
+      "id": "s04",
+      "scene": "S4",
+      "kind": "line",
+      "role": "sep",
+      "text": "Nhưng chiều nay em lên phòng họp nhé.",
+      "expression": {
+        "sep": "neutral"
+      }
+    },
+    {
+      "id": "s05",
+      "scene": "S4",
+      "kind": "line",
+      "role": "sep",
+      "sameTurn": true,
+      "text": "Anh có một buổi riêng cho em.",
+      "expression": {
+        "sep": "happy",
+        "kien": "suspicious"
+      }
+    },
+    {
+      "id": "k09",
+      "scene": "S4",
+      "kind": "line",
+      "role": "kien",
+      "text": "Dạ, họp về chuyện gì vậy sếp?",
+      "expression": {
+        "kien": "suspicious"
+      }
+    },
+    {
+      "id": "s06",
+      "scene": "S4",
+      "kind": "line",
+      "role": "sep",
+      "text": "Cách viết thư nội bộ. Chỉ em với anh thôi.",
+      "expression": {
+        "sep": "neutral"
+      },
+      "pose": {
+        "sep": "pointing"
+      }
+    },
+    {
+      "id": "s07",
+      "scene": "S4",
+      "kind": "line",
+      "role": "sep",
+      "sameTurn": true,
+      "text": "Anh xếp ba tiếng nhé.",
+      "visual": "Sếp nhấp ngụm trà.",
+      "expression": {
+        "sep": "happy",
+        "kien": "surprised"
+      }
+    },
+    {
+      "id": "a08",
+      "scene": "S4",
+      "kind": "action",
+      "desc": "Sếp quay đi. Kiên đứng chết lặng. Chuyển cảnh.",
+      "sec": 1.2
+    },
+    {
+      "id": "t07",
+      "scene": "S5",
+      "kind": "line",
+      "role": "trinh",
+      "text": "Anh ơi, cả phòng cảm ơn anh. Họp còn mười lăm phút.",
+      "visual": "Trinh cầm hộp bánh, mời Kiên một cái.",
+      "expression": {
+        "trinh": "happy",
+        "kien": "annoyed"
+      }
+    },
+    {
+      "id": "k10",
+      "scene": "S5",
+      "kind": "line",
+      "role": "kien",
+      "text": "Còn anh thì họp ba tiếng.",
+      "expression": {
+        "kien": "annoyed"
+      }
+    },
+    {
+      "id": "t08",
+      "scene": "S5",
+      "kind": "line",
+      "role": "trinh",
+      "text": "Vậy lát họp xong, anh nhắn em than nha.",
+      "expression": {
+        "trinh": "happy"
+      },
+      "pose": {
+        "trinh": "phone"
+      }
+    },
+    {
+      "id": "t09",
+      "scene": "S5",
+      "kind": "line",
+      "role": "trinh",
+      "sameTurn": true,
+      "text": "Nhớ nhắn riêng đó.",
+      "visual": "Trinh nháy mắt, quay đi.",
+      "expression": {
+        "trinh": "happy"
+      }
+    },
+    {
+      "id": "a09",
+      "scene": "S5",
+      "kind": "action",
+      "desc": "Kiên nhìn theo, tay cầm cốc cà phê. Điện thoại rung: thư Sếp gửi cả phòng \"Từ tuần sau họp 15 phút. Cảm ơn góp ý của Kiên.\"",
+      "sec": 1.5
+    },
+    {
+      "id": "n07",
+      "scene": "S5",
+      "kind": "line",
+      "role": "narrator",
+      "text": "Tôi thành người hùng của cả phòng.",
+      "expression": {
+        "kien": "neutral"
+      }
+    },
+    {
+      "id": "n08",
+      "scene": "S5",
+      "kind": "line",
+      "role": "narrator",
+      "sameTurn": true,
+      "text": "Người hùng duy nhất còn phải họp ba tiếng.",
+      "expression": {
+        "kien": "embarrassed"
+      }
+    },
+    {
+      "id": "a10",
+      "scene": "S5",
+      "kind": "action",
+      "desc": "Giữ khung hình mặt Kiên; kết thúc.",
+      "sec": 1
+    }
+  ],
+  "duration": {
+    "minSec": 60,
+    "targetRangeSec": [
+      60,
+      90
+    ]
+  }
+}

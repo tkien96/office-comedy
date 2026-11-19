@@ -1,0 +1,22 @@
+{
+  "createdAt": "2026-11-16T09:48:25.968Z",
+  "requestToken": "cc-6071e64d-57a6-4310-a5a1-e9bc3e843e8d",
+  "ideaSource": "user",
+  "title": "Ai lấy hộp cơm của tôi?",
+  "idea": "Kiên mở tủ lạnh pantry thì hộp cơm biến mất, chỉ còn tờ giấy nhắn \"Cảm ơn, ngon lắm!\". Kiên điều tra như thám tử, nghi Trinh vì Trinh đang ăn cơm sườn. Trinh chứng minh hộp của mình có tên. Kiên chuyển sang nghi Sếp nhưng không dám hỏi thẳng, nên hỏi vòng vo.",
+  "punchlineDirection": "Sếp tưởng hộp cơm là cơm phòng đặt chung nên đã ăn, còn lịch sự để giấy cảm ơn. Sếp xin lỗi, rồi vì mê quy trình nên đặt quy định dán tên cho tủ lạnh và giao Kiên phụ trách. Kiên mất bữa trưa và được thêm một việc.",
+  "characters": [
+    "kien",
+    "trinh",
+    "sep"
+  ],
+  "setting": "pantry",
+  "notes": "Sếp điềm tĩnh, không phải người xấu. Hài từ tình huống và phản ứng.",
+  "duration": {
+    "minSec": 60,
+    "targetRangeSec": [
+      60,
+      90
+    ]
+  }
+}

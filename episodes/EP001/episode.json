@@ -29,10 +29,6 @@
     "teaser1x1": "episodes/EP001/thumbnails/teaser-1x1.png",
     "socialDir": "episodes/EP001/social",
     "social": "episodes/EP001/social/social.json",
-    "publishingDir": "episodes/EP001/publishing",
-    "jobs": "episodes/EP001/publishing/jobs.json",
-    "publishLog": "episodes/EP001/publishing/log.jsonl",
-    "publishLock": "episodes/EP001/publishing/.lock",
     "reportsDir": "episodes/EP001/reports",
     "qaReport": "episodes/EP001/reports/qa-report.md",
     "publicAudio": "public/audio/episodes/EP001/dialogue.wav",
@@ -49,15 +45,6 @@
     "stagingHash": "d38709ca28993e990dfea21078a939d6baa6a427da9d8773a4a599de7b7f9b4f",
     "thumbnailDesignHash": "f849463e1f3a1a004ae87533e1d9c3187b759bb5d77e6fa0cb3d7121a83c207c"
   },
-  "production": {
-    "script": "done",
-    "audio": "done",
-    "video": "done",
-    "captions": "done",
-    "thumbnail9x16": "done",
-    "teaser1x1": "done",
-    "social": "done"
-  },
   "checks": {
     "verify": {
       "at": "2026-11-11",
@@ -69,81 +56,5 @@
       "at": "2026-11-11T04:36:29.739Z",
       "note": "Chuyển sang cấu trúc thư mục mới; hash video và âm thanh trùng bản đã duyệt."
     }
-  },
-  "approvals": {
-    "script": {
-      "status": "approved",
-      "approvedAt": "2026-11-11",
-      "approvedBy": "người dùng",
-      "sha256": "86a8344ee58bf1912a8126c27fe18f34556da286a2296cbbcef1b486f5b7d222",
-      "note": "Hash nội dung kịch bản (không gồm trường trạng thái).",
-      "basis": {},
-      "basisNote": "Nguồn ghi bổ sung 2026-11-11 (sau khi duyệt). Hợp lệ vì hash sản phẩm vẫn trùng bản duyệt, và render lại từ đúng các nguồn này cho video trùng từng byte."
-    },
-    "audio": {
-      "status": "approved",
-      "approvedAt": "2026-11-11",
-      "approvedBy": "người dùng",
-      "sha256": "801e4d91e9c190f746d90bcd4c6d13f4e773e8be1b7f203c749cf9afa855ad2f",
-      "lineCacheKeys": [
-        "79b50c37695e6d10a792cc89",
-        "14af7f14ae0a1130a6a5ccf5",
-        "a9034472cfba6c34bf463ce2",
-        "5f3bf6cb786373fa87c23ee2",
-        "0b3b5af0405ea5817ce238e2",
-        "3e166aa121ce104fe4567ec1",
-        "eaa315921618c2b3a6ccc3e0",
-        "164a3273551c9a6007245d4a",
-        "72550cbb668893f7863fbaaa",
-        "99c31440af7dec630105a577",
-        "4680eff9857816e9efef53e8",
-        "f51c19b196c2e47a9eabded9",
-        "578aca24ee1528cbcfd1936e",
-        "af9d6687813fd7a8e76b3166",
-        "1ff31a160511373a5cb3f831",
-        "bb6fc18583c42e60865d5a89",
-        "7155430f407c7b6a8c78b1a9",
-        "fa3e0708dbdb2f64fd66bd2c",
-        "d8870e0484eec70fa0001168",
-        "35b99be4f984289556f7c71c",
-        "0e16ead37d4959726567b12b",
-        "5e12ae424791932dab267fc5",
-        "61cdda6ce4cd2b954e28f102",
-        "2979c63aa9bbd129d4c2fb21",
-        "6eec5a3130aa4d8548f842df",
-        "bcf57c1974f8e02707e93e8f"
-      ],
-      "basis": {
-        "script": "86a8344ee58bf1912a8126c27fe18f34556da286a2296cbbcef1b486f5b7d222",
-        "voiceConfig": "79a5e10c01239a3f242835721c3564a0bef10c5ae134a821bf818bc163ef707f"
-      },
-      "basisNote": "Nguồn ghi bổ sung 2026-11-11 (sau khi duyệt). Hợp lệ vì hash sản phẩm vẫn trùng bản duyệt, và render lại từ đúng các nguồn này cho video trùng từng byte."
-    },
-    "video": {
-      "status": "approved",
-      "approvedAt": "2026-11-11",
-      "approvedBy": "người dùng",
-      "sha256": "8e4da8097b0c65788af5711943075c487d6d204ec38ba6ed1f51de898e204547",
-      "note": "Video có phụ đề in sẵn.",
-      "basis": {
-        "script": "86a8344ee58bf1912a8126c27fe18f34556da286a2296cbbcef1b486f5b7d222",
-        "timeline": "a8b2fcdcaa41aa3f6c1d6f6f17786266db475d466be71f5b2fa06029047c2514",
-        "audio": "801e4d91e9c190f746d90bcd4c6d13f4e773e8be1b7f203c749cf9afa855ad2f",
-        "staging": "d38709ca28993e990dfea21078a939d6baa6a427da9d8773a4a599de7b7f9b4f",
-        "sharedAssets": "dbbb624b920fe35d8106e314e87e6d9fce53ae35c75de1838dfa7a7ac68b2524"
-      },
-      "basisNote": "Nguồn ghi bổ sung 2026-11-11 (sau khi duyệt). Hợp lệ vì hash sản phẩm vẫn trùng bản duyệt, và render lại từ đúng các nguồn này cho video trùng từng byte."
-    },
-    "captions": {
-      "status": "not_approved",
-      "note": "File SRT xuất từ cùng timeline với phụ đề trong video đã duyệt, nhưng chưa được duyệt riêng như một file đăng tải."
-    },
-    "thumbnail9x16": {
-      "status": "missing"
-    },
-    "teaser1x1": {
-      "status": "missing"
-    },
-    "social": {}
   }
 }

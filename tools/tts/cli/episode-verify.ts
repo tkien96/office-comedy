@@ -1,7 +1,7 @@
 // npm run episode:verify -- EP001 [video.mp4]  (mặc định: exports/EPxxx.mp4 của tập)
 // Checks a rendered episode against its timeline (CLAUDE.md rules):
 // ≥ min duration, frame count = timeline durationInFrames, 1080x1920@30,
-// h264/yuv420p + aac, audio matches the approved preview, last speech and
+// h264/yuv420p + aac, audio matches the dialogue preview, last speech and
 // last caption fit inside the video, no black frames or long freezes.
 import { spawnSync } from "node:child_process";
 import { readFileSync } from "node:fs";
@@ -44,7 +44,7 @@ add("Không cắt cụt nội dung", dur >= tl.contentEndSec - 0.001 && dur >= l
 const dec = run("ffmpeg", ["-v", "error", "-i", video, "-f", "null", "-"]);
 add("Giải mã toàn bộ không lỗi", dec.status === 0 && !dec.stderr.trim(), dec.stderr.trim() ? dec.stderr.slice(0, 200) : "OK");
 
-// Audio vs approved preview: loudness and length (AAC re-encode, not bit-exact).
+// Audio vs dialogue preview: loudness and length (AAC re-encode, not bit-exact).
 const lufs = (f: string) => {
   const s = run("ffmpeg", ["-hide_banner", "-nostats", "-i", f, "-map", "0:a:0", "-af", "ebur128", "-f", "null", "-"]).stderr;
   const m = s.slice(s.lastIndexOf("Summary:")).match(/I:\s+(-?[\d.]+) LUFS/);
@@ -53,7 +53,7 @@ const lufs = (f: string) => {
 const prev = P.preview;
 const lv = lufs(video);
 const lp = lufs(prev);
-add("Âm thanh khớp bản đã duyệt (độ to)", Math.abs(lv - lp) <= 0.5, `video ${lv} LUFS · preview ${lp} LUFS`);
+add("Âm thanh khớp bản preview (độ to)", Math.abs(lv - lp) <= 0.5, `video ${lv} LUFS · preview ${lp} LUFS`);
 
 // Black frames and frozen picture.
 const black = run("ffmpeg", ["-hide_banner", "-nostats", "-i", video, "-vf", "blackdetect=d=0.1:pic_th=0.95", "-an", "-f", "null", "-"]).stderr;

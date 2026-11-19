@@ -117,52 +117,38 @@ Ràng buộc trong code:
 
 ## Office Comedy Studio (website local)
 
-Giao diện tiếng Việt để xem từng tập, duyệt sản phẩm, sửa nội dung social, chạy dry-run và tạo/tải bộ delivery. Chạy trên máy này, địa chỉ **http://127.0.0.1:5178**.
+Giao diện tiếng Việt để **quản lý tập**: danh sách tập, tạo tập, kịch bản (phiên bản, đề xuất, sửa tay), xem âm thanh/video/phụ đề/ảnh, sửa nội dung social, tạo và tải bộ đăng thủ công, báo cáo. Chạy trên máy này, địa chỉ **http://127.0.0.1:5178**. Không có bước duyệt và không có tích hợp đăng bài.
 
 - Mở: nhấp đúp `Studio.cmd`, hoặc chạy `npm run studio` trong PowerShell (cần Node 22.18 trở lên và `npm install` một lần trước đó).
 - Chỉ chạy máy chủ (khi đã build): `npm run studio:serve`. Đổi cổng: `$env:STUDIO_PORT=5180`.
-- **Viết kịch bản bằng Claude:** menu "Tạo tập mới" → nhập ý tưởng (hoặc nhờ Claude đề xuất 3 ý tưởng) → tạo tập → Claude viết bản nháp. Tab "Kịch bản" cho sửa tay, nhờ Claude sửa (toàn bộ hoặc theo cảnh), xem khác biệt, chấp nhận, phục hồi phiên bản, duyệt.
-  - Cần `ANTHROPIC_API_KEY` trong `.env` (khóa từ Claude Console, tính phí theo API, tách với gói Claude Code). Không có khóa thì giao diện báo "Chưa cấu hình Claude".
-  - Model và giới hạn nằm trong `config/studio.json` (mặc định `claude-opus-5-5`).
-- **Kết nối mạng xã hội:** Cấu hình → Kết nối mạng xã hội. Kết nối YouTube bằng đăng nhập Google (chỉ quyền đọc kênh), nhập Page ID + Page token Facebook, lưu username TikTok (đăng thủ công). Bí mật mã hoá bằng Windows DPAPI trong `runtime/connections/`, không cần sửa `.env`. Hướng dẫn đầy đủ: [docs/social-connections.md](docs/social-connections.md).
-- Chưa có: tạo TTS/render từ giao diện, upload, đặt lịch, đăng thật. Các nút này bị khoá và có ghi lý do.
+- **Viết kịch bản bằng Claude Code:** menu "Tạo tập mới" → nhập ý tưởng → tạo tập (Studio chỉ cấp mã và lưu yêu cầu). Nhờ Claude Code viết hoặc sửa trong phiên chat; Claude Code lưu kết quả bằng `npm run script:propose -- EPxxx <file.json>`. Tab "Kịch bản" hiện bản đề xuất để xem khác biệt, chấp nhận hoặc bỏ; ngoài ra có sửa tay và phục hồi phiên bản.
+  - Studio không gọi Claude, không cần khóa API. Việc viết dùng hạn mức phiên Claude Code của bạn.
+- **Đăng social thủ công:** tab "Bộ đăng thủ công" tạo/tải bộ `delivery/` (video, SRT, ảnh bìa, bản dán và các bước đăng cho YouTube, Facebook, TikTok).
+- Chưa có: tạo TTS/render từ giao diện (dùng lệnh npm).
 
 Kiến trúc, nguồn dữ liệu, an toàn và kết quả kiểm tra: [docs/studio.md](docs/studio.md).
 
 ## Quản lý tập
 
-Mỗi tập nằm trong `episodes/EPxxx/` gồm `episode.json`, `script/`, `audio/`, `assets/`, `exports/`, `thumbnails/`, `social/`, `publishing/`, `reports/`. Chi tiết trong CLAUDE.md, mục "Cấu trúc thư mục".
+Mỗi tập nằm trong `episodes/EPxxx/` gồm `episode.json`, `script/`, `audio/`, `assets/`, `exports/`, `thumbnails/`, `social/`, `reports/`. Chi tiết trong CLAUDE.md, mục "Cấu trúc thư mục".
 
 | Lệnh | Tác dụng |
 |---|---|
 | `npm run episode:new -- "Tiêu đề"` | Cấp mã tập mới (không trùng kể cả khi chạy đồng thời), tạo khung thư mục |
-| `npm run episode:status -- EP001` | Trạng thái sản xuất và duyệt, tính lại hash để phát hiện phần cần duyệt lại |
+| `npm run episode:status -- EP001` | Phần nào đã có / chưa có, file xuất còn khớp nguồn không |
 | `npm run script:lint -- EP001` | Rà soát kịch bản (xưng hô, vùng giọng, độ dài câu, số người nói mỗi cảnh) |
+| `npm run script:propose -- EP001 <file.json>` | Lưu kịch bản viết bằng Claude Code thành bản đề xuất (`--check`: chỉ kiểm tra) |
 | `npm run episode:audio -- EP001` | Tạo hoặc dựng lại âm thanh theo timeline tự nhiên (dùng cache) |
 | `npm run episode:docs -- EP001` | Xuất `script/script.md` với mốc thời gian thật |
-| `npm run episode:stage-audio -- EP001` | Chép âm thanh đã duyệt sang `public/` để render (từ chối nếu hash khác) |
+| `npm run episode:stage-audio -- EP001` | Chép âm thanh sang `public/` để render |
 | `npm run render:ep001` | Render ra `episodes/EP001/exports/EP001.mp4` |
 | `npm run episode:verify -- EP001` | Kiểm tra video cuối (thời lượng, khung hình, codec, âm thanh, khung đen, hình đứng im) |
 | `npm run episode:captions -- EP001` | Tạo lại `exports/EP001.srt` từ timeline và kiểm tra (chữ = lời đã đọc, mốc, chồng cue, độ dài, ngắt dòng, xưng hô, đối chiếu âm thanh). Báo cáo `reports/captions-qc.md` |
-| `npm run episode:social -- EP001` | Kiểm nội dung social (lộ câu chốt, hứa ngày giờ, giới hạn nền tảng), ghi `social/social.md` để duyệt |
+| `npm run episode:social -- EP001` | Kiểm nội dung social (lộ câu chốt, hứa ngày giờ, giới hạn nền tảng), ghi `social/social.md` |
 | `npm run episode:thumbnails -- EP001` | Render thumbnail 9:16 (2160x3840) và ảnh nhá hàng 1:1 (1080x1080) từ rig của video |
 | `npm run episode:delivery -- EP001` | Tạo lại bộ đăng thủ công `delivery/` (video, SRT, 2 ảnh, youtube/facebook/tiktok.md, README, manifest). `--check`: kiểm bộ còn khớp nguồn |
-| `npm run episode:approve -- EP001 <phần>` | **Người dùng tự chạy** sau khi xem: ghi duyệt gắn hash. Phần: `captions`, `thumbnail9x16`, `teaser1x1`, `social.youtube.video`, `social.facebook.teaser`, …; `--revoke` để thu hồi |
 
-Trạng thái duyệt:
-- **cần duyệt lại**: file hoặc chữ đã đổi sau khi duyệt.
-- **cần kiểm tra lại**: file còn nguyên, nhưng nguồn (kịch bản, timeline, âm thanh…) đã đổi.
-
-Cả hai trạng thái đều chặn đăng. Thư mục `delivery/` là bản xuất, không đưa vào Git, và không bao giờ tự nâng trạng thái duyệt.
-
-## Đăng bài (mới có dry-run)
-
-| Lệnh | Tác dụng |
-|---|---|
-| `npm run publish:dry-run -- EP001` | Kiểm tra file, hash, duyệt, tài khoản đích, token (chỉ báo có hay không), lịch, giới hạn nền tảng, lộ câu chốt, job trùng. **Không upload.** Báo cáo ở `reports/publish-dry-run.json` |
-| `npm run publish:plan -- EP001 <jobId> "YYYY-MM-DD HH:mm"` | Đặt lịch **trong dự án** theo giờ Việt Nam (lưu kèm UTC). Không gửi gì lên nền tảng |
-
-Khả năng từng nền tảng, ảnh bìa và thông tin tài khoản còn thiếu: [docs/publishing-platforms.md](docs/publishing-platforms.md). Kế hoạch tích hợp YouTube (chưa triển khai): [docs/youtube-integration-plan.md](docs/youtube-integration-plan.md). Tài khoản và token quản lý trong Studio (kho DPAPI); `.env` vẫn dùng được như trước (xem quy tắc nguồn trong [docs/social-connections.md](docs/social-connections.md)); `.env.example` chỉ có tên biến.
+Thư mục `delivery/` là bản xuất, không đưa vào Git. Đăng social làm thủ công; ghi chú giới hạn từng nền tảng (ảnh bìa, độ dài…): [docs/publishing-platforms.md](docs/publishing-platforms.md).
 
 ## Lệnh khác
 

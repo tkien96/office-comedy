@@ -4,15 +4,15 @@ import { join } from "node:path";
 // Single source of truth for the per-episode folder layout:
 //
 // episodes/EPxxx/
-//   episode.json            metadata, versions, approvals (bound to hashes)
+//   episode.json            metadata, versions, checks
 //   script/                 script.json (source), script.md, timeline.json
 //   audio/                  dialogue-preview.wav, lines/ (not in Git)
 //   assets/                 episode-only assets (shared assets stay outside)
 //   exports/                EPxxx.mp4 (not in Git), EPxxx.srt
 //   thumbnails/             thumb-9x16.png, teaser-1x1.png (not in Git)
-//   social/                 social.json (per-platform copy)
-//   publishing/             jobs.json, log.jsonl (not in Git), .lock
-//   reports/                qa-report.md, verify/dry-run reports
+//   social/                 social.json (per-platform copy, posted by hand)
+//   reports/                qa-report.md, captions-qc.md
+//   delivery/               manual-posting package (rebuilt, not in Git)
 
 export const EPISODE_ID = /^EP\d{3,}$/;
 
@@ -41,16 +41,12 @@ export const episodePaths = (id: string) => {
     teaser1x1: join(root, "thumbnails", "teaser-1x1.png"),
     socialDir: join(root, "social"),
     social: join(root, "social", "social.json"),
-    publishingDir: join(root, "publishing"),
-    jobs: join(root, "publishing", "jobs.json"),
-    publishLog: join(root, "publishing", "log.jsonl"),
-    publishLock: join(root, "publishing", ".lock"),
     reportsDir: join(root, "reports"),
     qaReport: join(root, "reports", "qa-report.md"),
     captionsQc: join(root, "reports", "captions-qc.md"),
     /** Manual-posting package, rebuilt from sources by episode:delivery (not in Git). */
     deliveryDir: join(root, "delivery"),
-    /** Copy of the approved preview used by Remotion (public/ is served). */
+    /** Copy of the dialogue preview used by Remotion (public/ is served). */
     publicAudio: join("public", "audio", "episodes", id, "dialogue.wav"),
     publicAudioSrc: `audio/episodes/${id}/dialogue.wav`,
   };

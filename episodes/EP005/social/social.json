@@ -1,0 +1,65 @@
+{
+  "$comment": "Nội dung social EP005. Đăng thủ công: bản dán và các bước đăng nằm trong bộ delivery (npm run episode:delivery -- EP005). social.md là bản đọc, tạo bằng npm run episode:social. Không lộ câu chốt, không hứa ngày/giờ.",
+  "episode": "EP005",
+  "language": "vi",
+  "spoilerGuard": {
+    "punchline": "Sếp khen bản báo cáo Kiên làm, Trinh nhận là của mình; Sếp giao thêm ba trang và Trinh lại nhờ Kiên \"mỗi trang một phút thôi\".",
+    "keepSecret": ["Sếp khen báo cáo", "Trinh nhận công", "thêm ba trang phân tích", "mỗi trang một phút"],
+    "allowedPremise": "Trinh nhờ Kiên \"giúp em một phút thôi\": đổi màu một ô bảng tính. Rồi căn lề, rồi biểu đồ, rồi tiêu đề… và đồng hồ cứ thế quay.",
+    "punchlineMustNotAppear": ["ba trang", "3 trang", "sếp khen", "nhận công", "em làm ạ", "mỗi trang"],
+    "note": "Danh sách từ khóa chỉ là lưới lọc thô, KHÔNG chứng minh bài không spoil. Đọc lại từng bài trước khi đăng."
+  },
+  "platforms": {
+    "youtube": {
+      "video": {
+        "kind": "short",
+        "title": "\"Một phút thôi mà anh…\" ⏰ | Hài công sở",
+        "body": "2 giờ chiều, Trinh nhờ Kiên \"giúp em một phút thôi\": đổi màu một ô bảng tính. Rồi căn lề. Rồi thêm biểu đồ. Rồi sửa tiêu đề cho sang… Đồng hồ thì cứ quay.\n\nCâu \"một phút thôi\" của đồng nghiệp bạn thường dài bao lâu?\n\nPhim hoạt hình hài công sở, lồng tiếng Việt.",
+        "hashtags": ["#haicongso", "#congso", "#dongnghiep", "#Shorts"],
+        "madeForKids": false,
+        "privacyAtUpload": "private",
+        "captionsFile": "exports/EP005.srt",
+        "thumbnail": "thumbnails/thumb-9x16.png"
+      },
+      "teaser": {
+        "kind": "community_text",
+        "optional": true,
+        "body": "\"Giúp em một phút thôi.\" ⏰\nBạn tin không? Kiên đã tin.",
+        "hashtags": [],
+        "image": "thumbnails/teaser-1x1.png",
+        "note": "Tùy chọn. Đăng tay trong YouTube Studio (mục Cộng đồng)."
+      }
+    },
+    "facebook": {
+      "video": {
+        "kind": "reel",
+        "body": "\"Anh ơi, giúp em một phút thôi.\" ⏰\nPhút thứ 1… phút thứ 15… phút thứ 40…\n\nTag ngay đồng nghiệp hay nhờ \"một phút thôi\" 👇",
+        "hashtags": ["#haicongso", "#congso", "#vanphong", "#hoathinh"],
+        "coverImage": "thumbnails/thumb-9x16.png",
+        "captionsFile": "exports/EP005.srt"
+      },
+      "teaser": {
+        "kind": "photo",
+        "image": "thumbnails/teaser-1x1.png",
+        "body": "Trinh nhờ Kiên \"một phút thôi\".\nĐồng hồ đang chỉ 5 giờ chiều. 👀\n\nBạn đoán đây là phút thứ mấy?",
+        "hashtags": ["#haicongso", "#congso"]
+      }
+    },
+    "tiktok": {
+      "video": {
+        "kind": "video",
+        "body": "\"Giúp em một phút thôi\" ⏰ phút thứ mấy rồi?",
+        "hashtags": ["#haicongso", "#congso", "#dongnghiep", "#hoathinh"],
+        "coverTimestampMs": 15000,
+        "coverImage": "thumbnails/thumb-9x16.png",
+        "note": "Ảnh bìa: chọn khung hình gợi ý ở coverTimestampMs, hoặc tải ảnh bìa lên nếu app cho phép (xem delivery/tiktok.md)."
+      },
+      "teaser": {
+        "kind": "photo",
+        "image": "thumbnails/teaser-1x1.png",
+        "body": "\"Một phút thôi.\" Phút thứ mấy rồi? 👀",
+        "hashtags": ["#haicongso", "#congso"]
+      }
+    }
+  }
+}

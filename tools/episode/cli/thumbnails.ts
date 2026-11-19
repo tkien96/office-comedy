@@ -4,11 +4,10 @@
 // "<ID>-thumb-9x16" / "<ID>-teaser-1x1" (layout data in
 // src/episodes/<id>-thumbnails.ts, same rig/backgrounds/fonts as the video),
 // then checks size, aspect, file limits and the text against the spoiler list.
-// Never approves anything.
 import { spawnSync } from "node:child_process";
 import { mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { pathToFileURL } from "node:url";
-import { currentSources, readManifest, readSocial, thumbnailDesignFile } from "../manifest.ts";
+import { readSocial, thumbnailDesignFile, thumbnailDesignHash } from "../manifest.ts";
 import { rel, resolveEpisode } from "../paths.ts";
 
 const P = resolveEpisode(process.argv[2] ?? "EP001");
@@ -45,14 +44,12 @@ const texts = Object.values(mod).flatMap((s) => [...s.text.headline, s.text.kick
 const guard = ((readSocial(P)?.spoilerGuard as { punchlineMustNotAppear?: string[] })?.punchlineMustNotAppear ?? []).map((g) => g.toLowerCase());
 for (const t of texts) for (const g of guard) if (t.toLowerCase().includes(g)) problems.push(`Chữ trên ảnh lộ câu chốt: "${t}" chứa "${g}".`);
 
-// Production state only (never approval).
+// Record which layout the images were rendered from.
 const raw = JSON.parse(readFileSync(P.episodeJson, "utf8"));
-raw.production.thumbnail9x16 = "done";
-raw.production.teaser1x1 = "done";
-raw.versions.thumbnailDesignHash = currentSources(P, readManifest(P)).thumbnailDesign;
+raw.versions.thumbnailDesignHash = thumbnailDesignHash(P);
 writeFileSync(P.episodeJson, JSON.stringify(raw, null, 2) + "\n");
 
 console.log(`Chữ trên ảnh: ${texts.filter(Boolean).map((t) => `"${t}"`).join(", ")}`);
 for (const p of problems) console.log(`LỖI: ${p}`);
-console.log("Cần người xem: bố cục, mặt nhân vật, chữ đọc được ở cỡ nhỏ, không lộ câu chốt. Duyệt: npm run episode:approve -- " + P.id + " thumbnail9x16 / teaser1x1");
+console.log("Cần người xem: bố cục, mặt nhân vật, chữ đọc được ở cỡ nhỏ, không lộ câu chốt.");
 if (problems.length) process.exit(1);

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { ConfigPage } from "./ConfigPage";
-import { SocialConnections } from "./SocialConnections";
 import { EpisodeDetail } from "./EpisodeDetail";
 import { EpisodeList } from "./EpisodeList";
 import { NewEpisodePage } from "./NewEpisodePage";
@@ -14,7 +13,6 @@ import { ToastProvider } from "./ui";
 //   #/tao-tap                tạo tập mới (ý tưởng → Claude viết nháp)
 //   #/cong-viec              công việc nền
 //   #/cau-hinh               cấu hình
-//   #/cau-hinh/ket-noi       kết nối mạng xã hội (?r=<id> sau khi Google chuyển về)
 
 const useHash = () => {
   const [hash, setHash] = useState(window.location.hash || "#/");
@@ -35,9 +33,6 @@ const App: React.FC = () => {
   else if (parts[0] === "tao-tap") {
     page = <NewEpisodePage />;
     active = "new";
-  } else if (parts[0] === "cau-hinh" && parts[1] === "ket-noi") {
-    page = <SocialConnections />;
-    active = "social";
   } else if (parts[0] === "cau-hinh") {
     page = <ConfigPage />;
     active = "config";
@@ -64,10 +59,7 @@ const App: React.FC = () => {
         <a className={active === "config" ? "nav active" : "nav"} href="#/cau-hinh">
           Cấu hình
         </a>
-        <a className={active === "social" ? "nav nav-sub active" : "nav nav-sub"} href="#/cau-hinh/ket-noi">
-          Kết nối mạng xã hội
-        </a>
-        <div className="sidebar-note">Chạy trên máy này (127.0.0.1). Chưa có TTS, render hay đăng bài từ giao diện.</div>
+        <div className="sidebar-note">Chạy trên máy này (127.0.0.1). Quản lý tập; tạo giọng và render bằng lệnh npm, đăng social thủ công.</div>
       </nav>
       <main className="content">{page}</main>
     </div>

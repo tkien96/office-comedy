@@ -1,13 +1,11 @@
 import { existsSync, readFileSync, statSync } from "node:fs";
 import type { IncomingMessage, ServerResponse } from "node:http";
-import { join } from "node:path";
 import { parseSrt } from "../../tools/episode/captions.ts";
 import { checkDelivery, deliveryZipEntries } from "../../tools/episode/delivery.ts";
 import { LockBusyError } from "../../tools/episode/fsutil.ts";
 import { readManifest, readSocial, socialPostKeys } from "../../tools/episode/manifest.ts";
 import { episodePaths, rel, type EpisodePaths } from "../../tools/episode/paths.ts";
 import {
-  approvePart,
   ConflictError,
   EDITABLE_FIELDS,
   episodeSummary,
@@ -23,17 +21,11 @@ import {
   type SocialPatch,
 } from "../../tools/episode/service.ts";
 import { pasteText, type Post } from "../../tools/episode/social.ts";
-import { readJobs } from "../../tools/publish/jobs.ts";
-import { runDryRun, writeDryRunReport } from "../../tools/publish/dryrun.ts";
 import { configView } from "./config.ts";
 import { insideRoot, serveFile } from "./files.ts";
 import { HttpError, readJsonBody, sendError, sendJson, SECURITY_HEADERS, str } from "./http.ts";
 import { ActiveTaskError, getTask, listTasks, runNodeScript, startTask } from "./tasks.ts";
-import { AiError } from "../../tools/ai/provider.ts";
 import { SCRIPT_ROUTES } from "./scriptapi.ts";
-import { SOCIAL_ROUTES } from "./socialapi.ts";
-import { SecretStoreError } from "../../tools/secrets/dpapi.ts";
-import { PlatformError } from "../../tools/publish/platforms.ts";
 import { writeZip } from "./zip.ts";
 
 // API routes. Every route takes an episode ID (validated against the folders
@@ -83,28 +75,10 @@ const detail = (P: EpisodePaths) => {
       editable: EDITABLE_FIELDS.filter((f) => post[f] !== undefined),
     };
   });
-  const jobs = readJobs(P).jobs.map((j) => ({
-    id: j.id,
-    platform: j.platform,
-    type: j.type,
-    mode: j.mode,
-    state: j.state,
-    target: j.target,
-    contentRef: j.content.ref,
-    media: j.media,
-    scheduleLocal: j.schedule.local,
-    scheduleUtc: j.schedule.utc,
-    remote: { id: j.remote.id, url: j.remote.url, platformStatus: j.remote.platformStatus },
-    attempts: j.attempts,
-    lastError: j.lastError,
-    history: j.history,
-    account: j.account ?? null,
-  }));
-  const dryRunFile = join(P.reportsDir, "publish-dry-run.json");
   return {
     summary,
-    manifest: { id: m.id, title: m.title, contentVersion: m.contentVersion, contentHash: m.contentHash, createdAt: m.createdAt, duration: m.duration, versions: m.versions, checks: m.checks, production: m.production },
-    parts: partStates(P, m),
+    manifest: { id: m.id, title: m.title, contentVersion: m.contentVersion, contentHash: m.contentHash, createdAt: m.createdAt, duration: m.duration, versions: m.versions, checks: m.checks },
+    parts: partStates(P),
     freshness: freshness(P),
     script: script
       ? {
@@ -117,8 +91,6 @@ const detail = (P: EpisodePaths) => {
     captions: existsSync(P.captions) ? parseSrt(readFileSync(P.captions, "utf8")) : null,
     media: Object.fromEntries(Object.entries(MEDIA).map(([k, f]) => [k, fileInfo(f(P))])),
     social: { posts, findings: socialFindings(P), guard: social?.spoilerGuard ?? null },
-    jobs,
-    lastDryRun: existsSync(dryRunFile) ? JSON.parse(readFileSync(dryRunFile, "utf8")) : null,
     reports: Object.entries(REPORTS).map(([key, r]) => ({ key, label: r.label, kind: r.kind, exists: existsSync(r.file(P)) })),
     delivery: checkDelivery(P),
     tasks: listTasks({ episode: P.id }),
@@ -153,20 +125,6 @@ export const ROUTES: Route[] = [
     },
   },
   {
-    method: "POST",
-    re: /^\/api\/episodes\/(EP\d{3,})\/approve$/,
-    handler: async (req, res, m) => {
-      const P = episode(m[1]);
-      const body = await readJsonBody(req);
-      const part = str(body.part, "part", 60);
-      const revoke = body.revoke === true;
-      const viewToken = revoke ? undefined : str(body.viewToken, "viewToken", 64);
-      const note = typeof body.note === "string" && body.note.trim() ? body.note.trim().slice(0, 300) : undefined;
-      const r = approvePart(P, part, { viewToken, note, revoke });
-      sendJson(res, 200, { ok: true, ...r });
-    },
-  },
-  {
     method: "PUT",
     re: /^\/api\/episodes\/(EP\d{3,})\/social\/([a-z]+\.[a-z]+)$/,
     handler: async (req, res, m) => {
@@ -177,16 +135,6 @@ export const ROUTES: Route[] = [
       if (!patch || typeof patch !== "object" || Array.isArray(patch)) throw new HttpError(400, 'Thiếu "patch".');
       const r = updateSocialPost(P, m[2], patch as SocialPatch, baseToken);
       sendJson(res, 200, { ok: true, ...r });
-    },
-  },
-  {
-    method: "POST",
-    re: /^\/api\/episodes\/(EP\d{3,})\/dry-run$/,
-    handler: (_q, res, m) => {
-      const P = episode(m[1]);
-      const report = runDryRun(P, new Date());
-      writeDryRunReport(P, report);
-      sendJson(res, 200, report);
     },
   },
   { method: "GET", re: /^\/api\/episodes\/(EP\d{3,})\/delivery\/check$/, handler: (_q, res, m) => sendJson(res, 200, checkDelivery(episode(m[1]))) },
@@ -201,7 +149,6 @@ export const ROUTES: Route[] = [
         episode: P.id,
         exclusiveKey: `delivery:${P.id}`,
         onActive: "dedupe",
-        queue: "none",
         run: async () => {
           const r = await runNodeScript("tools/episode/cli/delivery.ts", [P.id]);
           return { summary: r.stdout.trim().split("\n")[0] ?? "" };
@@ -240,7 +187,6 @@ export const ROUTES: Route[] = [
   },
   { method: "GET", re: /^\/api\/config$/, handler: (_q, res) => sendJson(res, 200, configView()) },
   ...SCRIPT_ROUTES,
-  ...SOCIAL_ROUTES,
 ];
 
 export const handleApiError = (res: ServerResponse, e: unknown) => {
@@ -253,9 +199,6 @@ export const handleApiError = (res: ServerResponse, e: unknown) => {
   if (e instanceof ValidationError) return sendError(res, 422, e.message);
   if (e instanceof LockBusyError) return sendError(res, 423, e.message);
   if (e instanceof ActiveTaskError) return sendError(res, 409, e.message, { activeTask: e.task.id });
-  if (e instanceof SecretStoreError) return sendError(res, 503, e.message, { secretStore: true });
-  if (e instanceof PlatformError) return sendError(res, 502, e.message, { platformError: e.outcome });
-  if (e instanceof AiError) return sendError(res, e.kind === "not_configured" ? 503 : 502, e.message, { aiError: e.kind });
   console.error(`[studio] lỗi: ${(e as Error).message}`);
   sendError(res, 500, `Lỗi máy chủ: ${(e as Error).message}`);
 };
