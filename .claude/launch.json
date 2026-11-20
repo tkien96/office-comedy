@@ -4,7 +4,7 @@
     {
       "name": "studio",
       "runtimeExecutable": "node",
-      "runtimeArgs": ["--env-file-if-exists=.env", "studio/server/main.ts"],
+      "runtimeArgs": ["--env-file-if-exists=.env", "studio/start.mjs"],
       "port": 5178
     }
   ]

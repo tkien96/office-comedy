@@ -30,6 +30,8 @@ Nguồn: tài liệu chính thức đã tra (xem `docs/publishing-platforms.md`,
 
 ## 3. Lưu và làm mới token
 
+> Cập nhật 2026-11-12: kết nối và lưu token **đã triển khai trong Studio** (Cấu hình → Kết nối mạng xã hội), lưu bằng Windows DPAPI trong `runtime/connections/`, không dùng file `youtube-token.json` hay lệnh `youtube:auth` như đề xuất dưới đây. Bản hiện tại chỉ xin `youtube.readonly`; upload cần xin thêm `youtube.upload` khi triển khai. Xem `docs/social-connections.md`.
+
 - **Refresh token:**
   - Đề xuất lưu ở file ngoài repo: `%LOCALAPPDATA%\office-comedy\secrets\youtube-token.json`. Đường dẫn ghi trong `.env` là `YOUTUBE_TOKEN_FILE`.
   - Phương án thay thế: biến `YOUTUBE_REFRESH_TOKEN` trong `.env` (đã có trong `.env.example`).

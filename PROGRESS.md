@@ -4,7 +4,30 @@ Ghi lại tiến độ để tiếp tục được khi phiên làm việc bị g
 
 ## Trạng thái hiện tại
 
-- **2026-11-11: OFFICE COMEDY STUDIO (website local) BẢN ĐẦU chạy được. Chưa commit.**
+- **2026-11-12: KẾT NỐI MẠNG XÃ HỘI TRONG STUDIO, đã kiểm bằng mock. CHƯA kết nối Google/Meta thật.**
+  - Trang Cấu hình → Kết nối mạng xã hội: YouTube (OAuth Desktop app + PKCE, quyền `youtube.readonly`, xác nhận kênh), Facebook (Page ID + Page token, Lưu và kiểm tra qua Graph v27.0 `/me`), TikTok (username/URL, đăng thủ công).
+  - Bí mật: Windows DPAPI (`runtime/connections/secrets.dpapi.json`); metadata riêng (`runtime/connections/connections.json`). Service chung `tools/publish/connections.ts` cho Studio, dry-run, delivery, CLI. `.env` vẫn dùng được, không trộn nguồn.
+  - Job API gắn tài khoản đã xác minh (`account` trong jobs.json); dry-run chặn job chưa gắn/gắn tài khoản khác/kết nối đã gỡ/thiếu quyền đăng.
+  - Kiểm thử: 95/95 tự động (bản sao, nền tảng giả lập, DPAPI thật); luồng OAuth qua trình duyệt với Google giả lập; `npm run lint` sạch.
+  - Chưa commit. Bộ delivery EP001 hiện "lệch nguồn" vì `*.md` có thêm dòng tài khoản đích: chạy lại `npm run episode:delivery -- EP001` khi cần.
+  - **Chờ người dùng:** thiết lập OAuth client trên Google Cloud và tự bấm Kết nối YouTube; nhập Page token Facebook; nhập username TikTok. Hướng dẫn: `docs/social-connections.md`.
+
+- **2026-11-12: VIẾT KỊCH BẢN BẰNG CLAUDE TRÊN STUDIO, đã chạy với mock. CHƯA chạy với khóa thật.**
+  - **Commit:**
+    - `e3e6530`: đóng bản Studio đầu (kiểm Node, khai báo esbuild, sửa bố cục desktop).
+    - Tính năng AI: commit riêng (xem git log). Chưa push.
+  - **Chạy thật được:**
+    - Trang "Tạo tập mới": nhập ý tưởng, Claude đề xuất 3 ý tưởng, tạo tập.
+    - Tab "Kịch bản": sửa tay, nhờ Claude sửa toàn bộ hoặc theo cảnh, diff, chấp nhận/bỏ đề xuất, lịch sử và phục hồi phiên bản, duyệt.
+    - Công việc AI: hàng đợi, huỷ, thử lại, gián đoạn, token và chi phí ước tính.
+  - **Kiểm thử:**
+    - 47/47 kiểm tra mock trên bản sao.
+    - Một lần gọi API thật với khóa giả, nhận 401 đúng như mong đợi.
+    - Luồng chính chạy qua trình duyệt (mock).
+  - **Chờ người dùng:**
+    - Đặt `ANTHROPIC_API_KEY` trong `.env` và xác nhận ngân sách để chạy thử thật.
+    - Sửa `config/publishing.json`: hiện `credentialEnv` của YouTube đang chứa giá trị bí mật thay vì tên biến. File chưa commit, mình không đưa vào commit nào.
+- **2026-11-11: OFFICE COMEDY STUDIO (website local) BẢN ĐẦU chạy được.**
   - Chạy: `npm run studio` hoặc `Studio.cmd` → http://127.0.0.1:5178. Chi tiết: `docs/studio.md`.
   - **Chạy thật:**
     - danh sách tập (tìm, lọc, báo lỗi theo từng tập);
@@ -114,6 +137,28 @@ Ghi lại tiến độ để tiếp tục được khi phiên làm việc bị g
 - **Chưa thay giọng chính thức, chưa tạo lại video.**
 
 ## Nhật ký
+
+### 2026-11-12 — Viết kịch bản bằng Claude trên Studio
+
+- [x] **Đóng bản Studio đầu (commit `e3e6530`):**
+  - `studio/start.mjs` kiểm Node ≥ 22.18 trước khi nạp file `.ts`.
+  - Khai báo esbuild 0.28.1 trực tiếp trong devDependencies.
+  - `Studio.cmd` gọi `timeout.exe` bằng đường dẫn đầy đủ.
+  - Video dọc vừa màn hình 1366×768; giới hạn bề rộng nội dung ở 1920×1080.
+  - Đã chạy thử launcher bằng `cmd /c`.
+- [x] **Tách code dùng chung:**
+  - `tools/tts/scriptlint.ts` (lint thành hàm).
+  - `tools/episode/create.ts` (bộ cấp mã tập; CLI `episode:new` dùng lại).
+- [x] **AI:**
+  - `tools/ai/` (provider, claude, mock, config, prompts).
+  - `tools/episode/scriptdoc.ts` (schema, chuyển đổi, kiểm tra, diff).
+  - `tools/episode/scriptstore.ts` (phiên bản, đề xuất, yêu cầu ban đầu, bản lỗi).
+  - `studio/server/aijobs.ts`, `scriptapi.ts`; `tasks.ts` thêm hàng đợi AI, huỷ, sổ token.
+- [x] **Giao diện:** trang Tạo tập mới, tab Kịch bản mới, bảng công việc AI.
+- [x] **Thêm SDK:** `@anthropic-ai/sdk` 1.8.0 (khoá phiên bản).
+- [x] **Sửa lỗi an toàn:**
+  - Dry-run từng in thẳng mục `credentialEnv` ra báo cáo. Nay chỉ in mục đúng dạng tên biến, cả ở dry-run lẫn trang Cấu hình.
+  - Báo cáo dry-run có giá trị bí mật đã được khôi phục về bản đã commit.
 
 ### 2026-11-11 — Office Comedy Studio bản đầu
 

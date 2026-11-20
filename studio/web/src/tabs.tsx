@@ -5,7 +5,6 @@ import { Markdown } from "./Markdown";
 import { Empty, ErrorBox, fmtBytes, fmtSec, Loading, TechDetails, useAsync } from "./ui";
 
 type TabProps = { d: EpisodeDetail; reload: () => void };
-const ROLE: Record<string, string> = { narrator: "Kiên (lời dẫn)", kien: "Kiên", trinh: "Trinh", sep: "Sếp" };
 const media = (d: EpisodeDetail, k: string) => d.media?.[k];
 const src = (d: EpisodeDetail, k: string) => `/api/episodes/${d.summary.id}/media/${k}`;
 
@@ -14,53 +13,6 @@ const Missing: React.FC<{ what: string; path?: string }> = ({ what, path }) => (
     {what} chưa có{path ? ` (${path})` : ""}. Studio không tạo file thay thế; tạo bằng lệnh tương ứng trong README.
   </div>
 );
-
-// ---- Kịch bản ------------------------------------------------------------------
-
-export const ScriptTab: React.FC<TabProps & { part?: PartState }> = ({ d, part, reload }) => {
-  const s = d.script;
-  if (!s) return <Missing what="Kịch bản (script/script.json)" />;
-  return (
-    <div className="stack">
-      {part ? <ApprovalPanel episode={d.summary.id} part={part} onChanged={reload} /> : null}
-      <p>
-        <strong>Ý tưởng:</strong> {s.logline}
-      </p>
-      {s.scenes.map((sc) => (
-        <div key={sc.id} className="scene">
-          <h3>
-            {sc.id}. {sc.title} <span className="muted small">· {sc.location}</span>
-          </h3>
-          {sc.note ? <p className="muted small">{sc.note}</p> : null}
-          <div className="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Thời gian</th>
-                  <th>Ai</th>
-                  <th>Lời / hành động</th>
-                  <th>Hình ảnh</th>
-                </tr>
-              </thead>
-              <tbody>
-                {s.beats
-                  .filter((b) => b.scene === sc.id)
-                  .map((b) => (
-                    <tr key={b.id} className={b.kind === "action" ? "row-action" : undefined}>
-                      <td className="nowrap">{b.time ? `${fmtSec(b.time.speechStartSec ?? b.time.startSec)}–${fmtSec(b.time.speechEndSec ?? b.time.endSec)}` : "—"}</td>
-                      <td>{b.kind === "line" ? ROLE[b.role ?? ""] ?? b.role : <em>hành động</em>}</td>
-                      <td>{b.kind === "line" ? `"${b.text}"` : <em>{b.desc}</em>}</td>
-                      <td className="small">{b.visual ?? ""}</td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-};
 
 // ---- Âm thanh và video --------------------------------------------------------------
 

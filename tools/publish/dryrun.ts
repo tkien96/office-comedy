@@ -8,11 +8,15 @@ import { checkApproval, currentHashes, currentSources, hashFile, hashJson, hashT
 import { rel, type EpisodePaths } from "../episode/paths.ts";
 import { partLabel } from "../episode/service.ts";
 import { DATE_PROMISE } from "../episode/social.ts";
+import { readMeta, targetAccountInfo, targetCredentialStatus, type TargetCredentialStatus } from "./connections.ts";
 import { idempotencyKey, isMissed, localToUtc, mustReconcileBeforeSend, readJobs, type Job } from "./jobs.ts";
 
 export type Cap = { api: boolean; schedule?: boolean; minLeadMinutes?: number; maxAheadDays?: number | null; minDurationSec?: number; maxDurationSec?: number; note?: string };
 type Target = { platform: string; label: string; credentialEnv: string[]; [k: string]: unknown };
-export type Finding = { level: "BLOCK" | "WARN" | "INFO"; msg: string };
+/** A valid environment variable NAME (upper-case, digits, underscore). Values never match. */
+export const isEnvName = (s: string) => /^[A-Z][A-Z0-9_]{1,63}$/.test(s);
+
+export type Finding ={ level: "BLOCK" | "WARN" | "INFO"; msg: string };
 export type DryRunResult = { job: string; platform: string; type: string; state: string; mode: string; ready: boolean; findings: Finding[]; idempotencyKey: string | null; scheduleUtc: string | null; scheduleLocal: string | null };
 export type DryRunReport = { episode: string; dryRun: true; note: string; checkedAt: string; readyCount: number; total: number; results: DryRunResult[] };
 
@@ -35,6 +39,7 @@ export const runDryRun = (P: EpisodePaths, now: Date = new Date()): DryRunReport
 
   const results: DryRunResult[] = [];
   const keys = new Map<string, string>();
+  const credCache = new Map<string, TargetCredentialStatus>();
 
   for (const job of jobs as Job[]) {
     const f: Finding[] = [];
@@ -97,11 +102,29 @@ export const runDryRun = (P: EpisodePaths, now: Date = new Date()): DryRunReport
     else {
       if (target.platform !== job.platform) block(`Tài khoản đích ${job.target} không thuộc ${job.platform}.`);
       const idField = TARGET_ID_FIELD[job.platform];
-      if (!target[idField]) (job.mode === "api" ? block : warn)(`Tài khoản đích "${target.label}" chưa có ${idField}.`);
       if (job.mode === "api") {
-        const missing = target.credentialEnv.filter((n) => !process.env[n]);
-        if (missing.length) block(`Thiếu biến môi trường: ${missing.join(", ")} (không in giá trị).`);
-        else info("Biến môi trường thông tin đăng nhập: có (không in giá trị).");
+        // One shared resolver (Studio connection OR .env, never mixed). Names only, no values.
+        if (!credCache.has(job.target)) credCache.set(job.target, targetCredentialStatus(job.target, { decryptTest: true }));
+        const cs = credCache.get(job.target)!;
+        for (const p of cs.problems) block(`Tài khoản đích "${target.label}": ${p}`);
+        for (const n of cs.notes) info(n);
+        for (const c of cs.capabilities) if (c.state !== "yes" && ["upload", "publish", "schedule"].includes(c.key)) block(`${c.label}: ${c.note}`);
+        // The job must be bound to a verified account, and that account must be the one active now.
+        if (!job.account) block("Job chưa gắn tài khoản đích đã xác minh. Vào Studio → tab Phát hành → Gắn tài khoản (không tự gán).");
+        else {
+          const meta = readMeta();
+          const boundConn = meta.connections[job.account.connectionId];
+          if (boundConn?.removedAt) block(`Kết nối mà job gắn (${job.account.name}) đã bị gỡ khỏi Studio: ${boundConn.removedReason ?? ""} Không thể tiếp tục với kết nối này.`);
+          if (cs.identity && job.account.platformAccountId !== cs.identity.id)
+            block(`Job gắn với ${job.account.name} (${job.account.platformAccountId}) nhưng kết nối đang dùng là ${cs.identity.name} (${cs.identity.id}). Studio không tự chuyển đích; gắn lại nếu bạn muốn đổi.`);
+          else if (cs.identity) info(`Tài khoản đích: ${cs.identity.name} (${cs.identity.id}).`);
+        }
+        const expected = target[idField] as string | null | undefined;
+        if (expected && cs.identity && expected !== cs.identity.id) warn(`${idField} trong config/publishing.json (${expected}) khác tài khoản đã xác minh (${cs.identity.id}).`);
+      } else if (job.platform === "tiktok") {
+        const a = targetAccountInfo(job.target);
+        if (a?.tiktok) info(`Tài khoản TikTok (đăng thủ công, chưa xác minh bằng API): @${a.tiktok.username}.`);
+        else warn("Chưa lưu tài khoản TikTok đích trong Studio (Cấu hình → Kết nối mạng xã hội).");
       }
     }
 

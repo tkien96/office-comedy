@@ -50,8 +50,16 @@ export type Job = {
   remote: { id: string | null; url: string | null; platformStatus: string | null; lastCheckedAt: string | null };
   attempts: number;
   lastError: string | null;
+  /**
+   * Verified account this job posts to (set only by the user: Studio "Gắn tài
+   * khoản" / bindJobAccount). Changing the default connection never rewrites it.
+   * Missing on old jobs → API posting is blocked until the user confirms.
+   */
+  account?: JobAccount | null;
   history: { at: string; from: JobState | null; to: JobState; note: string }[];
 };
+
+export type JobAccount = { connectionId: string; platformAccountId: string; name: string; boundAt: string };
 
 export type JobsFile = { episode: string; jobs: Job[] };
 
