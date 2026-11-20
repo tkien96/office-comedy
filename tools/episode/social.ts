@@ -3,14 +3,12 @@ import { hashJson, readSocial, socialPostKeys, type SocialDoc } from "./manifest
 import type { EpisodePaths } from "./paths.ts";
 
 // Social copy helpers. social.json is the source; social.md is a readable
-// export for review, generated deterministically (no approval state inside,
-// so it only changes when the copy changes).
+// export, generated deterministically (it only changes when the copy changes).
+// Every post is published by hand.
 
 export type Post = {
   kind?: string;
-  postingMode?: "api" | "manual";
   optional?: boolean;
-  supportedByApi?: boolean;
   title?: string;
   body?: string;
   hashtags?: string[];
@@ -78,7 +76,7 @@ export const platformMd = (social: SocialDoc, platform: string, opts: { mapPath?
     return [
       `### ${POST_LABEL[name] ?? name}${p.optional ? " (tùy chọn)" : ""} · \`${key}\``,
       "",
-      `- Cách đăng: **${p.postingMode === "manual" ? "thủ công" : "API (sau khi tích hợp)"}**${p.kind ? ` · loại: ${p.kind}` : ""}`,
+      p.kind ? `- Loại bài: ${p.kind}` : null,
       media ? `- Media: ${media}` : null,
       p.coverTimestampMs !== undefined ? `- Khung bìa gợi ý: ${(p.coverTimestampMs / 1000).toFixed(1)} s` : null,
       p.note ? `- Ghi chú: ${p.note}` : null,
@@ -101,10 +99,10 @@ export const platformMd = (social: SocialDoc, platform: string, opts: { mapPath?
 
 export const buildSocialMd = (P: EpisodePaths, social: SocialDoc) => {
   const g = social.spoilerGuard as { punchline?: string; keepSecret?: string[]; allowedPremise?: string; note?: string };
-  return `# ${P.id}: nội dung social (bản đọc để duyệt)
+  return `# ${P.id}: nội dung social (bản đọc)
 
 Tạo từ \`social/social.json\` bằng \`npm run episode:social -- ${P.id}\`. Đừng sửa file này; sửa \`social.json\` rồi chạy lại lệnh.
-Mỗi bài duyệt riêng, gắn với hash nội dung của bài đó: \`npm run episode:approve -- ${P.id} social.<nền tảng>.<bài>\` (ví dụ \`social.youtube.video\`). Trạng thái duyệt xem bằng \`npm run episode:status -- ${P.id}\`.
+Đăng thủ công trên từng nền tảng; bản dán và các bước đăng nằm trong bộ delivery (\`npm run episode:delivery -- ${P.id}\`).
 
 ## Giữ bí mật
 

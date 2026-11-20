@@ -1,0 +1,22 @@
+{
+  "createdAt": "2026-11-19T07:19:06.406Z",
+  "requestToken": "cc-be3d522e-16e0-4bf4-b185-f355c6e871dc",
+  "ideaSource": "user",
+  "title": "Họp online",
+  "idea": "Họp trực tuyến, Kiên tưởng mình đã tắt micro nên vừa họp vừa than thở, ăn bánh, hát nho nhỏ. Trinh ngồi bàn bên nhắn tin \"Anh ơi…\" mấy lần nhưng Kiên không đọc. Cả cuộc họp im lặng bất thường.",
+  "punchlineDirection": "Sếp kết thúc cuộc họp: cảm ơn các em, và cảm ơn Kiên đã hát nền suốt buổi. Không bị giao việc, chỉ ngượng chín người.",
+  "characters": [
+    "kien",
+    "trinh",
+    "sep"
+  ],
+  "setting": "office",
+  "notes": "Không giống EP002: lần này không gửi nhầm, mà quên tắt micro. Sếp điềm tĩnh, có chút hài hước. Không dùng lời bài hát có thật (bản quyền); Kiên ngân nga lời tự chế.",
+  "duration": {
+    "minSec": 60,
+    "targetRangeSec": [
+      60,
+      90
+    ]
+  }
+}

@@ -1,0 +1,521 @@
+{
+  "id": "p-mwn8mhle-415mhm",
+  "createdAt": "2026-11-19T07:37:33.074Z",
+  "hash": "e6edc3289836947a29c8f45c5069e7047ae8d0d908315d9b8e7f47d4195e29f8",
+  "source": "claude-code",
+  "kind": "draft",
+  "instruction": "Bản nháp đầu viết bằng Claude Code",
+  "scope": [],
+  "baseVersion": null,
+  "baseHash": null,
+  "status": "accepted",
+  "check": {
+    "errors": [],
+    "warnings": [
+      "n03: lời dẫn không có \"tôi\" (ngôi thứ nhất vẫn có thể ngầm hiểu): \"Phút thứ mười lăm.\"",
+      "n04: lời dẫn không có \"tôi\" (ngôi thứ nhất vẫn có thể ngầm hiểu): \"Phút thứ bốn mươi.\"",
+      "n05: lời dẫn không có \"tôi\" (ngôi thứ nhất vẫn có thể ngầm hiểu): \"Phút thứ chín mươi.\"",
+      "Số câu Kiên/Trinh có từ \"sếp\": 1"
+    ],
+    "lint": {
+      "problems": [],
+      "notes": [
+        "n03: lời dẫn không có \"tôi\" (ngôi thứ nhất vẫn có thể ngầm hiểu): \"Phút thứ mười lăm.\"",
+        "n04: lời dẫn không có \"tôi\" (ngôi thứ nhất vẫn có thể ngầm hiểu): \"Phút thứ bốn mươi.\"",
+        "n05: lời dẫn không có \"tôi\" (ngôi thứ nhất vẫn có thể ngầm hiểu): \"Phút thứ chín mươi.\"",
+        "Số câu Kiên/Trinh có từ \"sếp\": 1"
+      ],
+      "estimateSec": 69.7
+    },
+    "estimateSec": 69.7
+  },
+  "script": {
+    "$comment": "Dữ liệu kịch bản EP005 (nguồn duy nhất cho âm thanh và video). Mỗi beat là câu thoại (line) hoặc nhịp hành động không lời (action, \"sec\" theo nội dung hành động). Hành động diễn ra trong lúc có thoại ghi ở \"visual\" của câu đó, không cộng thêm thời gian.",
+    "id": "EP005",
+    "title": "Một phút thôi",
+    "logline": "Trinh nhờ Kiên \"giúp em một phút thôi\". Một ô bảng tính thành căn lề, biểu đồ, tiêu đề… và đồng hồ cứ thế quay. Đến khi Sếp đi ngang khen bản báo cáo.",
+    "creative": {
+      "premise": "Một lời nhờ \"một phút thôi\" kéo dài cả buổi chiều.",
+      "punchline": "Trinh nhận lời khen của Sếp cho báo cáo Kiên làm, Sếp giao thêm ba trang, và Trinh lại nhờ Kiên \"một phút nữa thôi\"."
+    },
+    "fps": 30,
+    "timing": {
+      "turnGapSec": 0.22,
+      "sameTurnGapSec": 0.2,
+      "leadInSec": 0.25
+    },
+    "scenes": [
+      {
+        "id": "S1",
+        "title": "Hai giờ chiều",
+        "location": "office",
+        "speakers": [
+          "narrator"
+        ],
+        "note": "Câu móc trong 3 giây đầu."
+      },
+      {
+        "id": "S2",
+        "title": "Một phút",
+        "location": "office",
+        "speakers": [
+          "trinh",
+          "kien"
+        ],
+        "note": "Đồng hồ treo tường chạy nhanh suốt cảnh (montage)."
+      },
+      {
+        "id": "S3",
+        "title": "Sếp đi ngang",
+        "location": "office",
+        "speakers": [
+          "sep",
+          "trinh"
+        ],
+        "note": "Kiên có mặt nhưng không nói."
+      },
+      {
+        "id": "S4",
+        "title": "Thêm một phút",
+        "location": "office",
+        "speakers": [
+          "trinh",
+          "kien"
+        ],
+        "note": "Lời dẫn chốt là của Kiên, không đọc chồng lên thoại."
+      }
+    ],
+    "beats": [
+      {
+        "id": "n01",
+        "scene": "S1",
+        "kind": "line",
+        "role": "narrator",
+        "text": "Trinh bảo tôi: chỉ một phút thôi.",
+        "visual": "Cận mặt Kiên trước laptop, đồng hồ treo tường chỉ 2 giờ.",
+        "expression": {
+          "kien": "neutral"
+        }
+      },
+      {
+        "id": "n02",
+        "scene": "S1",
+        "kind": "line",
+        "role": "narrator",
+        "sameTurn": true,
+        "text": "Và tôi đã tin.",
+        "visual": "Hình đứng khựng, Kiên mỉm cười ngây thơ.",
+        "expression": {
+          "kien": "happy"
+        }
+      },
+      {
+        "id": "a01",
+        "scene": "S1",
+        "kind": "action",
+        "desc": "Trinh trượt ghế sang bàn Kiên, ôm laptop, cười ngọt.",
+        "sec": 1.1
+      },
+      {
+        "id": "t01",
+        "scene": "S2",
+        "kind": "line",
+        "role": "trinh",
+        "text": "Anh ơi, giúp em một phút thôi.",
+        "expression": {
+          "trinh": "happy",
+          "kien": "neutral"
+        }
+      },
+      {
+        "id": "t02",
+        "scene": "S2",
+        "kind": "line",
+        "role": "trinh",
+        "sameTurn": true,
+        "text": "Đổi màu ô này sang xanh giùm em.",
+        "visual": "Trinh chỉ vào màn hình.",
+        "expression": {
+          "trinh": "happy"
+        },
+        "pose": {
+          "trinh": "pointing"
+        }
+      },
+      {
+        "id": "k01",
+        "scene": "S2",
+        "kind": "line",
+        "role": "kien",
+        "text": "Dễ mà. Xong rồi nè.",
+        "visual": "Kiên bấm chuột một cái.",
+        "expression": {
+          "kien": "happy"
+        }
+      },
+      {
+        "id": "t03",
+        "scene": "S2",
+        "kind": "line",
+        "role": "trinh",
+        "text": "Hay quá. Tiện anh căn lề luôn nha.",
+        "expression": {
+          "trinh": "happy"
+        }
+      },
+      {
+        "id": "k02",
+        "scene": "S2",
+        "kind": "line",
+        "role": "kien",
+        "text": "Ờ… cũng được.",
+        "expression": {
+          "kien": "neutral"
+        }
+      },
+      {
+        "id": "n03",
+        "scene": "S2",
+        "kind": "line",
+        "role": "narrator",
+        "text": "Phút thứ mười lăm.",
+        "visual": "Kim đồng hồ quay vèo.",
+        "expression": {
+          "kien": "neutral"
+        }
+      },
+      {
+        "id": "t04",
+        "scene": "S2",
+        "kind": "line",
+        "role": "trinh",
+        "text": "Thêm cái biểu đồ nữa là đẹp luôn á anh.",
+        "expression": {
+          "trinh": "happy"
+        }
+      },
+      {
+        "id": "k03",
+        "scene": "S2",
+        "kind": "line",
+        "role": "kien",
+        "text": "Biểu đồ cột hay biểu đồ tròn?",
+        "expression": {
+          "kien": "suspicious"
+        }
+      },
+      {
+        "id": "t05",
+        "scene": "S2",
+        "kind": "line",
+        "role": "trinh",
+        "text": "Cả hai đi anh. Cho người ta chọn.",
+        "expression": {
+          "trinh": "happy",
+          "kien": "surprised"
+        }
+      },
+      {
+        "id": "n03b",
+        "scene": "S2",
+        "kind": "line",
+        "role": "narrator",
+        "text": "Việc của tôi thì vẫn nằm yên ở tab bên cạnh.",
+        "visual": "Màn hình Kiên: tab \"Báo cáo của Kiên\" chưa mở.",
+        "expression": {
+          "kien": "neutral"
+        }
+      },
+      {
+        "id": "n04",
+        "scene": "S2",
+        "kind": "line",
+        "role": "narrator",
+        "text": "Phút thứ bốn mươi.",
+        "expression": {
+          "kien": "annoyed"
+        }
+      },
+      {
+        "id": "t06",
+        "scene": "S2",
+        "kind": "line",
+        "role": "trinh",
+        "text": "Sửa tiêu đề cho sang chút nha anh.",
+        "expression": {
+          "trinh": "happy"
+        }
+      },
+      {
+        "id": "k04",
+        "scene": "S2",
+        "kind": "line",
+        "role": "kien",
+        "text": "Sang cỡ nào em?",
+        "expression": {
+          "kien": "annoyed"
+        }
+      },
+      {
+        "id": "t07",
+        "scene": "S2",
+        "kind": "line",
+        "role": "trinh",
+        "text": "Cỡ… được sếp khen á.",
+        "expression": {
+          "trinh": "happy"
+        }
+      },
+      {
+        "id": "t07b",
+        "scene": "S2",
+        "kind": "line",
+        "role": "trinh",
+        "text": "Xong rồi anh xuất ra PDF giùm em nha.",
+        "expression": {
+          "trinh": "happy"
+        }
+      },
+      {
+        "id": "k04b",
+        "scene": "S2",
+        "kind": "line",
+        "role": "kien",
+        "text": "Hay anh in ra, đóng bìa luôn cho em?",
+        "visual": "Kiên nói mỉa, nhướng mày.",
+        "expression": {
+          "kien": "suspicious"
+        }
+      },
+      {
+        "id": "t07c",
+        "scene": "S2",
+        "kind": "line",
+        "role": "trinh",
+        "text": "Dạ được luôn hả? Anh tốt quá!",
+        "expression": {
+          "trinh": "happy",
+          "kien": "surprised"
+        }
+      },
+      {
+        "id": "a02",
+        "scene": "S2",
+        "kind": "action",
+        "desc": "Kiên gõ phím như vũ bão. Đồng hồ treo tường quay tít.",
+        "sec": 1.3
+      },
+      {
+        "id": "n05",
+        "scene": "S2",
+        "kind": "line",
+        "role": "narrator",
+        "text": "Phút thứ chín mươi.",
+        "expression": {
+          "kien": "embarrassed"
+        }
+      },
+      {
+        "id": "n05b",
+        "scene": "S2",
+        "kind": "line",
+        "role": "narrator",
+        "sameTurn": true,
+        "text": "Tôi bắt đầu nghi ngờ khái niệm một phút.",
+        "expression": {
+          "kien": "embarrassed"
+        }
+      },
+      {
+        "id": "a03",
+        "scene": "S3",
+        "kind": "action",
+        "desc": "Trinh kéo laptop về bàn mình. Sếp đi ngang, dừng lại nhìn màn hình của Trinh.",
+        "sec": 1.3
+      },
+      {
+        "id": "s01",
+        "scene": "S3",
+        "kind": "line",
+        "role": "sep",
+        "text": "Báo cáo này ai làm mà đẹp thế?",
+        "expression": {
+          "sep": "happy",
+          "kien": "happy"
+        }
+      },
+      {
+        "id": "t08",
+        "scene": "S3",
+        "kind": "line",
+        "role": "trinh",
+        "text": "Dạ, em làm ạ!",
+        "visual": "Trinh nhanh nhảu giơ tay. Kiên há hốc.",
+        "expression": {
+          "trinh": "happy",
+          "kien": "surprised"
+        }
+      },
+      {
+        "id": "s02",
+        "scene": "S3",
+        "kind": "line",
+        "role": "sep",
+        "text": "Tốt. Biểu đồ rõ ràng, tiêu đề cũng sang.",
+        "expression": {
+          "sep": "happy"
+        }
+      },
+      {
+        "id": "s03",
+        "scene": "S3",
+        "kind": "line",
+        "role": "sep",
+        "sameTurn": true,
+        "text": "Em làm thêm ba trang phân tích nhé.",
+        "expression": {
+          "sep": "neutral"
+        },
+        "pose": {
+          "sep": "pointing"
+        }
+      },
+      {
+        "id": "s04",
+        "scene": "S3",
+        "kind": "line",
+        "role": "sep",
+        "sameTurn": true,
+        "text": "Sáng mai anh xem.",
+        "expression": {
+          "sep": "neutral"
+        }
+      },
+      {
+        "id": "t09",
+        "scene": "S3",
+        "kind": "line",
+        "role": "trinh",
+        "text": "Dạ, em làm liền ạ!",
+        "expression": {
+          "trinh": "happy"
+        }
+      },
+      {
+        "id": "a04",
+        "scene": "S3",
+        "kind": "action",
+        "desc": "Sếp đi khỏi. Trinh từ từ quay sang Kiên, cười tươi hơn bao giờ hết.",
+        "sec": 1.3
+      },
+      {
+        "id": "t10",
+        "scene": "S4",
+        "kind": "line",
+        "role": "trinh",
+        "text": "Anh ơi…",
+        "expression": {
+          "trinh": "happy",
+          "kien": "suspicious"
+        }
+      },
+      {
+        "id": "k05",
+        "scene": "S4",
+        "kind": "line",
+        "role": "kien",
+        "text": "Đừng nói là một phút nha em.",
+        "expression": {
+          "kien": "annoyed"
+        }
+      },
+      {
+        "id": "t11",
+        "scene": "S4",
+        "kind": "line",
+        "role": "trinh",
+        "text": "Không đâu. Lần này một phút thiệt mà.",
+        "expression": {
+          "trinh": "happy"
+        }
+      },
+      {
+        "id": "t12",
+        "scene": "S4",
+        "kind": "line",
+        "role": "trinh",
+        "sameTurn": true,
+        "text": "Ba trang, mỗi trang… một phút thôi.",
+        "visual": "Trinh giơ ba ngón tay, cười híp mắt.",
+        "expression": {
+          "trinh": "happy",
+          "kien": "embarrassed"
+        }
+      },
+      {
+        "id": "k06",
+        "scene": "S4",
+        "kind": "line",
+        "role": "kien",
+        "text": "Hôm nay anh phải về sớm mà em.",
+        "expression": {
+          "kien": "annoyed"
+        }
+      },
+      {
+        "id": "t13",
+        "scene": "S4",
+        "kind": "line",
+        "role": "trinh",
+        "text": "Dạ, nên em mới nhờ anh làm nhanh đó.",
+        "expression": {
+          "trinh": "happy",
+          "kien": "embarrassed"
+        }
+      },
+      {
+        "id": "a05",
+        "scene": "S4",
+        "kind": "action",
+        "desc": "Kiên gục xuống bàn phím. Đồng hồ treo tường chỉ năm rưỡi chiều.",
+        "sec": 1.3
+      },
+      {
+        "id": "n06",
+        "scene": "S4",
+        "kind": "line",
+        "role": "narrator",
+        "text": "Hôm đó tôi học được một điều.",
+        "expression": {
+          "kien": "neutral"
+        }
+      },
+      {
+        "id": "n07",
+        "scene": "S4",
+        "kind": "line",
+        "role": "narrator",
+        "sameTurn": true,
+        "text": "Một phút của Trinh dài hơn cả buổi chiều của tôi.",
+        "expression": {
+          "kien": "embarrassed"
+        }
+      },
+      {
+        "id": "a06",
+        "scene": "S4",
+        "kind": "action",
+        "desc": "Giữ khung hình mặt Kiên; kết thúc.",
+        "sec": 1
+      }
+    ],
+    "duration": {
+      "minSec": 60,
+      "targetRangeSec": [
+        60,
+        90
+      ]
+    }
+  },
+  "statusNote": "Thành phiên bản 1"
+}

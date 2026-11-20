@@ -1,0 +1,2198 @@
+{
+  "episode": "EP004",
+  "contentEndSec": 63.86,
+  "durationSec": 63.867,
+  "fps": 30,
+  "durationInFrames": 1916,
+  "durationRule": "durationInFrames = ceil(contentEndSec × fps); contentEndSec = điểm kết thúc của mục cuối cùng trên timeline (âm thanh hoặc hành động)",
+  "minDurationSec": 60,
+  "targetRangeSec": [
+    60,
+    90
+  ],
+  "durationStatus": "trong khoảng mục tiêu 60–90 s",
+  "sampleRate": 48000,
+  "model": "vieneu@3.8.4/v3turbo-onnx-fp32/pnnbao-ump/VieNeu-TTS-v3-Turbo@61b85e3d937fbbacb387714180e8182823512523/OpenMOSS-Team/MOSS-Audio-Tokenizer-Nano-ONNX@ceff0d0749bfb3fa2d61149794ec6feef0d1e1ae",
+  "voices": {
+    "narrator": {
+      "voiceId": "ref:806c4f559c3a4cf0d30045b650044c008d565ae95ae7d8df94f27c5b953b5712",
+      "ref": "kien",
+      "settings": {
+        "temperature": 0.8,
+        "top_k": 25,
+        "top_p": 0.95,
+        "repetition_penalty": 1.2,
+        "max_chars": 256,
+        "silence_p": 0.15,
+        "crossfade_p": 0,
+        "apply_watermark": false,
+        "ref_denoise": false
+      }
+    },
+    "kien": {
+      "voiceId": "ref:806c4f559c3a4cf0d30045b650044c008d565ae95ae7d8df94f27c5b953b5712",
+      "ref": "kien",
+      "settings": {
+        "temperature": 0.8,
+        "top_k": 25,
+        "top_p": 0.95,
+        "repetition_penalty": 1.2,
+        "max_chars": 256,
+        "silence_p": 0.15,
+        "crossfade_p": 0,
+        "apply_watermark": false,
+        "ref_denoise": false
+      }
+    },
+    "trinh": {
+      "voiceId": "ref:b07ad2220f15db399ce12bda426919582de6093a7c5fd29f5390b87e602a3011",
+      "ref": "trinh",
+      "settings": {
+        "temperature": 0.8,
+        "top_k": 25,
+        "top_p": 0.95,
+        "repetition_penalty": 1.2,
+        "max_chars": 256,
+        "silence_p": 0.15,
+        "crossfade_p": 0,
+        "apply_watermark": false,
+        "ref_denoise": false
+      }
+    },
+    "sep": {
+      "voiceId": "ref:f19ba79593237254d45e8b7bc91595b51af2ca685765eecce63ab53ad5e16230",
+      "ref": "sep",
+      "settings": {
+        "temperature": 0.8,
+        "top_k": 25,
+        "top_p": 0.95,
+        "repetition_penalty": 1.2,
+        "max_chars": 256,
+        "silence_p": 0.15,
+        "crossfade_p": 0,
+        "apply_watermark": false,
+        "ref_denoise": false
+      }
+    }
+  },
+  "mix": {
+    "targetLufs": -18,
+    "maxTruePeakDb": -1.5,
+    "appliedTargetLufs": -21.2,
+    "preview": "episodes/EP004/audio/dialogue-preview.wav",
+    "lufs": -21.5,
+    "truePeakDb": -1.5
+  },
+  "edgeRules": {
+    "speechRmsDb": -38,
+    "speechPeakDb": -30,
+    "floorMaxPeakDb": -35,
+    "minOnsetJumpDb": 15,
+    "minLeadSec": 0.15,
+    "decayGuardSec": 0.06,
+    "prerollSec": 0.08,
+    "attackGuardSec": 0.03,
+    "postrollSec": 0.12,
+    "fadeInSec": 0.015,
+    "fadeOutSec": 0.04
+  },
+  "breakdown": {
+    "lineClipsSec": 53.09,
+    "actionSec": 10,
+    "gapsSec": 0.77,
+    "frameAlignTailSec": 0.007,
+    "gapNotes": [
+      "n01→n02: khoảng lặng tự nhiên 0.22 s > mục tiêu 0.2 s",
+      "s04→s05: khoảng lặng tự nhiên 0.26 s > mục tiêu 0.22 s",
+      "t03→k09: khoảng lặng tự nhiên 0.33 s > mục tiêu 0.22 s",
+      "t04→t05: khoảng lặng tự nhiên 0.23 s > mục tiêu 0.2 s",
+      "t05→t06: khoảng lặng tự nhiên 0.21 s > mục tiêu 0.2 s",
+      "k10→t07: khoảng lặng tự nhiên 0.23 s > mục tiêu 0.22 s",
+      "t07→k11: khoảng lặng tự nhiên 0.25 s > mục tiêu 0.22 s"
+    ]
+  },
+  "items": [
+    {
+      "id": "n01",
+      "scene": "S1",
+      "kind": "line",
+      "role": "narrator",
+      "voiceId": "ref:806c4f559c3a4cf0d30045b650044c008d565ae95ae7d8df94f27c5b953b5712",
+      "text": "Họp online thì tôi luôn tắt micro.",
+      "file": "episodes/EP004/audio/lines/01_n01_narrator.wav",
+      "startSec": 0.14,
+      "endSec": 1.86,
+      "speechStartSec": 0.25,
+      "speechEndSec": 1.74,
+      "startFrame": 4,
+      "endFrame": 56,
+      "cacheKey": "a26fbc8946d9aa2305eb8ba5",
+      "fromCache": false,
+      "createdAt": "2026-11-19T07:23:10.222Z",
+      "rawSec": 1.76,
+      "edges": {
+        "leading": {
+          "lengthSec": 0.11,
+          "floorPeakDb": -66.8,
+          "floorMedianRmsDb": -94.5,
+          "onsetJumpDb": 79,
+          "trimmed": false,
+          "reason": "ngắn (0.11 s), giữ nguyên"
+        },
+        "trailing": {
+          "lengthSec": 0.16,
+          "floorPeakDb": -54.1,
+          "trimmed": true,
+          "reason": "đuôi 0.16 s, sau 60 ms tắt dần chỉ còn nền (đỉnh ≤ -54.1 dBFS); giữ 120 ms"
+        }
+      },
+      "loudness": {
+        "before": {
+          "lufs": -19.8,
+          "truePeakDb": -2.1
+        },
+        "gainDb": -1.4,
+        "after": {
+          "lufs": -21.2,
+          "truePeakDb": -3.5
+        }
+      },
+      "qc": {
+        "durationSec": 1.72,
+        "sampleRate": 48000,
+        "channels": 1,
+        "peakDb": -3.53,
+        "leadingSilenceSec": 0,
+        "trailingSilenceSec": 0,
+        "tailRmsDb": -59.9,
+        "innerSilences": [],
+        "speechSec": 1.72,
+        "syllables": 7,
+        "syllablesPerSec": 4.07,
+        "flags": []
+      }
+    },
+    {
+      "id": "n02",
+      "scene": "S1",
+      "kind": "line",
+      "role": "narrator",
+      "voiceId": "ref:806c4f559c3a4cf0d30045b650044c008d565ae95ae7d8df94f27c5b953b5712",
+      "text": "Ít nhất là tôi tưởng vậy.",
+      "file": "episodes/EP004/audio/lines/02_n02_narrator.wav",
+      "startSec": 1.86,
+      "endSec": 3.06,
+      "speechStartSec": 1.96,
+      "speechEndSec": 2.94,
+      "startFrame": 56,
+      "endFrame": 92,
+      "cacheKey": "23e5ae7a42b02359f94ac690",
+      "fromCache": false,
+      "createdAt": "2026-11-19T07:23:24.546Z",
+      "rawSec": 1.28,
+      "edges": {
+        "leading": {
+          "lengthSec": 0.1,
+          "floorPeakDb": -90.3,
+          "floorMedianRmsDb": -95.8,
+          "onsetJumpDb": 77.1,
+          "trimmed": false,
+          "reason": "ngắn (0.10 s), giữ nguyên"
+        },
+        "trailing": {
+          "lengthSec": 0.2,
+          "floorPeakDb": -44.5,
+          "trimmed": true,
+          "reason": "đuôi 0.20 s, sau 60 ms tắt dần chỉ còn nền (đỉnh ≤ -44.5 dBFS); giữ 120 ms"
+        }
+      },
+      "loudness": {
+        "before": {
+          "lufs": -20.2,
+          "truePeakDb": -3.4
+        },
+        "gainDb": -1,
+        "after": {
+          "lufs": -21.2,
+          "truePeakDb": -4.4
+        }
+      },
+      "qc": {
+        "durationSec": 1.2,
+        "sampleRate": 48000,
+        "channels": 1,
+        "peakDb": -4.45,
+        "leadingSilenceSec": 0,
+        "trailingSilenceSec": 0,
+        "tailRmsDb": -54.8,
+        "innerSilences": [],
+        "speechSec": 1.2,
+        "syllables": 6,
+        "syllablesPerSec": 5,
+        "flags": []
+      }
+    },
+    {
+      "id": "a01",
+      "scene": "S1",
+      "kind": "action",
+      "startSec": 3.06,
+      "endSec": 4.26,
+      "durationSec": 1.2,
+      "startFrame": 92,
+      "endFrame": 128,
+      "desc": "Thẻ cuộc họp: \"Họp phòng · 9:00 · 12 người\". Kiên ngả ghế, Trinh ở bàn bên đeo tai nghe."
+    },
+    {
+      "id": "k01",
+      "scene": "S2",
+      "kind": "line",
+      "role": "kien",
+      "voiceId": "ref:806c4f559c3a4cf0d30045b650044c008d565ae95ae7d8df94f27c5b953b5712",
+      "text": "Slide này nói ba lần rồi đó trời.",
+      "file": "episodes/EP004/audio/lines/03_k01_kien.wav",
+      "startSec": 4.26,
+      "endSec": 6.01,
+      "speechStartSec": 4.37,
+      "speechEndSec": 5.89,
+      "startFrame": 128,
+      "endFrame": 180,
+      "cacheKey": "e5ab1a282fc17df576620400",
+      "fromCache": false,
+      "createdAt": "2026-11-19T07:23:25.742Z",
+      "rawSec": 1.84,
+      "edges": {
+        "leading": {
+          "lengthSec": 0.11,
+          "floorPeakDb": -53.2,
+          "floorMedianRmsDb": -94.2,
+          "onsetJumpDb": 62.1,
+          "trimmed": false,
+          "reason": "ngắn (0.11 s), giữ nguyên"
+        },
+        "trailing": {
+          "lengthSec": 0.21,
+          "floorPeakDb": -43.9,
+          "trimmed": true,
+          "reason": "đuôi 0.21 s, sau 60 ms tắt dần chỉ còn nền (đỉnh ≤ -43.9 dBFS); giữ 120 ms"
+        }
+      },
+      "loudness": {
+        "before": {
+          "lufs": -19.9,
+          "truePeakDb": -3.9
+        },
+        "gainDb": -1.3,
+        "after": {
+          "lufs": -21.2,
+          "truePeakDb": -5.2
+        }
+      },
+      "qc": {
+        "durationSec": 1.75,
+        "sampleRate": 48000,
+        "channels": 1,
+        "peakDb": -5.24,
+        "leadingSilenceSec": 0,
+        "trailingSilenceSec": 0,
+        "tailRmsDb": -55.1,
+        "innerSilences": [],
+        "speechSec": 1.75,
+        "syllables": 8,
+        "syllablesPerSec": 4.57,
+        "flags": []
+      }
+    },
+    {
+      "id": "a02",
+      "scene": "S2",
+      "kind": "action",
+      "startSec": 6.01,
+      "endSec": 7.11,
+      "durationSec": 1.1,
+      "startFrame": 180,
+      "endFrame": 213,
+      "desc": "Kiên xé gói bánh, nhai rôm rốp. Trinh quay phắt sang nhìn."
+    },
+    {
+      "id": "k02",
+      "scene": "S2",
+      "kind": "line",
+      "role": "kien",
+      "voiceId": "ref:806c4f559c3a4cf0d30045b650044c008d565ae95ae7d8df94f27c5b953b5712",
+      "text": "Bánh này giòn ghê.",
+      "file": "episodes/EP004/audio/lines/04_k02_kien.wav",
+      "startSec": 7.11,
+      "endSec": 8.06,
+      "speechStartSec": 7.2,
+      "speechEndSec": 7.94,
+      "startFrame": 213,
+      "endFrame": 242,
+      "cacheKey": "e477f71a35d7011b1e03add1",
+      "fromCache": false,
+      "createdAt": "2026-11-19T07:23:27.486Z",
+      "rawSec": 1.04,
+      "edges": {
+        "leading": {
+          "lengthSec": 0.09,
+          "floorPeakDb": -84.3,
+          "floorMedianRmsDb": -94.1,
+          "onsetJumpDb": 75,
+          "trimmed": false,
+          "reason": "ngắn (0.09 s), giữ nguyên"
+        },
+        "trailing": {
+          "lengthSec": 0.21,
+          "floorPeakDb": -47.2,
+          "trimmed": true,
+          "reason": "đuôi 0.21 s, sau 60 ms tắt dần chỉ còn nền (đỉnh ≤ -47.2 dBFS); giữ 120 ms"
+        }
+      },
+      "loudness": {
+        "before": {
+          "lufs": -20.5,
+          "truePeakDb": -4.5
+        },
+        "gainDb": -0.7,
+        "after": {
+          "lufs": -21.2,
+          "truePeakDb": -5.2
+        }
+      },
+      "qc": {
+        "durationSec": 0.95,
+        "sampleRate": 48000,
+        "channels": 1,
+        "peakDb": -5.2,
+        "leadingSilenceSec": 0,
+        "trailingSilenceSec": 0,
+        "tailRmsDb": -57.5,
+        "innerSilences": [],
+        "speechSec": 0.95,
+        "syllables": 4,
+        "syllablesPerSec": 4.21,
+        "flags": []
+      }
+    },
+    {
+      "id": "k02b",
+      "scene": "S2",
+      "kind": "line",
+      "role": "kien",
+      "voiceId": "ref:806c4f559c3a4cf0d30045b650044c008d565ae95ae7d8df94f27c5b953b5712",
+      "text": "Em ăn bánh không? Giòn lắm nè.",
+      "file": "episodes/EP004/audio/lines/05_k02b_kien.wav",
+      "startSec": 8.08,
+      "endSec": 9.52,
+      "speechStartSec": 8.16,
+      "speechEndSec": 9.4,
+      "startFrame": 242,
+      "endFrame": 286,
+      "cacheKey": "be7d7cf2e21ddb8c7288e6c0",
+      "fromCache": false,
+      "createdAt": "2026-11-19T07:23:28.467Z",
+      "rawSec": 1.52,
+      "edges": {
+        "leading": {
+          "lengthSec": 0.08,
+          "floorPeakDb": -90.3,
+          "floorMedianRmsDb": -95.7,
+          "onsetJumpDb": 80.4,
+          "trimmed": false,
+          "reason": "ngắn (0.08 s), giữ nguyên"
+        },
+        "trailing": {
+          "lengthSec": 0.2,
+          "floorPeakDb": -40,
+          "trimmed": true,
+          "reason": "đuôi 0.20 s, sau 60 ms tắt dần chỉ còn nền (đỉnh ≤ -40.0 dBFS); giữ 120 ms"
+        }
+      },
+      "loudness": {
+        "before": {
+          "lufs": -19.7,
+          "truePeakDb": -3.2
+        },
+        "gainDb": -1.5,
+        "after": {
+          "lufs": -21.2,
+          "truePeakDb": -4.7
+        }
+      },
+      "qc": {
+        "durationSec": 1.44,
+        "sampleRate": 48000,
+        "channels": 1,
+        "peakDb": -4.74,
+        "leadingSilenceSec": 0,
+        "trailingSilenceSec": 0,
+        "tailRmsDb": -58.3,
+        "innerSilences": [],
+        "speechSec": 1.44,
+        "syllables": 7,
+        "syllablesPerSec": 4.86,
+        "flags": []
+      }
+    },
+    {
+      "id": "t01b",
+      "scene": "S2",
+      "kind": "line",
+      "role": "trinh",
+      "voiceId": "ref:b07ad2220f15db399ce12bda426919582de6093a7c5fd29f5390b87e602a3011",
+      "text": "Anh nói nhỏ thôi!",
+      "file": "episodes/EP004/audio/lines/06_t01b_trinh.wav",
+      "startSec": 9.52,
+      "endSec": 10.68,
+      "speechStartSec": 9.62,
+      "speechEndSec": 10.56,
+      "startFrame": 286,
+      "endFrame": 320,
+      "cacheKey": "c5c7456369f77e4aeabed2af",
+      "fromCache": false,
+      "createdAt": "2026-11-19T07:23:30.029Z",
+      "rawSec": 1.2,
+      "edges": {
+        "leading": {
+          "lengthSec": 0.1,
+          "floorPeakDb": -90.3,
+          "floorMedianRmsDb": -95.8,
+          "onsetJumpDb": 81.9,
+          "trimmed": false,
+          "reason": "ngắn (0.10 s), giữ nguyên"
+        },
+        "trailing": {
+          "lengthSec": 0.16,
+          "floorPeakDb": -37.1,
+          "trimmed": true,
+          "reason": "đuôi 0.16 s, sau 60 ms tắt dần chỉ còn nền (đỉnh ≤ -37.1 dBFS); giữ 120 ms"
+        }
+      },
+      "loudness": {
+        "before": {
+          "lufs": -18.1,
+          "truePeakDb": -1.3
+        },
+        "gainDb": -3.1,
+        "after": {
+          "lufs": -21.2,
+          "truePeakDb": -4.4
+        }
+      },
+      "qc": {
+        "durationSec": 1.16,
+        "sampleRate": 48000,
+        "channels": 1,
+        "peakDb": -4.48,
+        "leadingSilenceSec": 0,
+        "trailingSilenceSec": 0,
+        "tailRmsDb": -55.9,
+        "innerSilences": [],
+        "speechSec": 1.16,
+        "syllables": 4,
+        "syllablesPerSec": 3.45,
+        "flags": []
+      }
+    },
+    {
+      "id": "k02c",
+      "scene": "S2",
+      "kind": "line",
+      "role": "kien",
+      "voiceId": "ref:806c4f559c3a4cf0d30045b650044c008d565ae95ae7d8df94f27c5b953b5712",
+      "text": "Ủa, anh tắt micro rồi mà. Sợ gì.",
+      "file": "episodes/EP004/audio/lines/07_k02c_kien.wav",
+      "startSec": 10.72,
+      "endSec": 12.68,
+      "speechStartSec": 10.78,
+      "speechEndSec": 12.56,
+      "startFrame": 322,
+      "endFrame": 380,
+      "cacheKey": "12cafd55a69df0d7afb6e610",
+      "fromCache": false,
+      "createdAt": "2026-11-19T07:23:32.408Z",
+      "rawSec": 2.08,
+      "edges": {
+        "leading": {
+          "lengthSec": 0.06,
+          "floorPeakDb": -90.3,
+          "floorMedianRmsDb": -91.8,
+          "onsetJumpDb": 80.9,
+          "trimmed": false,
+          "reason": "ngắn (0.06 s), giữ nguyên"
+        },
+        "trailing": {
+          "lengthSec": 0.24,
+          "floorPeakDb": -41.2,
+          "trimmed": true,
+          "reason": "đuôi 0.24 s, sau 60 ms tắt dần chỉ còn nền (đỉnh ≤ -41.2 dBFS); giữ 120 ms"
+        }
+      },
+      "loudness": {
+        "before": {
+          "lufs": -19.7,
+          "truePeakDb": -2.5
+        },
+        "gainDb": -1.5,
+        "after": {
+          "lufs": -21.2,
+          "truePeakDb": -4
+        }
+      },
+      "qc": {
+        "durationSec": 1.96,
+        "sampleRate": 48000,
+        "channels": 1,
+        "peakDb": -3.97,
+        "leadingSilenceSec": 0,
+        "trailingSilenceSec": 0,
+        "tailRmsDb": -51.1,
+        "innerSilences": [],
+        "speechSec": 1.96,
+        "syllables": 8,
+        "syllablesPerSec": 4.08,
+        "flags": []
+      }
+    },
+    {
+      "id": "t01",
+      "scene": "S2",
+      "kind": "line",
+      "role": "trinh",
+      "voiceId": "ref:b07ad2220f15db399ce12bda426919582de6093a7c5fd29f5390b87e602a3011",
+      "text": "Anh ơi…",
+      "file": "episodes/EP004/audio/lines/08_t01_trinh.wav",
+      "startSec": 12.72,
+      "endSec": 13.37,
+      "speechStartSec": 12.78,
+      "speechEndSec": 13.25,
+      "startFrame": 382,
+      "endFrame": 401,
+      "cacheKey": "c7a458595d2d23ffba5510e7",
+      "fromCache": false,
+      "createdAt": "2026-11-19T07:23:34.027Z",
+      "rawSec": 0.72,
+      "edges": {
+        "leading": {
+          "lengthSec": 0.06,
+          "floorPeakDb": -74.7,
+          "floorMedianRmsDb": -89.9,
+          "onsetJumpDb": 73.3,
+          "trimmed": false,
+          "reason": "ngắn (0.06 s), giữ nguyên"
+        },
+        "trailing": {
+          "lengthSec": 0.19,
+          "floorPeakDb": -53.7,
+          "trimmed": true,
+          "reason": "đuôi 0.19 s, sau 60 ms tắt dần chỉ còn nền (đỉnh ≤ -53.7 dBFS); giữ 120 ms"
+        }
+      },
+      "loudness": {
+        "before": {
+          "lufs": -19.2,
+          "truePeakDb": -4.5
+        },
+        "gainDb": -2,
+        "after": {
+          "lufs": -21.2,
+          "truePeakDb": -6.5
+        }
+      },
+      "qc": {
+        "durationSec": 0.65,
+        "sampleRate": 48000,
+        "channels": 1,
+        "peakDb": -6.55,
+        "leadingSilenceSec": 0,
+        "trailingSilenceSec": 0,
+        "tailRmsDb": -67.7,
+        "innerSilences": [],
+        "speechSec": 0.65,
+        "syllables": 2,
+        "syllablesPerSec": 3.08,
+        "flags": []
+      }
+    },
+    {
+      "id": "k03",
+      "scene": "S2",
+      "kind": "line",
+      "role": "kien",
+      "voiceId": "ref:806c4f559c3a4cf0d30045b650044c008d565ae95ae7d8df94f27c5b953b5712",
+      "text": "Suỵt. Anh đang họp mà em.",
+      "file": "episodes/EP004/audio/lines/09_k03_kien.wav",
+      "startSec": 13.4,
+      "endSec": 14.72,
+      "speechStartSec": 13.47,
+      "speechEndSec": 14.6,
+      "startFrame": 402,
+      "endFrame": 442,
+      "cacheKey": "d05bb6785bc52abe5a132027",
+      "fromCache": false,
+      "createdAt": "2026-11-19T07:23:34.713Z",
+      "rawSec": 1.36,
+      "edges": {
+        "leading": {
+          "lengthSec": 0.07,
+          "floorPeakDb": -74.7,
+          "floorMedianRmsDb": -93.6,
+          "onsetJumpDb": 63.6,
+          "trimmed": false,
+          "reason": "ngắn (0.07 s), giữ nguyên"
+        },
+        "trailing": {
+          "lengthSec": 0.16,
+          "floorPeakDb": -50.6,
+          "trimmed": true,
+          "reason": "đuôi 0.16 s, sau 60 ms tắt dần chỉ còn nền (đỉnh ≤ -50.6 dBFS); giữ 120 ms"
+        }
+      },
+      "loudness": {
+        "before": {
+          "lufs": -18.5,
+          "truePeakDb": -2.2
+        },
+        "gainDb": -2.7,
+        "after": {
+          "lufs": -21.2,
+          "truePeakDb": -4.9
+        }
+      },
+      "qc": {
+        "durationSec": 1.32,
+        "sampleRate": 48000,
+        "channels": 1,
+        "peakDb": -4.91,
+        "leadingSilenceSec": 0,
+        "trailingSilenceSec": 0,
+        "tailRmsDb": -62.7,
+        "innerSilences": [],
+        "speechSec": 1.32,
+        "syllables": 6,
+        "syllablesPerSec": 4.55,
+        "flags": []
+      }
+    },
+    {
+      "id": "a03",
+      "scene": "S2",
+      "kind": "action",
+      "startSec": 14.72,
+      "endSec": 16.12,
+      "durationSec": 1.4,
+      "startFrame": 442,
+      "endFrame": 484,
+      "desc": "Trinh gõ điện thoại lia lịa. Thẻ tin nhắn hiện liên tiếp: \"Anh ơi\", \"Anh ơi!!\", \"MICRO\"."
+    },
+    {
+      "id": "k03b",
+      "scene": "S2",
+      "kind": "line",
+      "role": "kien",
+      "voiceId": "ref:806c4f559c3a4cf0d30045b650044c008d565ae95ae7d8df94f27c5b953b5712",
+      "text": "Em nhắn gì mà nhiều vậy? Lát họp xong anh đọc.",
+      "file": "episodes/EP004/audio/lines/10_k03b_kien.wav",
+      "startSec": 16.12,
+      "endSec": 18.15,
+      "speechStartSec": 16.19,
+      "speechEndSec": 18.03,
+      "startFrame": 484,
+      "endFrame": 545,
+      "cacheKey": "0fc6b9ec9e6388e88f583457",
+      "fromCache": false,
+      "createdAt": "2026-11-19T07:23:36.139Z",
+      "rawSec": 2.08,
+      "edges": {
+        "leading": {
+          "lengthSec": 0.07,
+          "floorPeakDb": -90.3,
+          "floorMedianRmsDb": -93.7,
+          "onsetJumpDb": 78.1,
+          "trimmed": false,
+          "reason": "ngắn (0.07 s), giữ nguyên"
+        },
+        "trailing": {
+          "lengthSec": 0.17,
+          "floorPeakDb": -38.5,
+          "trimmed": true,
+          "reason": "đuôi 0.17 s, sau 60 ms tắt dần chỉ còn nền (đỉnh ≤ -38.5 dBFS); giữ 120 ms"
+        }
+      },
+      "loudness": {
+        "before": {
+          "lufs": -19.6,
+          "truePeakDb": -1.6
+        },
+        "gainDb": -1.6,
+        "after": {
+          "lufs": -21.2,
+          "truePeakDb": -3.2
+        }
+      },
+      "qc": {
+        "durationSec": 2.03,
+        "sampleRate": 48000,
+        "channels": 1,
+        "peakDb": -3.23,
+        "leadingSilenceSec": 0,
+        "trailingSilenceSec": 0,
+        "tailRmsDb": -51,
+        "innerSilences": [
+          {
+            "start": 0.966,
+            "end": 1.225,
+            "duration": 0.26
+          }
+        ],
+        "speechSec": 1.77,
+        "syllables": 11,
+        "syllablesPerSec": 6.21,
+        "flags": []
+      }
+    },
+    {
+      "id": "k04",
+      "scene": "S2",
+      "kind": "line",
+      "role": "kien",
+      "voiceId": "ref:806c4f559c3a4cf0d30045b650044c008d565ae95ae7d8df94f27c5b953b5712",
+      "text": "Thứ Sáu ơi, mau tới đi mà…",
+      "file": "episodes/EP004/audio/lines/11_k04_kien.wav",
+      "startSec": 18.17,
+      "endSec": 19.51,
+      "speechStartSec": 18.25,
+      "speechEndSec": 19.39,
+      "startFrame": 545,
+      "endFrame": 585,
+      "cacheKey": "d42c9f45f51d2b71611fd97e",
+      "fromCache": false,
+      "createdAt": "2026-11-19T07:23:38.313Z",
+      "rawSec": 1.36,
+      "edges": {
+        "leading": {
+          "lengthSec": 0.08,
+          "floorPeakDb": -90.3,
+          "floorMedianRmsDb": -94.8,
+          "onsetJumpDb": 77.2,
+          "trimmed": false,
+          "reason": "ngắn (0.08 s), giữ nguyên"
+        },
+        "trailing": {
+          "lengthSec": 0.14,
+          "floorPeakDb": -50.5,
+          "trimmed": true,
+          "reason": "đuôi 0.14 s, sau 60 ms tắt dần chỉ còn nền (đỉnh ≤ -50.5 dBFS); giữ 120 ms"
+        }
+      },
+      "loudness": {
+        "before": {
+          "lufs": -17.1,
+          "truePeakDb": -0.6
+        },
+        "gainDb": -4.1,
+        "after": {
+          "lufs": -21.2,
+          "truePeakDb": -4.7
+        }
+      },
+      "qc": {
+        "durationSec": 1.34,
+        "sampleRate": 48000,
+        "channels": 1,
+        "peakDb": -4.78,
+        "leadingSilenceSec": 0,
+        "trailingSilenceSec": 0,
+        "tailRmsDb": -64.1,
+        "innerSilences": [],
+        "speechSec": 1.34,
+        "syllables": 7,
+        "syllablesPerSec": 5.22,
+        "flags": []
+      }
+    },
+    {
+      "id": "k05",
+      "scene": "S2",
+      "kind": "line",
+      "role": "kien",
+      "voiceId": "ref:806c4f559c3a4cf0d30045b650044c008d565ae95ae7d8df94f27c5b953b5712",
+      "text": "La la la, tan ca rồi về…",
+      "file": "episodes/EP004/audio/lines/12_k05_kien.wav",
+      "startSec": 19.51,
+      "endSec": 21.03,
+      "speechStartSec": 19.59,
+      "speechEndSec": 20.89,
+      "startFrame": 585,
+      "endFrame": 631,
+      "cacheKey": "3e9ee8c5a0544e69edca14ab",
+      "fromCache": false,
+      "createdAt": "2026-11-19T07:23:39.596Z",
+      "rawSec": 1.52,
+      "edges": {
+        "leading": {
+          "lengthSec": 0.08,
+          "floorPeakDb": -90.3,
+          "floorMedianRmsDb": -93.8,
+          "onsetJumpDb": 74.1,
+          "trimmed": false,
+          "reason": "ngắn (0.08 s), giữ nguyên"
+        },
+        "trailing": {
+          "lengthSec": 0.14,
+          "floorPeakDb": -52.5,
+          "trimmed": false,
+          "reason": "ngắn (0.14 s), giữ nguyên"
+        }
+      },
+      "loudness": {
+        "before": {
+          "lufs": -19,
+          "truePeakDb": -1.7
+        },
+        "gainDb": -2.2,
+        "after": {
+          "lufs": -21.2,
+          "truePeakDb": -3.9
+        }
+      },
+      "qc": {
+        "durationSec": 1.52,
+        "sampleRate": 48000,
+        "channels": 1,
+        "peakDb": -3.93,
+        "leadingSilenceSec": 0,
+        "trailingSilenceSec": 0,
+        "tailRmsDb": -67.3,
+        "innerSilences": [],
+        "speechSec": 1.52,
+        "syllables": 7,
+        "syllablesPerSec": 4.61,
+        "flags": []
+      }
+    },
+    {
+      "id": "t02",
+      "scene": "S2",
+      "kind": "line",
+      "role": "trinh",
+      "voiceId": "ref:b07ad2220f15db399ce12bda426919582de6093a7c5fd29f5390b87e602a3011",
+      "text": "Anh! Cái micro!",
+      "file": "episodes/EP004/audio/lines/13_t02_trinh.wav",
+      "startSec": 21.06,
+      "endSec": 22.27,
+      "speechStartSec": 21.11,
+      "speechEndSec": 22.15,
+      "startFrame": 632,
+      "endFrame": 668,
+      "cacheKey": "f9a22d8d3091719df1608cb5",
+      "fromCache": false,
+      "createdAt": "2026-11-19T07:23:41.391Z",
+      "rawSec": 1.28,
+      "edges": {
+        "leading": {
+          "lengthSec": 0.05,
+          "floorPeakDb": -90.3,
+          "floorMedianRmsDb": -93.6,
+          "onsetJumpDb": 82.1,
+          "trimmed": false,
+          "reason": "ngắn (0.05 s), giữ nguyên"
+        },
+        "trailing": {
+          "lengthSec": 0.19,
+          "floorPeakDb": -37.8,
+          "trimmed": true,
+          "reason": "đuôi 0.19 s, sau 60 ms tắt dần chỉ còn nền (đỉnh ≤ -37.8 dBFS); giữ 120 ms"
+        }
+      },
+      "loudness": {
+        "before": {
+          "lufs": -18.3,
+          "truePeakDb": -2.3
+        },
+        "gainDb": -2.9,
+        "after": {
+          "lufs": -21.2,
+          "truePeakDb": -5.2
+        }
+      },
+      "qc": {
+        "durationSec": 1.21,
+        "sampleRate": 48000,
+        "channels": 1,
+        "peakDb": -5.29,
+        "leadingSilenceSec": 0,
+        "trailingSilenceSec": 0,
+        "tailRmsDb": -54.6,
+        "innerSilences": [],
+        "speechSec": 1.21,
+        "syllables": 3,
+        "syllablesPerSec": 2.48,
+        "flags": [
+          "Tốc độ 2.48 âm tiết/s thấp bất thường: có thể lặp hoặc kéo dài từ"
+        ]
+      }
+    },
+    {
+      "id": "k06",
+      "scene": "S2",
+      "kind": "line",
+      "role": "kien",
+      "voiceId": "ref:806c4f559c3a4cf0d30045b650044c008d565ae95ae7d8df94f27c5b953b5712",
+      "text": "Ừ, anh tắt rồi. Yên tâm đi em.",
+      "file": "episodes/EP004/audio/lines/14_k06_kien.wav",
+      "startSec": 22.29,
+      "endSec": 24.07,
+      "speechStartSec": 22.37,
+      "speechEndSec": 23.95,
+      "startFrame": 669,
+      "endFrame": 722,
+      "cacheKey": "69ae221cdd39cd450fae3ba1",
+      "fromCache": false,
+      "createdAt": "2026-11-19T07:23:43.357Z",
+      "rawSec": 1.84,
+      "edges": {
+        "leading": {
+          "lengthSec": 0.08,
+          "floorPeakDb": -90.3,
+          "floorMedianRmsDb": -94.5,
+          "onsetJumpDb": 80,
+          "trimmed": false,
+          "reason": "ngắn (0.08 s), giữ nguyên"
+        },
+        "trailing": {
+          "lengthSec": 0.18,
+          "floorPeakDb": -39.3,
+          "trimmed": true,
+          "reason": "đuôi 0.18 s, sau 60 ms tắt dần chỉ còn nền (đỉnh ≤ -39.3 dBFS); giữ 120 ms"
+        }
+      },
+      "loudness": {
+        "before": {
+          "lufs": -19.1,
+          "truePeakDb": -1.3
+        },
+        "gainDb": -2.1,
+        "after": {
+          "lufs": -21.2,
+          "truePeakDb": -3.4
+        }
+      },
+      "qc": {
+        "durationSec": 1.78,
+        "sampleRate": 48000,
+        "channels": 1,
+        "peakDb": -3.41,
+        "leadingSilenceSec": 0,
+        "trailingSilenceSec": 0,
+        "tailRmsDb": -52.3,
+        "innerSilences": [],
+        "speechSec": 1.78,
+        "syllables": 8,
+        "syllablesPerSec": 4.49,
+        "flags": []
+      }
+    },
+    {
+      "id": "n03",
+      "scene": "S2",
+      "kind": "line",
+      "role": "narrator",
+      "voiceId": "ref:806c4f559c3a4cf0d30045b650044c008d565ae95ae7d8df94f27c5b953b5712",
+      "text": "Tôi không để ý, cả cuộc họp im lặng một cách lạ lùng.",
+      "file": "episodes/EP004/audio/lines/15_n03_narrator.wav",
+      "startSec": 24.1,
+      "endSec": 26.52,
+      "speechStartSec": 24.17,
+      "speechEndSec": 26.4,
+      "startFrame": 723,
+      "endFrame": 796,
+      "cacheKey": "5fb67a5b9287c711a478e134",
+      "fromCache": false,
+      "createdAt": "2026-11-19T07:23:45.658Z",
+      "rawSec": 2.48,
+      "edges": {
+        "leading": {
+          "lengthSec": 0.07,
+          "floorPeakDb": -90.3,
+          "floorMedianRmsDb": -93.9,
+          "onsetJumpDb": 83.4,
+          "trimmed": false,
+          "reason": "ngắn (0.07 s), giữ nguyên"
+        },
+        "trailing": {
+          "lengthSec": 0.18,
+          "floorPeakDb": -58.9,
+          "trimmed": true,
+          "reason": "đuôi 0.18 s, sau 60 ms tắt dần chỉ còn nền (đỉnh ≤ -58.9 dBFS); giữ 120 ms"
+        }
+      },
+      "loudness": {
+        "before": {
+          "lufs": -19.2,
+          "truePeakDb": -2.5
+        },
+        "gainDb": -2,
+        "after": {
+          "lufs": -21.2,
+          "truePeakDb": -4.5
+        }
+      },
+      "qc": {
+        "durationSec": 2.42,
+        "sampleRate": 48000,
+        "channels": 1,
+        "peakDb": -4.47,
+        "leadingSilenceSec": 0,
+        "trailingSilenceSec": 0,
+        "tailRmsDb": -65.5,
+        "innerSilences": [],
+        "speechSec": 2.42,
+        "syllables": 13,
+        "syllablesPerSec": 5.37,
+        "flags": []
+      }
+    },
+    {
+      "id": "a04",
+      "scene": "S3",
+      "kind": "action",
+      "startSec": 26.52,
+      "endSec": 27.72,
+      "durationSec": 1.2,
+      "startFrame": 796,
+      "endFrame": 832,
+      "desc": "Phòng họp. Sếp đứng trước màn hình chiếu, hắng giọng, nhìn vào camera."
+    },
+    {
+      "id": "s01",
+      "scene": "S3",
+      "kind": "line",
+      "role": "sep",
+      "voiceId": "ref:f19ba79593237254d45e8b7bc91595b51af2ca685765eecce63ab53ad5e16230",
+      "text": "Thôi, hôm nay họp đến đây nhé.",
+      "file": "episodes/EP004/audio/lines/16_s01_sep.wav",
+      "startSec": 27.72,
+      "endSec": 29.54,
+      "speechStartSec": 27.78,
+      "speechEndSec": 29.42,
+      "startFrame": 832,
+      "endFrame": 886,
+      "cacheKey": "179543d0abc1ea5606b98fcb",
+      "fromCache": false,
+      "createdAt": "2026-11-19T07:23:49.753Z",
+      "rawSec": 1.84,
+      "edges": {
+        "leading": {
+          "lengthSec": 0.06,
+          "floorPeakDb": -31.7,
+          "floorMedianRmsDb": -82,
+          "onsetJumpDb": 64.9,
+          "trimmed": false,
+          "reason": "ngắn (0.06 s), giữ nguyên"
+        },
+        "trailing": {
+          "lengthSec": 0.14,
+          "floorPeakDb": -70.3,
+          "trimmed": true,
+          "reason": "đuôi 0.14 s, sau 60 ms tắt dần chỉ còn nền (đỉnh ≤ -70.3 dBFS); giữ 120 ms"
+        }
+      },
+      "loudness": {
+        "before": {
+          "lufs": -20.2,
+          "truePeakDb": -0.9
+        },
+        "gainDb": -1,
+        "after": {
+          "lufs": -21.2,
+          "truePeakDb": -1.9
+        }
+      },
+      "qc": {
+        "durationSec": 1.82,
+        "sampleRate": 48000,
+        "channels": 1,
+        "peakDb": -1.95,
+        "leadingSilenceSec": 0,
+        "trailingSilenceSec": 0,
+        "tailRmsDb": -81,
+        "innerSilences": [
+          {
+            "start": 0.281,
+            "end": 0.606,
+            "duration": 0.325
+          }
+        ],
+        "speechSec": 1.495,
+        "syllables": 7,
+        "syllablesPerSec": 4.68,
+        "flags": []
+      }
+    },
+    {
+      "id": "s02",
+      "scene": "S3",
+      "kind": "line",
+      "role": "sep",
+      "voiceId": "ref:f19ba79593237254d45e8b7bc91595b51af2ca685765eecce63ab53ad5e16230",
+      "text": "Cảm ơn các em đã tham gia.",
+      "file": "episodes/EP004/audio/lines/17_s02_sep.wav",
+      "startSec": 29.6,
+      "endSec": 31.11,
+      "speechStartSec": 29.62,
+      "speechEndSec": 30.99,
+      "startFrame": 888,
+      "endFrame": 933,
+      "cacheKey": "5c9fb20fc4f486e1f62c3483",
+      "fromCache": false,
+      "createdAt": "2026-11-19T07:23:52.770Z",
+      "rawSec": 1.68,
+      "edges": {
+        "leading": {
+          "lengthSec": 0.02,
+          "floorPeakDb": -120,
+          "floorMedianRmsDb": -120,
+          "onsetJumpDb": 104.2,
+          "trimmed": false,
+          "reason": "ngắn (0.02 s), giữ nguyên"
+        },
+        "trailing": {
+          "lengthSec": 0.29,
+          "floorPeakDb": -68.7,
+          "trimmed": true,
+          "reason": "đuôi 0.29 s, sau 60 ms tắt dần chỉ còn nền (đỉnh ≤ -68.7 dBFS); giữ 120 ms"
+        }
+      },
+      "loudness": {
+        "before": {
+          "lufs": -19.8,
+          "truePeakDb": -2
+        },
+        "gainDb": -1.4,
+        "after": {
+          "lufs": -21.2,
+          "truePeakDb": -3.4
+        }
+      },
+      "qc": {
+        "durationSec": 1.51,
+        "sampleRate": 48000,
+        "channels": 1,
+        "peakDb": -3.38,
+        "leadingSilenceSec": 0,
+        "trailingSilenceSec": 0,
+        "tailRmsDb": -70.4,
+        "innerSilences": [],
+        "speechSec": 1.51,
+        "syllables": 7,
+        "syllablesPerSec": 4.64,
+        "flags": []
+      }
+    },
+    {
+      "id": "s03",
+      "scene": "S3",
+      "kind": "line",
+      "role": "sep",
+      "voiceId": "ref:f19ba79593237254d45e8b7bc91595b51af2ca685765eecce63ab53ad5e16230",
+      "text": "Và cảm ơn Kiên đã hát nền suốt buổi nhé.",
+      "file": "episodes/EP004/audio/lines/18_s03_sep.wav",
+      "startSec": 31.12,
+      "endSec": 33.4,
+      "speechStartSec": 31.19,
+      "speechEndSec": 33.28,
+      "startFrame": 934,
+      "endFrame": 1002,
+      "cacheKey": "62bb6c604310efd3ec309542",
+      "fromCache": false,
+      "createdAt": "2026-11-19T07:23:54.516Z",
+      "rawSec": 2.56,
+      "edges": {
+        "leading": {
+          "lengthSec": 0.07,
+          "floorPeakDb": -62.7,
+          "floorMedianRmsDb": -73.6,
+          "onsetJumpDb": 57.8,
+          "trimmed": false,
+          "reason": "ngắn (0.07 s), giữ nguyên"
+        },
+        "trailing": {
+          "lengthSec": 0.4,
+          "floorPeakDb": -71.2,
+          "trimmed": true,
+          "reason": "đuôi 0.40 s, sau 60 ms tắt dần chỉ còn nền (đỉnh ≤ -71.2 dBFS); giữ 120 ms"
+        }
+      },
+      "loudness": {
+        "before": {
+          "lufs": -20.6,
+          "truePeakDb": -2.1
+        },
+        "gainDb": -0.6,
+        "after": {
+          "lufs": -21.2,
+          "truePeakDb": -2.7
+        }
+      },
+      "qc": {
+        "durationSec": 2.28,
+        "sampleRate": 48000,
+        "channels": 1,
+        "peakDb": -2.68,
+        "leadingSilenceSec": 0,
+        "trailingSilenceSec": 0,
+        "tailRmsDb": -77.7,
+        "innerSilences": [],
+        "speechSec": 2.28,
+        "syllables": 10,
+        "syllablesPerSec": 4.39,
+        "flags": []
+      }
+    },
+    {
+      "id": "k07",
+      "scene": "S3",
+      "kind": "line",
+      "role": "kien",
+      "voiceId": "ref:806c4f559c3a4cf0d30045b650044c008d565ae95ae7d8df94f27c5b953b5712",
+      "text": "Dạ…? Em… hát ạ?",
+      "file": "episodes/EP004/audio/lines/19_k07_kien.wav",
+      "startSec": 33.44,
+      "endSec": 34.53,
+      "speechStartSec": 33.5,
+      "speechEndSec": 34.41,
+      "startFrame": 1003,
+      "endFrame": 1036,
+      "cacheKey": "616b4fe2763218094c7e1a3d",
+      "fromCache": false,
+      "createdAt": "2026-11-19T07:23:57.922Z",
+      "rawSec": 1.12,
+      "edges": {
+        "leading": {
+          "lengthSec": 0.06,
+          "floorPeakDb": -90.3,
+          "floorMedianRmsDb": -93.9,
+          "onsetJumpDb": 65.3,
+          "trimmed": false,
+          "reason": "ngắn (0.06 s), giữ nguyên"
+        },
+        "trailing": {
+          "lengthSec": 0.15,
+          "floorPeakDb": -42.5,
+          "trimmed": true,
+          "reason": "đuôi 0.15 s, sau 60 ms tắt dần chỉ còn nền (đỉnh ≤ -42.5 dBFS); giữ 120 ms"
+        }
+      },
+      "loudness": {
+        "before": {
+          "lufs": -19.1,
+          "truePeakDb": -1.1
+        },
+        "gainDb": -2.1,
+        "after": {
+          "lufs": -21.2,
+          "truePeakDb": -3.2
+        }
+      },
+      "qc": {
+        "durationSec": 1.09,
+        "sampleRate": 48000,
+        "channels": 1,
+        "peakDb": -3.26,
+        "leadingSilenceSec": 0,
+        "trailingSilenceSec": 0,
+        "tailRmsDb": -54.7,
+        "innerSilences": [],
+        "speechSec": 1.09,
+        "syllables": 4,
+        "syllablesPerSec": 3.67,
+        "flags": []
+      }
+    },
+    {
+      "id": "s04",
+      "scene": "S3",
+      "kind": "line",
+      "role": "sep",
+      "voiceId": "ref:f19ba79593237254d45e8b7bc91595b51af2ca685765eecce63ab53ad5e16230",
+      "text": "Giọng cũng được đấy. Bánh nghe cũng giòn.",
+      "file": "episodes/EP004/audio/lines/20_s04_sep.wav",
+      "startSec": 34.63,
+      "endSec": 36.88,
+      "speechStartSec": 34.63,
+      "speechEndSec": 36.76,
+      "startFrame": 1039,
+      "endFrame": 1106,
+      "cacheKey": "443d64388100bbbb2d80bc4a",
+      "fromCache": false,
+      "createdAt": "2026-11-19T07:23:58.943Z",
+      "rawSec": 2.48,
+      "edges": {
+        "leading": {
+          "lengthSec": 0,
+          "floorPeakDb": -120,
+          "floorMedianRmsDb": -120,
+          "onsetJumpDb": 108.9,
+          "trimmed": false,
+          "reason": "ngắn (0.00 s), giữ nguyên"
+        },
+        "trailing": {
+          "lengthSec": 0.35,
+          "floorPeakDb": -63.5,
+          "trimmed": true,
+          "reason": "đuôi 0.35 s, sau 60 ms tắt dần chỉ còn nền (đỉnh ≤ -63.5 dBFS); giữ 120 ms"
+        }
+      },
+      "loudness": {
+        "before": {
+          "lufs": -19.7,
+          "truePeakDb": 0
+        },
+        "gainDb": -1.5,
+        "after": {
+          "lufs": -21.2,
+          "truePeakDb": -1.5
+        }
+      },
+      "qc": {
+        "durationSec": 2.25,
+        "sampleRate": 48000,
+        "channels": 1,
+        "peakDb": -1.5,
+        "leadingSilenceSec": 0,
+        "trailingSilenceSec": 0,
+        "tailRmsDb": -61.4,
+        "innerSilences": [],
+        "speechSec": 2.25,
+        "syllables": 8,
+        "syllablesPerSec": 3.56,
+        "flags": []
+      }
+    },
+    {
+      "id": "s05",
+      "scene": "S3",
+      "kind": "line",
+      "role": "sep",
+      "voiceId": "ref:f19ba79593237254d45e8b7bc91595b51af2ca685765eecce63ab53ad5e16230",
+      "text": "Biên bản hôm nay anh cho ghi đủ cả rồi.",
+      "file": "episodes/EP004/audio/lines/21_s05_sep.wav",
+      "startSec": 36.88,
+      "endSec": 39.33,
+      "speechStartSec": 37.02,
+      "speechEndSec": 39.21,
+      "startFrame": 1106,
+      "endFrame": 1180,
+      "cacheKey": "74870163eb0c084d8a260eb9",
+      "fromCache": false,
+      "createdAt": "2026-11-19T07:24:02.657Z",
+      "rawSec": 2.48,
+      "edges": {
+        "leading": {
+          "lengthSec": 0.14,
+          "floorPeakDb": -60.8,
+          "floorMedianRmsDb": -75,
+          "onsetJumpDb": 61.8,
+          "trimmed": false,
+          "reason": "ngắn (0.14 s), giữ nguyên"
+        },
+        "trailing": {
+          "lengthSec": 0.15,
+          "floorPeakDb": -70.3,
+          "trimmed": true,
+          "reason": "đuôi 0.15 s, sau 60 ms tắt dần chỉ còn nền (đỉnh ≤ -70.3 dBFS); giữ 120 ms"
+        }
+      },
+      "loudness": {
+        "before": {
+          "lufs": -19.2,
+          "truePeakDb": -1.9
+        },
+        "gainDb": -2,
+        "after": {
+          "lufs": -21.2,
+          "truePeakDb": -3.9
+        }
+      },
+      "qc": {
+        "durationSec": 2.45,
+        "sampleRate": 48000,
+        "channels": 1,
+        "peakDb": -3.87,
+        "leadingSilenceSec": 0,
+        "trailingSilenceSec": 0,
+        "tailRmsDb": -80.6,
+        "innerSilences": [],
+        "speechSec": 2.45,
+        "syllables": 10,
+        "syllablesPerSec": 4.08,
+        "flags": []
+      }
+    },
+    {
+      "id": "s06",
+      "scene": "S3",
+      "kind": "line",
+      "role": "sep",
+      "voiceId": "ref:f19ba79593237254d45e8b7bc91595b51af2ca685765eecce63ab53ad5e16230",
+      "text": "Kể cả đoạn tan ca rồi về.",
+      "file": "episodes/EP004/audio/lines/22_s06_sep.wav",
+      "startSec": 39.4,
+      "endSec": 40.98,
+      "speechStartSec": 39.41,
+      "speechEndSec": 40.86,
+      "startFrame": 1182,
+      "endFrame": 1229,
+      "cacheKey": "4a12c677c8d7189bdfd751b9",
+      "fromCache": false,
+      "createdAt": "2026-11-19T07:24:07.566Z",
+      "rawSec": 1.84,
+      "edges": {
+        "leading": {
+          "lengthSec": 0.01,
+          "floorPeakDb": -120,
+          "floorMedianRmsDb": -120,
+          "onsetJumpDb": 107.7,
+          "trimmed": false,
+          "reason": "ngắn (0.01 s), giữ nguyên"
+        },
+        "trailing": {
+          "lengthSec": 0.38,
+          "floorPeakDb": -67.4,
+          "trimmed": true,
+          "reason": "đuôi 0.38 s, sau 60 ms tắt dần chỉ còn nền (đỉnh ≤ -67.4 dBFS); giữ 120 ms"
+        }
+      },
+      "loudness": {
+        "before": {
+          "lufs": -20.6,
+          "truePeakDb": -2.3
+        },
+        "gainDb": -0.6,
+        "after": {
+          "lufs": -21.2,
+          "truePeakDb": -2.9
+        }
+      },
+      "qc": {
+        "durationSec": 1.58,
+        "sampleRate": 48000,
+        "channels": 1,
+        "peakDb": -2.9,
+        "leadingSilenceSec": 0,
+        "trailingSilenceSec": 0,
+        "tailRmsDb": -69.9,
+        "innerSilences": [],
+        "speechSec": 1.58,
+        "syllables": 7,
+        "syllablesPerSec": 4.43,
+        "flags": []
+      }
+    },
+    {
+      "id": "a05",
+      "scene": "S3",
+      "kind": "action",
+      "startSec": 40.98,
+      "endSec": 42.18,
+      "durationSec": 1.2,
+      "startFrame": 1229,
+      "endFrame": 1265,
+      "desc": "Sếp bấm kết thúc cuộc họp, nhấp ngụm trà, khẽ cười. Chuyển cảnh."
+    },
+    {
+      "id": "a06",
+      "scene": "S4",
+      "kind": "action",
+      "startSec": 42.18,
+      "endSec": 43.58,
+      "durationSec": 1.4,
+      "startFrame": 1265,
+      "endFrame": 1307,
+      "desc": "Kiên nhìn laptop: biểu tượng micro vẫn sáng. Kiên chết lặng, gói bánh rơi xuống bàn."
+    },
+    {
+      "id": "k08",
+      "scene": "S4",
+      "kind": "line",
+      "role": "kien",
+      "voiceId": "ref:806c4f559c3a4cf0d30045b650044c008d565ae95ae7d8df94f27c5b953b5712",
+      "text": "Sao em không nói anh?",
+      "file": "episodes/EP004/audio/lines/23_k08_kien.wav",
+      "startSec": 43.58,
+      "endSec": 44.49,
+      "speechStartSec": 43.65,
+      "speechEndSec": 44.37,
+      "startFrame": 1307,
+      "endFrame": 1335,
+      "cacheKey": "e799a5765f1a3f0c6cdc16c2",
+      "fromCache": false,
+      "createdAt": "2026-11-19T07:24:10.568Z",
+      "rawSec": 0.96,
+      "edges": {
+        "leading": {
+          "lengthSec": 0.07,
+          "floorPeakDb": -73.4,
+          "floorMedianRmsDb": -91.9,
+          "onsetJumpDb": 62.7,
+          "trimmed": false,
+          "reason": "ngắn (0.07 s), giữ nguyên"
+        },
+        "trailing": {
+          "lengthSec": 0.17,
+          "floorPeakDb": -51.1,
+          "trimmed": true,
+          "reason": "đuôi 0.17 s, sau 60 ms tắt dần chỉ còn nền (đỉnh ≤ -51.1 dBFS); giữ 120 ms"
+        }
+      },
+      "loudness": {
+        "before": {
+          "lufs": -18.5,
+          "truePeakDb": -3.4
+        },
+        "gainDb": -2.7,
+        "after": {
+          "lufs": -21.2,
+          "truePeakDb": -6.1
+        }
+      },
+      "qc": {
+        "durationSec": 0.91,
+        "sampleRate": 48000,
+        "channels": 1,
+        "peakDb": -6.16,
+        "leadingSilenceSec": 0,
+        "trailingSilenceSec": 0,
+        "tailRmsDb": -61.3,
+        "innerSilences": [],
+        "speechSec": 0.91,
+        "syllables": 5,
+        "syllablesPerSec": 5.49,
+        "flags": []
+      }
+    },
+    {
+      "id": "t03",
+      "scene": "S4",
+      "kind": "line",
+      "role": "trinh",
+      "voiceId": "ref:b07ad2220f15db399ce12bda426919582de6093a7c5fd29f5390b87e602a3011",
+      "text": "Em nhắn anh mười hai tin rồi đó.",
+      "file": "episodes/EP004/audio/lines/24_t03_trinh.wav",
+      "startSec": 44.52,
+      "endSec": 46.44,
+      "speechStartSec": 44.59,
+      "speechEndSec": 46.22,
+      "startFrame": 1336,
+      "endFrame": 1393,
+      "cacheKey": "0447ab5daea4506b6e1aa51f",
+      "fromCache": false,
+      "createdAt": "2026-11-19T07:24:12.219Z",
+      "rawSec": 1.92,
+      "edges": {
+        "leading": {
+          "lengthSec": 0.07,
+          "floorPeakDb": -90.3,
+          "floorMedianRmsDb": -94.4,
+          "onsetJumpDb": 79.6,
+          "trimmed": false,
+          "reason": "ngắn (0.07 s), giữ nguyên"
+        },
+        "trailing": {
+          "lengthSec": 0.22,
+          "floorPeakDb": -32.5,
+          "trimmed": false,
+          "reason": "sau phần tắt dần còn đỉnh -32.5 dBFS: có thể là âm thật, KHÔNG cắt"
+        }
+      },
+      "loudness": {
+        "before": {
+          "lufs": -18.5,
+          "truePeakDb": -2.6
+        },
+        "gainDb": -2.7,
+        "after": {
+          "lufs": -21.2,
+          "truePeakDb": -5.3
+        }
+      },
+      "qc": {
+        "durationSec": 1.92,
+        "sampleRate": 48000,
+        "channels": 1,
+        "peakDb": -5.35,
+        "leadingSilenceSec": 0,
+        "trailingSilenceSec": 0,
+        "tailRmsDb": -50.6,
+        "innerSilences": [],
+        "speechSec": 1.92,
+        "syllables": 8,
+        "syllablesPerSec": 4.17,
+        "flags": []
+      }
+    },
+    {
+      "id": "k09",
+      "scene": "S4",
+      "kind": "line",
+      "role": "kien",
+      "voiceId": "ref:806c4f559c3a4cf0d30045b650044c008d565ae95ae7d8df94f27c5b953b5712",
+      "text": "Sao em không nói lớn?",
+      "file": "episodes/EP004/audio/lines/25_k09_kien.wav",
+      "startSec": 46.44,
+      "endSec": 47.51,
+      "speechStartSec": 46.55,
+      "speechEndSec": 47.39,
+      "startFrame": 1393,
+      "endFrame": 1425,
+      "cacheKey": "f7fa88e9babbf72f60be6aac",
+      "fromCache": false,
+      "createdAt": "2026-11-19T07:24:14.989Z",
+      "rawSec": 1.12,
+      "edges": {
+        "leading": {
+          "lengthSec": 0.11,
+          "floorPeakDb": -90.3,
+          "floorMedianRmsDb": -95.9,
+          "onsetJumpDb": 65.4,
+          "trimmed": false,
+          "reason": "ngắn (0.11 s), giữ nguyên"
+        },
+        "trailing": {
+          "lengthSec": 0.17,
+          "floorPeakDb": -52.9,
+          "trimmed": true,
+          "reason": "đuôi 0.17 s, sau 60 ms tắt dần chỉ còn nền (đỉnh ≤ -52.9 dBFS); giữ 120 ms"
+        }
+      },
+      "loudness": {
+        "before": {
+          "lufs": -19.7,
+          "truePeakDb": -4.8
+        },
+        "gainDb": -1.5,
+        "after": {
+          "lufs": -21.2,
+          "truePeakDb": -6.3
+        }
+      },
+      "qc": {
+        "durationSec": 1.07,
+        "sampleRate": 48000,
+        "channels": 1,
+        "peakDb": -6.31,
+        "leadingSilenceSec": 0,
+        "trailingSilenceSec": 0,
+        "tailRmsDb": -65,
+        "innerSilences": [],
+        "speechSec": 1.07,
+        "syllables": 5,
+        "syllablesPerSec": 4.67,
+        "flags": []
+      }
+    },
+    {
+      "id": "t04",
+      "scene": "S4",
+      "kind": "line",
+      "role": "trinh",
+      "voiceId": "ref:b07ad2220f15db399ce12bda426919582de6093a7c5fd29f5390b87e602a3011",
+      "text": "Em mà nói lớn thì cả phòng cũng nghe luôn.",
+      "file": "episodes/EP004/audio/lines/26_t04_trinh.wav",
+      "startSec": 47.56,
+      "endSec": 49.72,
+      "speechStartSec": 47.61,
+      "speechEndSec": 49.6,
+      "startFrame": 1427,
+      "endFrame": 1492,
+      "cacheKey": "f0fc53064566772f8fec2377",
+      "fromCache": false,
+      "createdAt": "2026-11-19T07:24:16.292Z",
+      "rawSec": 2.24,
+      "edges": {
+        "leading": {
+          "lengthSec": 0.05,
+          "floorPeakDb": -90.3,
+          "floorMedianRmsDb": -93.7,
+          "onsetJumpDb": 78.6,
+          "trimmed": false,
+          "reason": "ngắn (0.05 s), giữ nguyên"
+        },
+        "trailing": {
+          "lengthSec": 0.2,
+          "floorPeakDb": -35.4,
+          "trimmed": true,
+          "reason": "đuôi 0.20 s, sau 60 ms tắt dần chỉ còn nền (đỉnh ≤ -35.4 dBFS); giữ 120 ms"
+        }
+      },
+      "loudness": {
+        "before": {
+          "lufs": -18.2,
+          "truePeakDb": -1.2
+        },
+        "gainDb": -3,
+        "after": {
+          "lufs": -21.2,
+          "truePeakDb": -4.2
+        }
+      },
+      "qc": {
+        "durationSec": 2.16,
+        "sampleRate": 48000,
+        "channels": 1,
+        "peakDb": -4.27,
+        "leadingSilenceSec": 0,
+        "trailingSilenceSec": 0,
+        "tailRmsDb": -53.8,
+        "innerSilences": [],
+        "speechSec": 2.16,
+        "syllables": 10,
+        "syllablesPerSec": 4.63,
+        "flags": []
+      }
+    },
+    {
+      "id": "t05",
+      "scene": "S4",
+      "kind": "line",
+      "role": "trinh",
+      "voiceId": "ref:b07ad2220f15db399ce12bda426919582de6093a7c5fd29f5390b87e602a3011",
+      "text": "Mà công nhận anh hát cũng được.",
+      "file": "episodes/EP004/audio/lines/27_t05_trinh.wav",
+      "startSec": 49.72,
+      "endSec": 51.32,
+      "speechStartSec": 49.83,
+      "speechEndSec": 51.2,
+      "startFrame": 1492,
+      "endFrame": 1540,
+      "cacheKey": "e253264b39c4e2c71a7af382",
+      "fromCache": false,
+      "createdAt": "2026-11-19T07:24:20.607Z",
+      "rawSec": 1.68,
+      "edges": {
+        "leading": {
+          "lengthSec": 0.11,
+          "floorPeakDb": -47.1,
+          "floorMedianRmsDb": -69.9,
+          "onsetJumpDb": 56.3,
+          "trimmed": false,
+          "reason": "ngắn (0.11 s), giữ nguyên"
+        },
+        "trailing": {
+          "lengthSec": 0.2,
+          "floorPeakDb": -42.8,
+          "trimmed": true,
+          "reason": "đuôi 0.20 s, sau 60 ms tắt dần chỉ còn nền (đỉnh ≤ -42.8 dBFS); giữ 120 ms"
+        }
+      },
+      "loudness": {
+        "before": {
+          "lufs": -19.6,
+          "truePeakDb": -1.9
+        },
+        "gainDb": -1.6,
+        "after": {
+          "lufs": -21.2,
+          "truePeakDb": -3.5
+        }
+      },
+      "qc": {
+        "durationSec": 1.6,
+        "sampleRate": 48000,
+        "channels": 1,
+        "peakDb": -3.48,
+        "leadingSilenceSec": 0,
+        "trailingSilenceSec": 0,
+        "tailRmsDb": -58,
+        "innerSilences": [],
+        "speechSec": 1.6,
+        "syllables": 7,
+        "syllablesPerSec": 4.38,
+        "flags": []
+      }
+    },
+    {
+      "id": "t06",
+      "scene": "S4",
+      "kind": "line",
+      "role": "trinh",
+      "voiceId": "ref:b07ad2220f15db399ce12bda426919582de6093a7c5fd29f5390b87e602a3011",
+      "text": "Chat cuộc họp vỗ tay quá trời kìa.",
+      "file": "episodes/EP004/audio/lines/28_t06_trinh.wav",
+      "startSec": 51.32,
+      "endSec": 53.56,
+      "speechStartSec": 51.41,
+      "speechEndSec": 53.35,
+      "startFrame": 1540,
+      "endFrame": 1607,
+      "cacheKey": "b8d4bcf089a024dea5ce4ff8",
+      "fromCache": false,
+      "createdAt": "2026-11-19T07:24:22.152Z",
+      "rawSec": 2.24,
+      "edges": {
+        "leading": {
+          "lengthSec": 0.09,
+          "floorPeakDb": -90.3,
+          "floorMedianRmsDb": -95.7,
+          "onsetJumpDb": 83.9,
+          "trimmed": false,
+          "reason": "ngắn (0.09 s), giữ nguyên"
+        },
+        "trailing": {
+          "lengthSec": 0.21,
+          "floorPeakDb": -33.1,
+          "trimmed": false,
+          "reason": "sau phần tắt dần còn đỉnh -33.1 dBFS: có thể là âm thật, KHÔNG cắt"
+        }
+      },
+      "loudness": {
+        "before": {
+          "lufs": -19.4,
+          "truePeakDb": -2.1
+        },
+        "gainDb": -1.8,
+        "after": {
+          "lufs": -21.2,
+          "truePeakDb": -3.9
+        }
+      },
+      "qc": {
+        "durationSec": 2.24,
+        "sampleRate": 48000,
+        "channels": 1,
+        "peakDb": -3.96,
+        "leadingSilenceSec": 0,
+        "trailingSilenceSec": 0,
+        "tailRmsDb": -46.4,
+        "innerSilences": [],
+        "speechSec": 2.24,
+        "syllables": 8,
+        "syllablesPerSec": 3.57,
+        "flags": []
+      }
+    },
+    {
+      "id": "a07",
+      "scene": "S4",
+      "kind": "action",
+      "startSec": 53.56,
+      "endSec": 55.06,
+      "durationSec": 1.5,
+      "startFrame": 1607,
+      "endFrame": 1652,
+      "desc": "Thẻ chat cuộc họp: \"Kiên hát hay quá\", \"Xin link bài hát\", \"Bánh gì vậy anh?\". Kiên úp mặt xuống bàn."
+    },
+    {
+      "id": "k10",
+      "scene": "S4",
+      "kind": "line",
+      "role": "kien",
+      "voiceId": "ref:806c4f559c3a4cf0d30045b650044c008d565ae95ae7d8df94f27c5b953b5712",
+      "text": "Cuộc họp có ghi hình không em?",
+      "file": "episodes/EP004/audio/lines/29_k10_kien.wav",
+      "startSec": 55.06,
+      "endSec": 56.45,
+      "speechStartSec": 55.18,
+      "speechEndSec": 56.33,
+      "startFrame": 1652,
+      "endFrame": 1694,
+      "cacheKey": "af4c251cd00c0d470b5a4f7a",
+      "fromCache": false,
+      "createdAt": "2026-11-19T07:24:25.123Z",
+      "rawSec": 1.44,
+      "edges": {
+        "leading": {
+          "lengthSec": 0.12,
+          "floorPeakDb": -73.4,
+          "floorMedianRmsDb": -95.8,
+          "onsetJumpDb": 82.9,
+          "trimmed": false,
+          "reason": "ngắn (0.12 s), giữ nguyên"
+        },
+        "trailing": {
+          "lengthSec": 0.17,
+          "floorPeakDb": -39.5,
+          "trimmed": true,
+          "reason": "đuôi 0.17 s, sau 60 ms tắt dần chỉ còn nền (đỉnh ≤ -39.5 dBFS); giữ 120 ms"
+        }
+      },
+      "loudness": {
+        "before": {
+          "lufs": -19,
+          "truePeakDb": -0.3
+        },
+        "gainDb": -2.2,
+        "after": {
+          "lufs": -21.2,
+          "truePeakDb": -2.5
+        }
+      },
+      "qc": {
+        "durationSec": 1.39,
+        "sampleRate": 48000,
+        "channels": 1,
+        "peakDb": -2.55,
+        "leadingSilenceSec": 0,
+        "trailingSilenceSec": 0,
+        "tailRmsDb": -51.4,
+        "innerSilences": [],
+        "speechSec": 1.39,
+        "syllables": 7,
+        "syllablesPerSec": 5.04,
+        "flags": []
+      }
+    },
+    {
+      "id": "t07",
+      "scene": "S4",
+      "kind": "line",
+      "role": "trinh",
+      "voiceId": "ref:b07ad2220f15db399ce12bda426919582de6093a7c5fd29f5390b87e602a3011",
+      "text": "Có. Sếp vừa gửi link cho cả công ty rồi.",
+      "file": "episodes/EP004/audio/lines/30_t07_trinh.wav",
+      "startSec": 56.45,
+      "endSec": 58.93,
+      "speechStartSec": 56.56,
+      "speechEndSec": 58.75,
+      "startFrame": 1694,
+      "endFrame": 1768,
+      "cacheKey": "aac014fb0d5a7ae4f0da329e",
+      "fromCache": false,
+      "createdAt": "2026-11-19T07:24:26.416Z",
+      "rawSec": 2.48,
+      "edges": {
+        "leading": {
+          "lengthSec": 0.11,
+          "floorPeakDb": -90.3,
+          "floorMedianRmsDb": -95.8,
+          "onsetJumpDb": 83.3,
+          "trimmed": false,
+          "reason": "ngắn (0.11 s), giữ nguyên"
+        },
+        "trailing": {
+          "lengthSec": 0.18,
+          "floorPeakDb": -33.8,
+          "trimmed": false,
+          "reason": "sau phần tắt dần còn đỉnh -33.8 dBFS: có thể là âm thật, KHÔNG cắt"
+        }
+      },
+      "loudness": {
+        "before": {
+          "lufs": -19.6,
+          "truePeakDb": -1.6
+        },
+        "gainDb": -1.6,
+        "after": {
+          "lufs": -21.2,
+          "truePeakDb": -3.2
+        }
+      },
+      "qc": {
+        "durationSec": 2.48,
+        "sampleRate": 48000,
+        "channels": 1,
+        "peakDb": -3.21,
+        "leadingSilenceSec": 0,
+        "trailingSilenceSec": 0,
+        "tailRmsDb": -47.2,
+        "innerSilences": [],
+        "speechSec": 2.48,
+        "syllables": 10,
+        "syllablesPerSec": 4.03,
+        "flags": []
+      }
+    },
+    {
+      "id": "k11",
+      "scene": "S4",
+      "kind": "line",
+      "role": "kien",
+      "voiceId": "ref:806c4f559c3a4cf0d30045b650044c008d565ae95ae7d8df94f27c5b953b5712",
+      "text": "Cả công ty luôn hả em?",
+      "file": "episodes/EP004/audio/lines/31_k11_kien.wav",
+      "startSec": 58.93,
+      "endSec": 60.06,
+      "speechStartSec": 59,
+      "speechEndSec": 59.94,
+      "startFrame": 1768,
+      "endFrame": 1802,
+      "cacheKey": "82b56da3937be72a261982b7",
+      "fromCache": false,
+      "createdAt": "2026-11-19T07:24:29.918Z",
+      "rawSec": 1.2,
+      "edges": {
+        "leading": {
+          "lengthSec": 0.07,
+          "floorPeakDb": -90.3,
+          "floorMedianRmsDb": -94.4,
+          "onsetJumpDb": 79.2,
+          "trimmed": false,
+          "reason": "ngắn (0.07 s), giữ nguyên"
+        },
+        "trailing": {
+          "lengthSec": 0.19,
+          "floorPeakDb": -47,
+          "trimmed": true,
+          "reason": "đuôi 0.19 s, sau 60 ms tắt dần chỉ còn nền (đỉnh ≤ -47.0 dBFS); giữ 120 ms"
+        }
+      },
+      "loudness": {
+        "before": {
+          "lufs": -19,
+          "truePeakDb": -3.7
+        },
+        "gainDb": -2.2,
+        "after": {
+          "lufs": -21.2,
+          "truePeakDb": -5.9
+        }
+      },
+      "qc": {
+        "durationSec": 1.13,
+        "sampleRate": 48000,
+        "channels": 1,
+        "peakDb": -5.89,
+        "leadingSilenceSec": 0,
+        "trailingSilenceSec": 0,
+        "tailRmsDb": -57.7,
+        "innerSilences": [],
+        "speechSec": 1.13,
+        "syllables": 6,
+        "syllablesPerSec": 5.31,
+        "flags": []
+      }
+    },
+    {
+      "id": "n04",
+      "scene": "S4",
+      "kind": "line",
+      "role": "narrator",
+      "voiceId": "ref:806c4f559c3a4cf0d30045b650044c008d565ae95ae7d8df94f27c5b953b5712",
+      "text": "Hôm đó, tôi nổi tiếng cả phòng.",
+      "file": "episodes/EP004/audio/lines/32_n04_narrator.wav",
+      "startSec": 60.09,
+      "endSec": 61.66,
+      "speechStartSec": 60.16,
+      "speechEndSec": 61.54,
+      "startFrame": 1803,
+      "endFrame": 1850,
+      "cacheKey": "8e598cf330231e73a66b4caa",
+      "fromCache": false,
+      "createdAt": "2026-11-19T07:24:31.242Z",
+      "rawSec": 1.6,
+      "edges": {
+        "leading": {
+          "lengthSec": 0.07,
+          "floorPeakDb": -57.4,
+          "floorMedianRmsDb": -86.5,
+          "onsetJumpDb": 76.1,
+          "trimmed": false,
+          "reason": "ngắn (0.07 s), giữ nguyên"
+        },
+        "trailing": {
+          "lengthSec": 0.15,
+          "floorPeakDb": -50.1,
+          "trimmed": true,
+          "reason": "đuôi 0.15 s, sau 60 ms tắt dần chỉ còn nền (đỉnh ≤ -50.1 dBFS); giữ 120 ms"
+        }
+      },
+      "loudness": {
+        "before": {
+          "lufs": -19.6,
+          "truePeakDb": -1.2
+        },
+        "gainDb": -1.6,
+        "after": {
+          "lufs": -21.2,
+          "truePeakDb": -2.8
+        }
+      },
+      "qc": {
+        "durationSec": 1.57,
+        "sampleRate": 48000,
+        "channels": 1,
+        "peakDb": -2.81,
+        "leadingSilenceSec": 0,
+        "trailingSilenceSec": 0,
+        "tailRmsDb": -61.1,
+        "innerSilences": [],
+        "speechSec": 1.57,
+        "syllables": 7,
+        "syllablesPerSec": 4.46,
+        "flags": []
+      }
+    },
+    {
+      "id": "n05",
+      "scene": "S4",
+      "kind": "line",
+      "role": "narrator",
+      "voiceId": "ref:806c4f559c3a4cf0d30045b650044c008d565ae95ae7d8df94f27c5b953b5712",
+      "text": "Theo cách tôi không muốn nhất.",
+      "file": "episodes/EP004/audio/lines/33_n05_narrator.wav",
+      "startSec": 61.67,
+      "endSec": 62.86,
+      "speechStartSec": 61.74,
+      "speechEndSec": 62.74,
+      "startFrame": 1850,
+      "endFrame": 1886,
+      "cacheKey": "70c25ffa39396223ab859eea",
+      "fromCache": false,
+      "createdAt": "2026-11-19T07:24:32.897Z",
+      "rawSec": 1.28,
+      "edges": {
+        "leading": {
+          "lengthSec": 0.07,
+          "floorPeakDb": -66.8,
+          "floorMedianRmsDb": -86.8,
+          "onsetJumpDb": 71.4,
+          "trimmed": false,
+          "reason": "ngắn (0.07 s), giữ nguyên"
+        },
+        "trailing": {
+          "lengthSec": 0.21,
+          "floorPeakDb": -45.6,
+          "trimmed": true,
+          "reason": "đuôi 0.21 s, sau 60 ms tắt dần chỉ còn nền (đỉnh ≤ -45.6 dBFS); giữ 120 ms"
+        }
+      },
+      "loudness": {
+        "before": {
+          "lufs": -18.8,
+          "truePeakDb": -3
+        },
+        "gainDb": -2.4,
+        "after": {
+          "lufs": -21.2,
+          "truePeakDb": -5.4
+        }
+      },
+      "qc": {
+        "durationSec": 1.19,
+        "sampleRate": 48000,
+        "channels": 1,
+        "peakDb": -5.4,
+        "leadingSilenceSec": 0,
+        "trailingSilenceSec": 0,
+        "tailRmsDb": -54.5,
+        "innerSilences": [],
+        "speechSec": 1.19,
+        "syllables": 6,
+        "syllablesPerSec": 5.04,
+        "flags": []
+      }
+    },
+    {
+      "id": "a08",
+      "scene": "S4",
+      "kind": "action",
+      "startSec": 62.86,
+      "endSec": 63.86,
+      "durationSec": 1,
+      "startFrame": 1886,
+      "endFrame": 1916,
+      "desc": "Giữ khung hình mặt Kiên; kết thúc."
+    }
+  ]
+}

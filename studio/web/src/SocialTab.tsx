@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { ApiError, send, type EpisodeDetail, type PartState, type SocialPost } from "./api";
-import { ApprovalPanel } from "./Approval";
+import { ApiError, send, type EpisodeDetail, type SocialPost } from "./api";
 import { Badge, CopyButton, PLATFORM, POST_NAME, TechDetails, useToast } from "./ui";
 
 // Social copy per platform and post. Editing changes only that post in
-// social.json (atomic write, conflict check), regenerates social.md, and
-// only that post's approval becomes "cần duyệt lại".
+// social.json (atomic write, conflict check) and regenerates social.md.
+// Posting is done by hand (copy the paste text, or use the delivery bundle).
 
 export const SocialTab: React.FC<{ d: EpisodeDetail; reload: () => void }> = ({ d, reload }) => {
   const posts = d.social?.posts ?? [];
@@ -18,7 +17,7 @@ export const SocialTab: React.FC<{ d: EpisodeDetail; reload: () => void }> = ({ 
         <div className="state state-info small">
           <strong>Giữ bí mật câu chốt:</strong> {guard.punchline}
           {guard.keepSecret?.length ? <div>Không nhắc: {guard.keepSecret.join("; ")}.</div> : null}
-          <div className="muted">Bộ lọc từ khóa chỉ là lưới lọc thô, không chứng minh bài không lộ câu chốt. Hãy đọc lại khi duyệt.</div>
+          <div className="muted">Bộ lọc từ khóa chỉ là lưới lọc thô, không chứng minh bài không lộ câu chốt. Hãy đọc lại trước khi đăng.</div>
         </div>
       ) : null}
       {platforms.map((pl) => (
@@ -28,7 +27,7 @@ export const SocialTab: React.FC<{ d: EpisodeDetail; reload: () => void }> = ({ 
             {posts
               .filter((p) => p.platform === pl)
               .map((p) => (
-                <PostCard key={p.key} episode={d.summary.id} p={p} part={d.parts?.find((x) => x.part === `social.${p.key}`)} findings={(d.social?.findings ?? []).filter((f) => f.post === p.key)} reload={reload} />
+                <PostCard key={p.key} episode={d.summary.id} p={p} findings={(d.social?.findings ?? []).filter((f) => f.post === p.key)} reload={reload} />
               ))}
           </div>
         </section>
@@ -37,7 +36,7 @@ export const SocialTab: React.FC<{ d: EpisodeDetail; reload: () => void }> = ({ 
   );
 };
 
-const PostCard: React.FC<{ episode: string; p: SocialPost; part?: PartState; findings: { level: string; msg: string }[]; reload: () => void }> = ({ episode, p, part, findings, reload }) => {
+const PostCard: React.FC<{ episode: string; p: SocialPost; findings: { level: string; msg: string }[]; reload: () => void }> = ({ episode, p, findings, reload }) => {
   const toast = useToast();
   const [editing, setEditing] = useState(false);
   const [title, setTitle] = useState(p.post.title ?? "");
@@ -68,7 +67,6 @@ const PostCard: React.FC<{ episode: string; p: SocialPost; part?: PartState; fin
     return out;
   };
   const dirty = editing && Object.keys(patch()).length > 0;
-  const approvedLike = part && (part.status === "approved" || part.status === "needs_recheck");
 
   const save = async () => {
     setSaving(true);
@@ -94,7 +92,6 @@ const PostCard: React.FC<{ episode: string; p: SocialPost; part?: PartState; fin
       <header className="post-head">
         <strong>{POST_NAME[p.name] ?? p.name}</strong>
         {post.optional ? <Badge tone="none">tùy chọn</Badge> : null}
-        <Badge tone={post.postingMode === "manual" ? "none" : "wait"}>{post.postingMode === "manual" ? "đăng thủ công" : "API (chưa tích hợp)"}</Badge>
       </header>
       {!editing ? (
         <>
@@ -130,7 +127,6 @@ const PostCard: React.FC<{ episode: string; p: SocialPost; part?: PartState; fin
         </>
       ) : (
         <div className="edit">
-          {approvedLike ? <div className="state state-warn small">Bài này đã duyệt. Lưu thay đổi sẽ làm bài này "Cần duyệt lại". Các bài khác không bị ảnh hưởng.</div> : null}
           {conflict ? (
             <div className="state state-error small">
               {conflict}{" "}
@@ -183,7 +179,6 @@ const PostCard: React.FC<{ episode: string; p: SocialPost; part?: PartState; fin
           ))}
         </ul>
       ) : null}
-      {part ? <ApprovalPanel episode={episode} part={part} onChanged={reload} compact /> : null}
       <TechDetails>
         <div>Mã bài: <code>{p.key}</code> · phiên bản <code>{p.token}</code></div>
       </TechDetails>

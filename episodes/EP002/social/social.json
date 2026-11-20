@@ -1,0 +1,102 @@
+{
+  "$comment": "Nội dung social EP002. Đăng thủ công: bản dán và các bước đăng nằm trong bộ delivery (npm run episode:delivery -- EP002). social.md là bản đọc, tạo bằng npm run episode:social. Không lộ câu chốt, không hứa ngày/giờ.",
+  "episode": "EP002",
+  "language": "vi",
+  "spoilerGuard": {
+    "punchline": "Sếp đồng ý rút họp của cả phòng còn mười lăm phút, rồi xếp riêng cho Kiên một buổi ba tiếng về cách viết thư nội bộ. Kiên thành người hùng duy nhất còn phải họp ba tiếng.",
+    "keepSecret": [
+      "Sếp trả lời thế nào",
+      "họp còn mười lăm phút",
+      "buổi họp riêng ba tiếng của Kiên",
+      "cách viết thư nội bộ",
+      "Kiên thành người hùng"
+    ],
+    "allowedPremise": "Kiên định than với Trinh về cuộc họp dài nhưng bấm Trả lời tất cả, cả phòng nhận được, có cả Sếp. Thu hồi không kịp; mấy thư giải thích sau đó càng làm mọi chuyện tệ hơn.",
+    "punchlineMustNotAppear": [
+      "15 phút",
+      "mười lăm phút",
+      "3 tiếng",
+      "ba tiếng",
+      "buổi riêng",
+      "họp riêng",
+      "cách viết thư",
+      "thư nội bộ",
+      "người hùng"
+    ],
+    "note": "Danh sách từ khóa chỉ là lưới lọc thô, KHÔNG chứng minh bài không spoil. Đọc lại từng bài trước khi đăng."
+  },
+  "platforms": {
+    "youtube": {
+      "video": {
+        "kind": "short",
+        "title": "Lỡ bấm Trả lời tất cả… có cả sếp 😶 | Hài công sở",
+        "body": "Kiên chỉ định than với đúng một người về cuộc họp sáng thứ Hai. Nhưng tay lại bấm Trả lời tất cả: cả phòng nhận được, có cả sếp. Thu hồi thì không kịp, mà càng giải thích lại càng tệ…\n\nBạn đã bao giờ gửi nhầm tin nhắn vào nhóm chưa?\n\nPhim hoạt hình hài công sở, lồng tiếng Việt.",
+        "hashtags": [
+          "#haicongso",
+          "#congso",
+          "#hoathinh",
+          "#Shorts"
+        ],
+        "madeForKids": false,
+        "privacyAtUpload": "private",
+        "captionsFile": "exports/EP002.srt",
+        "thumbnail": "thumbnails/thumb-9x16.png"
+      },
+      "teaser": {
+        "kind": "community_text",
+        "optional": true,
+        "body": "Nút nguy hiểm nhất văn phòng: Trả lời tất cả. 😬\nTập mới của Kiên kể chuyện đó.",
+        "hashtags": [],
+        "image": "thumbnails/teaser-1x1.png",
+        "note": "Tùy chọn. Đăng tay trong YouTube Studio (mục Cộng đồng)."
+      }
+    },
+    "facebook": {
+      "video": {
+        "kind": "reel",
+        "body": "Chỉ định than với một người. Bấm nhầm Trả lời tất cả. Cả phòng đọc được, có cả sếp. 😶\n\nTag ngay đồng nghiệp từng gửi nhầm tin nhắn 👇",
+        "hashtags": [
+          "#haicongso",
+          "#congso",
+          "#vanphong",
+          "#hoathinh"
+        ],
+        "coverImage": "thumbnails/thumb-9x16.png",
+        "captionsFile": "exports/EP002.srt"
+      },
+      "teaser": {
+        "kind": "photo",
+        "image": "thumbnails/teaser-1x1.png",
+        "body": "Kiên vừa gửi nhầm lời than cho cả phòng.\nVà sếp đã đọc. 👀\n\nNếu là bạn, bạn sẽ làm gì tiếp theo?",
+        "hashtags": [
+          "#haicongso",
+          "#congso"
+        ]
+      }
+    },
+    "tiktok": {
+      "video": {
+        "kind": "video",
+        "body": "Lỡ bấm Trả lời tất cả. Có cả sếp 😶",
+        "hashtags": [
+          "#haicongso",
+          "#congso",
+          "#vanphong",
+          "#hoathinh"
+        ],
+        "coverTimestampMs": 9000,
+        "coverImage": "thumbnails/thumb-9x16.png",
+        "note": "Ảnh bìa: chọn khung hình gợi ý ở coverTimestampMs, hoặc tải ảnh bìa lên nếu app cho phép (xem delivery/tiktok.md)."
+      },
+      "teaser": {
+        "kind": "photo",
+        "image": "thumbnails/teaser-1x1.png",
+        "body": "Gửi nhầm cả phòng. Có cả sếp. 👀",
+        "hashtags": [
+          "#haicongso",
+          "#congso"
+        ]
+      }
+    }
+  }
+}

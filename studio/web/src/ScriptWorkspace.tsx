@@ -1,15 +1,14 @@
 import React, { useState } from "react";
-import { ApiError, get, send, type AiStatus, type AiTask, type PartState, type ProposalMeta, type ScriptBeatDoc, type ScriptDiff, type ScriptDocT, type ScriptState, type VersionMeta } from "./api";
-import { ApprovalPanel } from "./Approval";
-import { AiStatusBanner, AiTaskPanel, isActive, useTask } from "./AiTaskPanel";
+import { ApiError, get, send, type ProposalMeta, type ScriptBeatDoc, type ScriptDiff, type ScriptDocT, type ScriptState, type VersionMeta } from "./api";
 import { Badge, Empty, ErrorBox, fmtSec, fmtVN, Loading, Modal, TechDetails, useAsync, useToast } from "./ui";
 
-// Script tab: current version (+ automatic checks), approval, manual edit,
-// "ask Claude to revise" (whole or selected scenes), proposals with diff,
-// accept/discard, and version history with restore (restore = new version).
+// Script tab: current version (+ automatic checks), manual edit,
+// proposals with diff, accept/discard, and version history with restore
+// (restore = new version). Scripts are written in a Claude Code session and
+// arrive here as proposals (npm run script:propose); the Studio calls no model.
 
 const ROLE: Record<string, string> = { narrator: "Kiên (lời dẫn)", kien: "Kiên", trinh: "Trinh", sep: "Sếp" };
-const SOURCE: Record<string, string> = { user: "bạn sửa", claude: "Claude", restore: "phục hồi", import: "bản có sẵn" };
+const SOURCE: Record<string, string> = { user: "bạn sửa", claude: "Claude API (cũ)", "claude-code": "Claude Code", restore: "phục hồi", import: "bản có sẵn" };
 const PSTATUS: Record<string, { label: string; tone: string }> = {
   pending: { label: "Chờ xem", tone: "wait" },
   accepted: { label: "Đã áp dụng", tone: "ok" },
@@ -17,9 +16,8 @@ const PSTATUS: Record<string, { label: string; tone: string }> = {
   conflict: { label: "Xung đột", tone: "bad" },
 };
 
-export const ScriptWorkspace: React.FC<{ episode: string; part?: PartState; reloadEpisode: () => void }> = ({ episode, part, reloadEpisode }) => {
+export const ScriptWorkspace: React.FC<{ episode: string; reloadEpisode: () => void }> = ({ episode, reloadEpisode }) => {
   const st = useAsync(() => get<ScriptState>(`/api/episodes/${episode}/script`), [episode]);
-  const ai = useAsync(() => get<AiStatus>("/api/ai/status"), []);
   const reload = () => {
     st.reload();
     reloadEpisode();
@@ -27,51 +25,26 @@ export const ScriptWorkspace: React.FC<{ episode: string; part?: PartState; relo
   if (st.loading && !st.data) return <Loading />;
   if (st.error) return <ErrorBox message={st.error} onRetry={st.reload} />;
   const s = st.data!;
-  return <Workspace key={`${s.current?.hash ?? "none"}-${s.proposals.length}-${s.activeTask?.id ?? ""}`} episode={episode} s={s} part={part} ai={ai.data} reload={reload} />;
+  return <Workspace key={`${s.current?.hash ?? "none"}-${s.proposals.length}`} episode={episode} s={s} reload={reload} />;
 };
 
-const Workspace: React.FC<{ episode: string; s: ScriptState; part?: PartState; ai: AiStatus | null; reload: () => void }> = ({ episode, s, part, ai, reload }) => {
-  const toast = useToast();
-  const latest = s.activeTask ?? s.tasks[0] ?? null;
-  const { task, setTask, now } = useTask(latest, (t) => {
-    toast(t.state === "succeeded" ? "ok" : "bad", t.state === "succeeded" ? "Claude đã xong. Xem kết quả bên dưới." : `Công việc AI kết thúc: ${t.message ?? t.state}`);
-    reload();
-  });
-  const [mode, setMode] = useState<"view" | "edit" | "revise">("view");
+const Workspace: React.FC<{ episode: string; s: ScriptState; reload: () => void }> = ({ episode, s, reload }) => {
+  const [mode, setMode] = useState<"view" | "edit">("view");
   const [openProposal, setOpenProposal] = useState<string | null>(null);
   const [openVersion, setOpenVersion] = useState<number | null>(null);
   const cur = s.current;
-  const aiReady = Boolean(ai?.configured);
-  const busyAi = isActive(task);
-
-  const startDraft = async () => {
-    try {
-      const r = await send<{ task: AiTask }>("POST", `/api/episodes/${episode}/script/draft`);
-      setTask(r.task);
-    } catch (e) {
-      toast("bad", (e as Error).message);
-    }
-  };
 
   return (
     <div className="stack">
-      <AiStatusBanner status={ai} />
-      {task ? <AiTaskPanel task={task} now={now} onChanged={setTask} /> : null}
-
       {!cur ? (
         <div className="card stack">
           <h2>Chưa có kịch bản</h2>
           {s.request ? (
-            <>
-              <p className="small">
-                Yêu cầu ban đầu: <strong>{s.request.title}</strong> — {s.request.idea}
-              </p>
-              <button type="button" className="btn btn-primary" onClick={startDraft} disabled={!aiReady || busyAi}>
-                {busyAi ? "Claude đang viết…" : "Nhờ Claude viết bản nháp"}
-              </button>
-            </>
+            <p className="small">
+              Yêu cầu ban đầu: <strong>{s.request.title}</strong> — {s.request.idea}
+            </p>
           ) : (
-            <p className="muted small">Tập này không có yêu cầu ban đầu nên không viết nháp tự động được.</p>
+            <p className="muted small">Tập này chưa có yêu cầu ban đầu (script/request.json).</p>
           )}
         </div>
       ) : (
@@ -81,31 +54,26 @@ const Workspace: React.FC<{ episode: string; s: ScriptState; part?: PartState; a
               <strong>Bản hiện hành{cur.version ? `: phiên bản ${cur.version}` : " (chưa có lịch sử phiên bản)"}</strong>
               {cur.versionMeta ? (
                 <span className="muted small">
-                  {SOURCE[cur.versionMeta.source]} · {fmtVN(cur.versionMeta.createdAt)}
+                  {SOURCE[cur.versionMeta.source] ?? cur.versionMeta.source} · {fmtVN(cur.versionMeta.createdAt)}
                   {cur.versionMeta.note ? ` · ${cur.versionMeta.note}` : ""}
                 </span>
               ) : null}
             </div>
             <CheckView check={cur.check} />
           </div>
-          {part ? <ApprovalPanel episode={episode} part={part} onChanged={reload} /> : null}
           <div className="row">
             <button type="button" className={mode === "view" ? "btn btn-primary" : "btn"} onClick={() => setMode("view")}>
               Xem
             </button>
-            <button type="button" className={mode === "edit" ? "btn btn-primary" : "btn"} onClick={() => setMode("edit")} disabled={busyAi} title={busyAi ? "Đang có công việc AI cho tập này" : ""}>
+            <button type="button" className={mode === "edit" ? "btn btn-primary" : "btn"} onClick={() => setMode("edit")}>
               Sửa thủ công
             </button>
-            <button type="button" className={mode === "revise" ? "btn btn-primary" : "btn"} onClick={() => setMode("revise")} disabled={!aiReady || busyAi}>
-              Yêu cầu Claude sửa
-            </button>
-            {busyAi ? <span className="muted small">Đang có công việc AI cho tập này; chờ xong hoặc huỷ.</span> : null}
           </div>
           {mode === "edit" ? <ManualEditor episode={episode} script={cur.script} baseHash={cur.hash} onDone={() => (setMode("view"), reload())} /> : null}
-          {mode === "revise" ? <ReviseForm episode={episode} script={cur.script} baseHash={cur.hash} onStarted={(t) => (setTask(t), setMode("view"))} /> : null}
         </>
       )}
 
+      <ClaudeCodeHelp episode={episode} hasScript={Boolean(cur)} hasRequest={Boolean(s.request)} reload={reload} />
       <ProposalList episode={episode} proposals={s.proposals} currentHash={cur?.hash ?? null} open={openProposal} setOpen={setOpenProposal} reload={reload} />
       <VersionList episode={episode} versions={s.versions} currentHash={cur?.hash ?? null} open={openVersion} setOpen={setOpenVersion} reload={reload} />
 
@@ -118,6 +86,49 @@ const Workspace: React.FC<{ episode: string; s: ScriptState; part?: PartState; a
     </div>
   );
 };
+
+/** How to get a draft or a revision from a Claude Code session (no model call from here). */
+const ClaudeCodeHelp: React.FC<{ episode: string; hasScript: boolean; hasRequest: boolean; reload: () => void }> = ({ episode, hasScript, hasRequest, reload }) => {
+  const toast = useToast();
+  const ask = hasScript
+    ? `Sửa kịch bản ${episode}: <ghi điều cần sửa, ví dụ cảnh nào, câu nào>. Lưu thành bản đề xuất bằng npm run script:propose.`
+    : hasRequest
+      ? `Viết kịch bản cho ${episode} theo yêu cầu trong episodes/${episode}/script/request.json, rồi lưu thành bản đề xuất bằng npm run script:propose.`
+      : `Viết kịch bản cho ${episode}: <ý tưởng>. Lưu thành bản đề xuất bằng npm run script:propose.`;
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(ask);
+      toast("ok", "Đã chép câu yêu cầu. Dán vào phiên Claude Code.");
+    } catch {
+      toast("bad", "Trình duyệt không cho chép tự động. Bôi đen câu yêu cầu để chép tay.");
+    }
+  };
+  return (
+    <div className="card stack">
+      <h2>{hasScript ? "Sửa bằng Claude Code" : "Viết kịch bản bằng Claude Code"}</h2>
+      <ol className="small">
+        <li>Mở phiên Claude Code của dự án (ứng dụng Claude, thư mục office-comedy) và gửi yêu cầu, ví dụ:</li>
+      </ol>
+      <pre className="small">{ask}</pre>
+      <ol className="small" start={2}>
+        <li>
+          Claude Code viết kịch bản rồi chạy <code>npm run script:propose -- {episode} &lt;file.json&gt;</code>. Lệnh kiểm tra như Studio (cấu trúc, xưng hô, vùng giọng, quy tắc ngôn ngữ); có lỗi chặn thì không lưu. Lệnh chỉ lưu bản đề xuất, không đổi bản hiện hành.
+        </li>
+        <li>Tải lại trang này, mở bản đề xuất, xem khác biệt rồi chấp nhận hoặc bỏ.</li>
+      </ol>
+      <div className="row">
+        <button type="button" className="btn" onClick={copy}>
+          Chép câu yêu cầu
+        </button>
+        <button type="button" className="btn" onClick={reload}>
+          Tải lại để xem đề xuất mới
+        </button>
+        <span className="muted small">Studio không gọi Claude; việc viết dùng hạn mức phiên Claude Code của bạn.</span>
+      </div>
+    </div>
+  );
+};
+
 
 const CheckView: React.FC<{ check: { errors: string[]; warnings: string[]; estimateSec: number | null } }> = ({ check }) => (
   <div className="small">
@@ -177,52 +188,6 @@ export const ScriptTable: React.FC<{ script: ScriptDocT; highlight?: Map<string,
   </div>
 );
 
-// ---- Revise ------------------------------------------------------------------------
-
-const ReviseForm: React.FC<{ episode: string; script: ScriptDocT; baseHash: string; onStarted: (t: AiTask) => void }> = ({ episode, script, baseHash, onStarted }) => {
-  const toast = useToast();
-  const [instruction, setInstruction] = useState("");
-  const [scope, setScope] = useState<string[]>([]);
-  const [busy, setBusy] = useState(false);
-  const submit = async () => {
-    setBusy(true);
-    try {
-      const r = await send<{ task: AiTask }>("POST", `/api/episodes/${episode}/script/revise`, { instruction, scope, baseHash });
-      toast("info", "Đã gửi yêu cầu sửa. Kết quả sẽ là bản đề xuất, không tự thay bản hiện hành.");
-      onStarted(r.task);
-    } catch (e) {
-      toast("bad", (e as Error).message);
-    } finally {
-      setBusy(false);
-    }
-  };
-  return (
-    <div className="card stack">
-      <h3>Yêu cầu Claude sửa</h3>
-      <label className="field">
-        Cần sửa gì?
-        <textarea rows={3} value={instruction} maxLength={2000} onChange={(e) => setInstruction(e.target.value)} placeholder="Ví dụ: làm câu chốt bất ngờ hơn; cho Trinh phản ứng nhanh hơn ở cảnh 2…" />
-      </label>
-      <fieldset className="field">
-        <legend>Phạm vi (không chọn = toàn bộ kịch bản; chọn cảnh thì các cảnh khác giữ nguyên tuyệt đối)</legend>
-        <div className="row">
-          {script.scenes.map((sc) => (
-            <label key={sc.id} className="check">
-              <input type="checkbox" checked={scope.includes(sc.id)} onChange={() => setScope((x) => (x.includes(sc.id) ? x.filter((y) => y !== sc.id) : [...x, sc.id]))} /> {sc.id} {sc.title}
-            </label>
-          ))}
-        </div>
-      </fieldset>
-      <div className="row">
-        <button type="button" className="btn btn-primary" onClick={submit} disabled={busy || !instruction.trim()}>
-          {busy ? "Đang gửi…" : "Gửi cho Claude"}
-        </button>
-        <span className="muted small">Gọi Claude tính phí. Kết quả là bản đề xuất để bạn xem khác biệt rồi chấp nhận hoặc bỏ.</span>
-      </div>
-    </div>
-  );
-};
-
 // ---- Manual editor ---------------------------------------------------------------------
 
 const clone = <T,>(x: T): T => JSON.parse(JSON.stringify(x)) as T;
@@ -265,7 +230,7 @@ const ManualEditor: React.FC<{ episode: string; script: ScriptDocT; baseHash: st
     setErrors([]);
     try {
       await send("PUT", `/api/episodes/${episode}/script`, { script: body, baseHash, note: note || "Sửa thủ công" });
-      toast("ok", "Đã lưu thành phiên bản mới. Duyệt kịch bản (nếu có) chuyển thành cần duyệt lại.");
+      toast("ok", "Đã lưu thành phiên bản mới.");
       onDone();
     } catch (e) {
       const err = e as ApiError;
@@ -280,7 +245,7 @@ const ManualEditor: React.FC<{ episode: string; script: ScriptDocT; baseHash: st
   return (
     <div className="card stack">
       <h3>Sửa thủ công</h3>
-      <p className="muted small">Lưu sẽ tạo phiên bản mới (nguồn: bạn sửa). Máy chủ kiểm tra lại; lỗi chặn thì không lưu. Bản đang có duyệt sẽ chuyển thành cần duyệt lại.</p>
+      <p className="muted small">Lưu sẽ tạo phiên bản mới (nguồn: bạn sửa). Máy chủ kiểm tra lại; lỗi chặn thì không lưu.</p>
       {conflict ? (
         <div className="state state-error small">
           {conflict}{" "}
@@ -456,7 +421,7 @@ const ProposalList: React.FC<{ episode: string; proposals: ProposalMeta[]; curre
   if (!proposals.length) return null;
   return (
     <div className="card stack">
-      <h2>Bản đề xuất của Claude</h2>
+      <h2>Bản đề xuất</h2>
       <p className="muted small">Bản đề xuất không tự thay bản hiện hành. Xem khác biệt rồi chấp nhận (tạo phiên bản mới) hoặc bỏ.</p>
       <div className="table-wrap">
         <table>
@@ -468,7 +433,9 @@ const ProposalList: React.FC<{ episode: string; proposals: ProposalMeta[]; curre
                   <Badge tone={PSTATUS[p.status].tone}>{PSTATUS[p.status].label}</Badge>
                 </td>
                 <td className="small">
-                  {p.kind === "draft" ? "Bản nháp mới" : p.instruction}
+                  <span className="muted">{p.source === "claude-code" ? "Claude Code" : "Claude API (cũ)"} · </span>
+                  {p.kind === "draft" ? "Bản nháp mới" : "Bản sửa"}
+                  {p.instruction ? ` · ${p.instruction}` : ""}
                   {p.scope.length ? <span className="muted"> · cảnh {p.scope.join(", ")}</span> : null}
                   {p.statusNote ? <div className="muted">{p.statusNote}</div> : null}
                 </td>
@@ -500,7 +467,7 @@ const ProposalView: React.FC<{ episode: string; id: string; currentHash: string 
     setBusy(true);
     try {
       await send("POST", `/api/episodes/${episode}/script/proposals/${id}/accept`, { viewedHash: currentHash });
-      toast("ok", "Đã áp dụng thành phiên bản mới. Kịch bản chưa được duyệt.");
+      toast("ok", "Đã áp dụng thành phiên bản mới.");
       onDone();
     } catch (e) {
       toast("bad", (e as Error).message);
@@ -524,7 +491,7 @@ const ProposalView: React.FC<{ episode: string; id: string; currentHash: string 
       <CheckView check={proposal.check} />
       {stale && proposal.status !== "accepted" ? (
         <div className="state state-warn small">
-          Bản hiện hành đã khác bản Claude dùng để sửa. Không áp dụng được để tránh ghi đè thay đổi của bạn. Bạn có thể xem, bỏ, hoặc yêu cầu Claude sửa lại trên bản mới nhất.
+          Bản hiện hành đã khác bản mà đề xuất này dựa vào. Không áp dụng được để tránh ghi đè thay đổi của bạn. Bạn có thể xem, bỏ, hoặc nhờ Claude Code sửa lại trên bản mới nhất.
         </div>
       ) : null}
       <DiffView diff={diff} />
@@ -558,8 +525,7 @@ const ProposalView: React.FC<{ episode: string; id: string; currentHash: string 
             </>
           }
         >
-          <p>Bản đề xuất sẽ thành phiên bản mới của kịch bản (nguồn: Claude). Bản cũ vẫn trong lịch sử, phục hồi được.</p>
-          <p className="small">Chấp nhận không phải là duyệt. Duyệt kịch bản là bước riêng; duyệt cũ (nếu có) sẽ chuyển thành cần duyệt lại.</p>
+          <p>Bản đề xuất sẽ thành phiên bản mới của kịch bản (nguồn: {proposal.source === "claude-code" ? "Claude Code" : "Claude API cũ"}). Bản cũ vẫn trong lịch sử, phục hồi được.</p>
         </Modal>
       ) : null}
     </div>

@@ -1,0 +1,489 @@
+{
+  "id": "p-mwj30ibu-znafws",
+  "createdAt": "2026-11-16T09:49:24.810Z",
+  "hash": "79c6724cb9b98f59285a29e3e42de493d8f4ae644965f0db41ad72d97c52f959",
+  "source": "claude-code",
+  "kind": "draft",
+  "instruction": "Bản nháp đầu viết bằng Claude Code",
+  "scope": [],
+  "baseVersion": null,
+  "baseHash": null,
+  "status": "accepted",
+  "check": {
+    "errors": [],
+    "warnings": [
+      "n02: lời dẫn không có \"tôi\" (ngôi thứ nhất vẫn có thể ngầm hiểu): \"Kẻ lấy còn để lại một tờ giấy.\"",
+      "n05: lời dẫn không có \"tôi\" (ngôi thứ nhất vẫn có thể ngầm hiểu): \"Và được giao quản lý cả cái tủ lạnh.\"",
+      "Số câu Kiên/Trinh có từ \"sếp\": 4"
+    ],
+    "lint": {
+      "problems": [],
+      "notes": [
+        "n02: lời dẫn không có \"tôi\" (ngôi thứ nhất vẫn có thể ngầm hiểu): \"Kẻ lấy còn để lại một tờ giấy.\"",
+        "n05: lời dẫn không có \"tôi\" (ngôi thứ nhất vẫn có thể ngầm hiểu): \"Và được giao quản lý cả cái tủ lạnh.\"",
+        "Số câu Kiên/Trinh có từ \"sếp\": 4"
+      ],
+      "estimateSec": 70.7
+    },
+    "estimateSec": 70.7
+  },
+  "script": {
+    "$comment": "Dữ liệu kịch bản EP003 (nguồn duy nhất cho âm thanh và video). Mỗi beat là câu thoại (line) hoặc nhịp hành động không lời (action, \"sec\" theo nội dung hành động). Hành động diễn ra trong lúc có thoại ghi ở \"visual\" của câu đó, không cộng thêm thời gian.",
+    "id": "EP003",
+    "title": "Ai lấy hộp cơm của tôi?",
+    "logline": "Hộp cơm trưa của Kiên biến mất khỏi tủ lạnh, chỉ để lại tờ giấy \"Cảm ơn, ngon lắm!\". Kiên điều tra từ Trinh tới Sếp, và nhận được nhiều hơn một lời xin lỗi.",
+    "creative": {
+      "premise": "Hộp cơm trưa biến mất khỏi tủ lạnh văn phòng, kèm một tờ giấy cảm ơn.",
+      "punchline": "Sếp tưởng là cơm phòng đặt chung nên đã ăn, xin lỗi đàng hoàng, rồi lập quy định dán tên cho tủ lạnh và giao Kiên phụ trách."
+    },
+    "fps": 30,
+    "timing": {
+      "turnGapSec": 0.22,
+      "sameTurnGapSec": 0.2,
+      "leadInSec": 0.25
+    },
+    "scenes": [
+      {
+        "id": "S1",
+        "title": "Tủ lạnh trống",
+        "location": "pantry",
+        "speakers": [
+          "narrator"
+        ],
+        "note": "Câu móc trong 3 giây đầu."
+      },
+      {
+        "id": "S2",
+        "title": "Nghi phạm số một",
+        "location": "pantry",
+        "speakers": [
+          "trinh",
+          "kien"
+        ]
+      },
+      {
+        "id": "S3",
+        "title": "Nghi phạm số hai",
+        "location": "pantry",
+        "speakers": [
+          "sep",
+          "kien"
+        ],
+        "note": "Sếp vào pantry pha trà. Trinh đã đi."
+      },
+      {
+        "id": "S4",
+        "title": "Sáng hôm sau",
+        "location": "pantry",
+        "speakers": [
+          "trinh",
+          "kien"
+        ],
+        "note": "Lời dẫn chốt là của Kiên, không đọc chồng lên thoại."
+      }
+    ],
+    "beats": [
+      {
+        "id": "n01",
+        "scene": "S1",
+        "kind": "line",
+        "role": "narrator",
+        "text": "Trưa nay, hộp cơm của tôi biến mất.",
+        "visual": "Kiên mở tủ lạnh pantry, ngăn giữa trống trơn.",
+        "expression": {
+          "kien": "surprised"
+        }
+      },
+      {
+        "id": "n02",
+        "scene": "S1",
+        "kind": "line",
+        "role": "narrator",
+        "sameTurn": true,
+        "text": "Kẻ lấy còn để lại một tờ giấy.",
+        "visual": "Thẻ giấy nhớ: \"Cảm ơn, ngon lắm!\"",
+        "expression": {
+          "kien": "annoyed"
+        }
+      },
+      {
+        "id": "a01",
+        "scene": "S1",
+        "kind": "action",
+        "desc": "Kiên cầm tờ giấy, nheo mắt nhìn quanh pantry như thám tử.",
+        "sec": 1.3
+      },
+      {
+        "id": "a02",
+        "scene": "S2",
+        "kind": "action",
+        "desc": "Trinh bước vào, tay cầm hộp cơm đang ăn dở, vừa đi vừa nhai.",
+        "sec": 1
+      },
+      {
+        "id": "k01",
+        "scene": "S2",
+        "kind": "line",
+        "role": "kien",
+        "text": "Em ăn gì vậy?",
+        "visual": "Kiên chỉ thẳng vào hộp cơm của Trinh.",
+        "expression": {
+          "kien": "suspicious",
+          "trinh": "neutral"
+        },
+        "pose": {
+          "kien": "pointing"
+        }
+      },
+      {
+        "id": "t01",
+        "scene": "S2",
+        "kind": "line",
+        "role": "trinh",
+        "text": "Cơm sườn nè. Ngon lắm.",
+        "expression": {
+          "trinh": "happy"
+        }
+      },
+      {
+        "id": "k02",
+        "scene": "S2",
+        "kind": "line",
+        "role": "kien",
+        "text": "Ngon lắm? Chữ y chang tờ giấy luôn.",
+        "visual": "Kiên giơ tờ giấy nhớ lên cạnh mặt Trinh.",
+        "expression": {
+          "kien": "suspicious"
+        }
+      },
+      {
+        "id": "t02",
+        "scene": "S2",
+        "kind": "line",
+        "role": "trinh",
+        "text": "Hộp em màu hồng, có ghi tên em nè.",
+        "visual": "Trinh xoay hộp cơm cho Kiên xem nhãn tên.",
+        "expression": {
+          "trinh": "annoyed"
+        }
+      },
+      {
+        "id": "t03",
+        "scene": "S2",
+        "kind": "line",
+        "role": "trinh",
+        "sameTurn": true,
+        "text": "Hộp anh màu gì?",
+        "expression": {
+          "trinh": "suspicious"
+        }
+      },
+      {
+        "id": "k03",
+        "scene": "S2",
+        "kind": "line",
+        "role": "kien",
+        "text": "Màu xanh. Mà không ghi tên.",
+        "expression": {
+          "kien": "embarrassed"
+        }
+      },
+      {
+        "id": "t04",
+        "scene": "S2",
+        "kind": "line",
+        "role": "trinh",
+        "text": "Sáng nay em thấy sếp mở tủ lạnh lâu lắm.",
+        "visual": "Trinh hạ giọng, liếc ra cửa.",
+        "expression": {
+          "trinh": "suspicious",
+          "kien": "surprised"
+        }
+      },
+      {
+        "id": "a03",
+        "scene": "S2",
+        "kind": "action",
+        "desc": "Trinh nhún vai, cầm hộp cơm đi ra. Kiên nuốt nước bọt.",
+        "sec": 1.1
+      },
+      {
+        "id": "n03",
+        "scene": "S2",
+        "kind": "line",
+        "role": "narrator",
+        "text": "Nghi phạm số hai là người tôi không dám hỏi.",
+        "expression": {
+          "kien": "embarrassed"
+        }
+      },
+      {
+        "id": "a04",
+        "scene": "S3",
+        "kind": "action",
+        "desc": "Sếp bước vào pantry, cầm tách trà. Kiên vội giấu tờ giấy ra sau lưng.",
+        "sec": 1.2
+      },
+      {
+        "id": "k04",
+        "scene": "S3",
+        "kind": "line",
+        "role": "kien",
+        "text": "Dạ sếp ăn trưa chưa ạ?",
+        "expression": {
+          "kien": "embarrassed",
+          "sep": "neutral"
+        }
+      },
+      {
+        "id": "s01",
+        "scene": "S3",
+        "kind": "line",
+        "role": "sep",
+        "text": "Rồi. Hôm nay cơm phòng đặt ngon đấy.",
+        "expression": {
+          "sep": "happy"
+        }
+      },
+      {
+        "id": "k05",
+        "scene": "S3",
+        "kind": "line",
+        "role": "kien",
+        "text": "Dạ, phòng mình đâu có đặt cơm hả sếp?",
+        "expression": {
+          "kien": "suspicious"
+        }
+      },
+      {
+        "id": "s02",
+        "scene": "S3",
+        "kind": "line",
+        "role": "sep",
+        "text": "Thế à? Thế hộp cơm xanh trong tủ lạnh là của ai?",
+        "expression": {
+          "sep": "surprised"
+        }
+      },
+      {
+        "id": "a05",
+        "scene": "S3",
+        "kind": "action",
+        "desc": "Kiên chậm rãi giơ tay lên. Sếp nhìn Kiên, rồi nhìn tách trà.",
+        "sec": 1.3
+      },
+      {
+        "id": "s03",
+        "scene": "S3",
+        "kind": "line",
+        "role": "sep",
+        "text": "À. Anh xin lỗi nhé. Anh tưởng là cơm chung.",
+        "expression": {
+          "sep": "embarrassed"
+        }
+      },
+      {
+        "id": "s04",
+        "scene": "S3",
+        "kind": "line",
+        "role": "sep",
+        "sameTurn": true,
+        "text": "Anh có để lại giấy cảm ơn rồi đấy.",
+        "expression": {
+          "sep": "neutral"
+        }
+      },
+      {
+        "id": "k06",
+        "scene": "S3",
+        "kind": "line",
+        "role": "kien",
+        "text": "Dạ, em đọc rồi ạ.",
+        "visual": "Kiên đưa tờ giấy nhớ ra.",
+        "expression": {
+          "kien": "embarrassed"
+        }
+      },
+      {
+        "id": "s09",
+        "scene": "S3",
+        "kind": "line",
+        "role": "sep",
+        "text": "Cơm em tự nấu à? Thịt kho vừa ăn lắm.",
+        "expression": {
+          "sep": "happy"
+        }
+      },
+      {
+        "id": "k09",
+        "scene": "S3",
+        "kind": "line",
+        "role": "kien",
+        "text": "Dạ… em cảm ơn sếp ạ.",
+        "visual": "Kiên cười méo xệch.",
+        "expression": {
+          "kien": "embarrassed"
+        }
+      },
+      {
+        "id": "s05",
+        "scene": "S3",
+        "kind": "line",
+        "role": "sep",
+        "text": "Nhưng lỗi là ở quy trình. Tủ lạnh không có quy định.",
+        "expression": {
+          "sep": "neutral"
+        },
+        "pose": {
+          "sep": "pointing"
+        }
+      },
+      {
+        "id": "s06",
+        "scene": "S3",
+        "kind": "line",
+        "role": "sep",
+        "sameTurn": true,
+        "text": "Từ mai, đồ trong tủ phải dán tên, ghi ngày.",
+        "expression": {
+          "sep": "neutral"
+        }
+      },
+      {
+        "id": "s07",
+        "scene": "S3",
+        "kind": "line",
+        "role": "sep",
+        "sameTurn": true,
+        "text": "Kiên phụ trách nhé.",
+        "expression": {
+          "sep": "happy",
+          "kien": "surprised"
+        }
+      },
+      {
+        "id": "k07",
+        "scene": "S3",
+        "kind": "line",
+        "role": "kien",
+        "text": "Dạ? Sao lại là em ạ?",
+        "expression": {
+          "kien": "surprised"
+        }
+      },
+      {
+        "id": "s08",
+        "scene": "S3",
+        "kind": "line",
+        "role": "sep",
+        "text": "Em là người bị hại. Em hiểu vấn đề nhất.",
+        "visual": "Sếp nhấp ngụm trà, gật gù.",
+        "expression": {
+          "sep": "happy"
+        }
+      },
+      {
+        "id": "a06",
+        "scene": "S3",
+        "kind": "action",
+        "desc": "Sếp đi ra. Kiên đứng chết lặng cạnh tủ lạnh. Chuyển cảnh.",
+        "sec": 1.2
+      },
+      {
+        "id": "a07",
+        "scene": "S4",
+        "kind": "action",
+        "desc": "Sáng hôm sau. Kiên đứng cạnh tủ lạnh, ôm xấp nhãn tên và cây bút.",
+        "sec": 1.2
+      },
+      {
+        "id": "t05",
+        "scene": "S4",
+        "kind": "line",
+        "role": "trinh",
+        "text": "Anh ơi, dán giùm em ba hộp này nha.",
+        "visual": "Trinh đặt ba hộp đồ ăn lên tay Kiên.",
+        "expression": {
+          "trinh": "happy",
+          "kien": "annoyed"
+        }
+      },
+      {
+        "id": "k08",
+        "scene": "S4",
+        "kind": "line",
+        "role": "kien",
+        "text": "Ba hộp? Em ăn hết nổi không?",
+        "expression": {
+          "kien": "surprised"
+        }
+      },
+      {
+        "id": "t06",
+        "scene": "S4",
+        "kind": "line",
+        "role": "trinh",
+        "text": "Hai hộp của em. Một hộp của anh.",
+        "expression": {
+          "trinh": "happy"
+        }
+      },
+      {
+        "id": "t07",
+        "scene": "S4",
+        "kind": "line",
+        "role": "trinh",
+        "sameTurn": true,
+        "text": "Hôm qua anh nhịn trưa mà. Em làm dư đó.",
+        "visual": "Trinh cười, vỗ vai Kiên rồi đi ra.",
+        "expression": {
+          "trinh": "happy",
+          "kien": "happy"
+        }
+      },
+      {
+        "id": "a08",
+        "scene": "S4",
+        "kind": "action",
+        "desc": "Kiên nhìn hộp cơm, mỉm cười, rồi cẩn thận viết tên mình lên nhãn thật to.",
+        "sec": 1.3
+      },
+      {
+        "id": "n04",
+        "scene": "S4",
+        "kind": "line",
+        "role": "narrator",
+        "text": "Tôi mất một hộp cơm.",
+        "expression": {
+          "kien": "neutral"
+        }
+      },
+      {
+        "id": "n05",
+        "scene": "S4",
+        "kind": "line",
+        "role": "narrator",
+        "sameTurn": true,
+        "text": "Và được giao quản lý cả cái tủ lạnh.",
+        "expression": {
+          "kien": "embarrassed"
+        }
+      },
+      {
+        "id": "a09",
+        "scene": "S4",
+        "kind": "action",
+        "desc": "Giữ khung hình Kiên cạnh tủ lạnh dán đầy nhãn; kết thúc.",
+        "sec": 1
+      }
+    ],
+    "duration": {
+      "minSec": 60,
+      "targetRangeSec": [
+        60,
+        90
+      ]
+    }
+  },
+  "statusNote": "Thành phiên bản 1"
+}

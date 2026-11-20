@@ -1,6 +1,8 @@
 # Khả năng đăng bài theo nền tảng
 
-Tra từ tài liệu chính thức ngày **2026-11-11**. Chính sách nền tảng thay đổi thường xuyên, nên kiểm tra lại trước khi tích hợp. Dự án **chưa upload, chưa đăng, chưa đặt lịch thật** trên nền tảng nào.
+Tra từ tài liệu chính thức ngày **2026-11-11**. Chính sách nền tảng thay đổi thường xuyên.
+
+> **Chỉ để tham khảo.** Từ 2026-11-16 dự án **đăng thủ công**; mọi tích hợp đăng bài qua API (kết nối tài khoản, job, lịch, dry-run) đã gỡ. Bảng dưới giữ lại để biết giới hạn từng nền tảng (ảnh bìa, độ dài, hẹn giờ trong app) khi đăng tay.
 
 Ký hiệu: ✅ có API · ⚠️ có nhưng kèm điều kiện · ❌ không có · ❓ tài liệu không nói rõ.
 
@@ -55,30 +57,6 @@ Ký hiệu: ✅ có API · ⚠️ có nhưng kèm điều kiện · ❌ không c
 | Facebook / TikTok bài ảnh | `teaser-1x1.png` (1080x1080) | ✅ | Facebook `/{page-id}/photos`; TikTok bài ảnh (cần URL thuộc tên miền đã xác minh) | Tài liệu đã đọc không nêu tỷ lệ khuyến nghị |
 
 Nguồn bổ sung: support.google.com/youtube/answer/72431 · developers.google.com/youtube/v3/docs/thumbnails/set · developers.facebook.com/docs/graph-api/reference/video/thumbnails · developers.tiktok.com/doc/content-posting-api-reference-direct-post · /content-posting-api-reference-photo-post.
-
-## Đề xuất
-
-1. **YouTube trước.**
-   - API đủ cho upload, hẹn giờ, thumbnail và kiểm tra trạng thái.
-   - Cần project Google Cloud, OAuth Desktop client và refresh token. Nên đưa consent screen sang In production để token không hết hạn sau 7 ngày.
-2. **Facebook Page sau.**
-   - Đăng Reels hẹn giờ trong vòng 29 ngày, kèm ảnh bìa. Bài nhá hàng dạng ảnh.
-   - App ở chế độ Development, chỉ admin của Page dùng.
-3. **TikTok: đăng thủ công.**
-   - Dự án chuẩn bị gói xuất: video, caption, hashtag, khung bìa gợi ý.
-   - Người dùng tự đăng trong app TikTok, rồi ghi lại link vào job.
-   - Không xây công cụ tự đăng TikTok khi chưa đủ điều kiện audit.
-
-## Thông tin tài khoản và quyền còn thiếu
-
-| Nền tảng | Cần người dùng cung cấp / làm |
-|---|---|
-| YouTube | Channel ID; project Google Cloud đã bật YouTube Data API v3; OAuth client (Desktop app); refresh token có scope `youtube.upload` (và `youtube` nếu cần sửa lịch); trạng thái consent screen; kênh đã xác minh (để đặt thumbnail) |
-| Facebook | Page ID; Meta App (loại Business) mà người dùng là admin hoặc developer; Page access token dài hạn (hoặc System User token) có `pages_manage_posts`, `pages_read_engagement`, `pages_show_list` (thêm `pages_manage_engagement`, `pages_read_user_content` nếu đặt bìa) |
-| TikTok | Tên tài khoản (để ghi vào job); xác nhận phương án đăng thủ công |
-| Chung | Lịch đăng đã xác nhận (giờ Việt Nam) cho từng bài |
-
-Token chỉ đặt trong `.env` (Git bỏ qua) hoặc kho bí mật ngoài repo. `config/publishing.json` chỉ chứa **tên** biến môi trường.
 
 ## Nguồn
 

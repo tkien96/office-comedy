@@ -32,7 +32,7 @@ export const createEpisode = (title: string): EpisodePaths => {
   if (!id) throw new Error("Không cấp được mã tập.");
 
   const P = episodePaths(id);
-  for (const d of [P.scriptDir, P.audioDir, P.assetsDir, P.exportsDir, P.thumbnailsDir, P.socialDir, P.publishingDir, P.reportsDir]) {
+  for (const d of [P.scriptDir, P.audioDir, P.assetsDir, P.exportsDir, P.thumbnailsDir, P.socialDir, P.reportsDir]) {
     mkdirSync(d, { recursive: true });
   }
   for (const d of [P.assetsDir, P.thumbnailsDir]) writeFileSync(join(d, ".gitkeep"), "");
@@ -46,19 +46,8 @@ export const createEpisode = (title: string): EpisodePaths => {
     duration: { contentEndSec: null, videoSec: null, durationInFrames: null, fps: 30 },
     paths: Object.fromEntries(Object.entries(P).filter(([k]) => k !== "id" && k !== "publicAudioSrc").map(([k, v]) => [k, rel(v)])),
     versions: { voiceConfigHash: voiceConfigHash(), sharedAssetsHash: sharedAssetsHash(), gitCommit: gitCommit(), ttsModel: null, stagingFile: null, stagingHash: null },
-    production: { script: "chưa có", audio: "chưa có", video: "chưa có", captions: "chưa có", thumbnail9x16: "chưa có", teaser1x1: "chưa có", social: "chưa có" },
     checks: {},
-    approvals: {
-      script: { status: "missing" },
-      audio: { status: "missing" },
-      video: { status: "missing" },
-      captions: { status: "missing" },
-      thumbnail9x16: { status: "missing" },
-      teaser1x1: { status: "missing" },
-      social: {},
-    },
   };
   writeFileSync(P.episodeJson, JSON.stringify(manifest, null, 2) + "\n");
-  writeFileSync(P.jobs, JSON.stringify({ episode: id, jobs: [] }, null, 2) + "\n");
   return P;
 };

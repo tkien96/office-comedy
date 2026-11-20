@@ -1,0 +1,65 @@
+{
+  "$comment": "Nội dung social EP003. Đăng thủ công: bản dán và các bước đăng nằm trong bộ delivery (npm run episode:delivery -- EP003). social.md là bản đọc, tạo bằng npm run episode:social. Không lộ câu chốt, không hứa ngày/giờ.",
+  "episode": "EP003",
+  "language": "vi",
+  "spoilerGuard": {
+    "punchline": "Sếp tưởng hộp cơm là cơm phòng đặt chung nên đã ăn và để giấy cảm ơn; Sếp xin lỗi, rồi đặt quy định dán tên cho tủ lạnh và giao Kiên phụ trách. Kiên mất một hộp cơm và được giao quản lý cả cái tủ lạnh.",
+    "keepSecret": ["ai đã ăn hộp cơm", "Sếp tưởng là cơm chung", "quy định dán tên cho tủ lạnh", "Kiên bị giao phụ trách tủ lạnh", "Trinh nấu dư một hộp cho Kiên"],
+    "allowedPremise": "Hộp cơm của Kiên biến mất khỏi tủ lạnh văn phòng, chỉ còn tờ giấy \"Cảm ơn, ngon lắm!\". Kiên điều tra, nghi Trinh vì Trinh đang ăn cơm sườn.",
+    "punchlineMustNotAppear": ["sếp ăn", "cơm chung", "cơm phòng", "phụ trách", "quản lý tủ lạnh", "dán tên", "quy định", "nghi phạm số hai"],
+    "note": "Danh sách từ khóa chỉ là lưới lọc thô, KHÔNG chứng minh bài không spoil. Đọc lại từng bài trước khi đăng."
+  },
+  "platforms": {
+    "youtube": {
+      "video": {
+        "kind": "short",
+        "title": "Ai lấy hộp cơm của tôi? 🍱 | Hài công sở",
+        "body": "Trưa nay hộp cơm của Kiên biến mất khỏi tủ lạnh văn phòng. Kẻ lấy còn lịch sự để lại tờ giấy: \"Cảm ơn, ngon lắm!\". Thám tử Kiên bắt đầu điều tra…\n\nVăn phòng bạn có \"kẻ trộm cơm\" không?\n\nPhim hoạt hình hài công sở, lồng tiếng Việt.",
+        "hashtags": ["#haicongso", "#congso", "#hoathinh", "#Shorts"],
+        "madeForKids": false,
+        "privacyAtUpload": "private",
+        "captionsFile": "exports/EP003.srt",
+        "thumbnail": "thumbnails/thumb-9x16.png"
+      },
+      "teaser": {
+        "kind": "community_text",
+        "optional": true,
+        "body": "Mở tủ lạnh văn phòng, hộp cơm biến mất. Chỉ còn tờ giấy \"Cảm ơn, ngon lắm!\" 😶\nTập mới của Kiên kể chuyện đó.",
+        "hashtags": [],
+        "image": "thumbnails/teaser-1x1.png",
+        "note": "Tùy chọn. Đăng tay trong YouTube Studio (mục Cộng đồng)."
+      }
+    },
+    "facebook": {
+      "video": {
+        "kind": "reel",
+        "body": "Hộp cơm biến mất. Kẻ lấy còn để lại lời cảm ơn. 🍱🕵️\n\nTag ngay đồng nghiệp hay \"mượn\" đồ trong tủ lạnh 👇",
+        "hashtags": ["#haicongso", "#congso", "#vanphong", "#hoathinh"],
+        "coverImage": "thumbnails/thumb-9x16.png",
+        "captionsFile": "exports/EP003.srt"
+      },
+      "teaser": {
+        "kind": "photo",
+        "image": "thumbnails/teaser-1x1.png",
+        "body": "Hộp cơm của Kiên biến mất khỏi tủ lạnh.\nTrinh thì đang ăn cơm sườn ngon lành. 👀\n\nBạn đoán ai là thủ phạm?",
+        "hashtags": ["#haicongso", "#congso"]
+      }
+    },
+    "tiktok": {
+      "video": {
+        "kind": "video",
+        "body": "Ai lấy hộp cơm của tôi? Còn để lại lời cảm ơn nữa 🍱",
+        "hashtags": ["#haicongso", "#congso", "#vanphong", "#hoathinh"],
+        "coverTimestampMs": 9000,
+        "coverImage": "thumbnails/thumb-9x16.png",
+        "note": "Ảnh bìa: chọn khung hình gợi ý ở coverTimestampMs, hoặc tải ảnh bìa lên nếu app cho phép (xem delivery/tiktok.md)."
+      },
+      "teaser": {
+        "kind": "photo",
+        "image": "thumbnails/teaser-1x1.png",
+        "body": "Hộp cơm biến mất. Ai là thủ phạm? 👀",
+        "hashtags": ["#haicongso", "#congso"]
+      }
+    }
+  }
+}

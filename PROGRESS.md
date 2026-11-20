@@ -4,6 +4,55 @@ Ghi lại tiến độ để tiếp tục được khi phiên làm việc bị g
 
 ## Trạng thái hiện tại
 
+- **2026-11-19: EP005 "Một phút thôi" — ĐÃ RENDER VÀ KIỂM TRA, bộ đăng thủ công sẵn sàng. Chưa đăng, chưa commit.**
+  - Kịch bản viết bằng Claude Code → `script:propose` → người dùng áp dụng (v1). Trinh nhờ Kiên "một phút thôi" cả buổi chiều; Sếp khen, Trinh nhận công, Sếp giao thêm ba trang, Trinh lại nhờ Kiên.
+  - Bản đầu ~56 s (< 60 s) và một câu dẫn 60 ký tự: đã thêm diễn biến và tách câu.
+  - Âm thanh: 35 câu + 6 nhịp hành động, nội dung kết thúc 65,94 s → 1979 khung.
+  - Video `episodes/EP005/exports/EP005.mp4`: 65,984 s, 1979 khung, 1080x1920@30, h264 yuv420p + aac; `episode:verify` 10/10 đạt.
+  - Dàn cảnh `src/episodes/ep005-staging.ts` (đồng hồ chạy nhanh ở S2, thẻ danh sách việc đổi tiêu đề "Phút 1/15/40", chữ "Phút 90!"), ảnh bìa `src/episodes/ep005-thumbnails.ts`, composition/Still `EP005`, lệnh `render:ep005`. Tài nguyên dựng chung không đổi.
+  - Phụ đề 0 lỗi (6 cue ngắn < 0,8 s vì thoại nhanh); social qua bộ lọc; delivery `--check` khớp nguồn. Người dùng tự đăng bằng `episodes/EP005/delivery/`.
+
+- **2026-11-19: EP004 "Họp online" — ĐÃ RENDER VÀ KIỂM TRA, bộ đăng thủ công sẵn sàng. Chưa đăng, chưa commit.**
+  - Kịch bản viết bằng Claude Code → `script:propose` → người dùng áp dụng (v1). Kiên quên tắt micro khi họp online; Sếp cảm ơn Kiên "hát nền", video gửi cả công ty. Không bị giao việc.
+  - Bản đầu ước tính ~52 s (< 60 s) nên đã thêm diễn biến (không kéo dài âm thanh). Lời Kiên hát là lời tự đặt, không dùng bài hát có thật.
+  - Âm thanh: 33 câu + 8 nhịp hành động, nội dung kết thúc 63,86 s → 1916 khung.
+  - Video `episodes/EP004/exports/EP004.mp4`: 63,872 s, 1916 khung, 1080x1920@30, h264 yuv420p + aac; `episode:verify` 10/10 đạt.
+  - Dàn cảnh `src/episodes/ep004-staging.ts` (S3 ở phòng họp, Kiên chỉ là tiếng qua cuộc gọi), ảnh bìa `src/episodes/ep004-thumbnails.ts`, composition/Still `EP004`, lệnh `render:ep004`. Tài nguyên dựng chung không đổi.
+  - Phụ đề 0 lỗi; social qua bộ lọc; delivery `--check` khớp nguồn. Người dùng tự đăng bằng `episodes/EP004/delivery/`.
+
+- **2026-11-16: EP003 "Ai lấy hộp cơm của tôi?" — ĐÃ RENDER VÀ KIỂM TRA. Chưa commit.**
+  - Kịch bản viết bằng Claude Code → `script:propose` → người dùng áp dụng (v1). 4 cảnh ở pantry; Sếp ăn nhầm hộp cơm, xin lỗi, rồi giao Kiên phụ trách tủ lạnh.
+  - Âm thanh: 30 câu + 9 nhịp hành động, nội dung kết thúc 66,06 s → 1982 khung. Không câu nào bị clip.
+  - Video `episodes/EP003/exports/EP003.mp4`: 66,069 s, 1982 khung, 1080x1920@30, h264 yuv420p + aac; `episode:verify` 10/10 đạt (ghi vào `checks.verify`).
+  - Dàn cảnh `src/episodes/ep003-staging.ts`, ảnh bìa `src/episodes/ep003-thumbnails.ts`, composition/Still `EP003` trong `src/Root.tsx`, lệnh `render:ep003`. Chỉ dùng loại thẻ có sẵn; tài nguyên dựng chung không đổi.
+  - Social `episodes/EP003/social/social.json` (+ social.md), bộ delivery đã tạo (`--check` khớp nguồn).
+  - Phụ đề QC: 1 lỗi tự động ở cue 13 ("Dạ, phòng mình đâu có đặt cơm hả sếp?": bộ lọc coi "mình" là tự xưng; ở đây là "phòng mình" = phòng của cả nhóm). Người dùng quyết giữ nguyên (2026-11-16).
+
+- **2026-11-16: STUDIO CHỈ CÒN QUẢN LÝ TẬP. Bỏ duyệt từng phần; đăng social thủ công. Chưa commit.**
+  - Theo quyết định của người dùng: bỏ hẳn quy trình duyệt (Studio và CLI) và gỡ tích hợp đăng bài.
+  - Gỡ: `tools/episode/cli/approve.ts`, `approvePart`, `checkApproval`/`DEPENDS_ON`/`basis`; `tools/publish/` (kết nối, OAuth, job, dry-run, lịch), `tools/secrets/` (DPAPI), `config/publishing.json`, `studio/server/socialapi.ts`, `oauth.ts`, giao diện Approval/Publish/SocialConnections; npm scripts `episode:approve`, `publish:dry-run`, `publish:plan`; `docs/social-connections.md`, `docs/youtube-integration-plan.md`.
+  - `episode.json` của EP001/EP002 bỏ `approvals` và `production`; xoá `publishing/` của từng tập và `reports/publish-dry-run.json`. Trạng thái mỗi phần giờ là có/chưa có tính từ file thật.
+  - `episode:stage-audio` chỉ cần có `dialogue-preview.wav`. Bộ delivery không còn trạng thái duyệt/tài khoản đích; tab mới "Bộ đăng thủ công" trong Studio. `social.json` bỏ `postingMode`/`supportedByApi`.
+  - Đã tạo lại phụ đề QC, social.md, script.md, delivery cho EP001 và EP002 (`--check` khớp nguồn). `npm run lint` sạch, build giao diện OK, Studio chạy và các API cũ trả 404.
+  - Dữ liệu cục bộ còn lại, người dùng tự quyết xoá: `runtime/connections/` (token mạng xã hội đã mã hoá DPAPI), các biến `YOUTUBE_*`, `FACEBOOK_PAGE_ACCESS_TOKEN`, `ANTHROPIC_API_KEY` trong `.env`.
+
+- **2026-11-16: EP002 "Lỡ bấm Trả lời tất cả" — ĐÃ RENDER VÀ KIỂM TRA. Kịch bản, âm thanh, phụ đề, ảnh bìa, ảnh nhá hàng đã duyệt; video và social CHỜ DUYỆT.**
+  - Video `episodes/EP002/exports/EP002.mp4`: 74.005 s, 2220 khung, 1080x1920@30, h264 yuv420p + aac; `episode:verify` 10/10 đạt (ghi vào `episode.json → checks.verify`). Bộ delivery đã tạo, `--check` khớp nguồn.
+  - Kịch bản viết bằng Claude Code → `script:propose` → người dùng chấp nhận (v1) và duyệt.
+  - Âm thanh: `npm run episode:audio -- EP002` (VieNeu cục bộ, giọng đã duyệt), 34 câu + 10 nhịp hành động, nội dung kết thúc 74 s → 2220 khung. Không câu nào bị clip.
+  - Phụ đề `exports/EP002.srt` (0 lỗi, 9 cảnh báo tốc độ đọc 20–23 ký tự/s, xem `reports/captions-qc.md`).
+  - Dàn cảnh `src/episodes/ep002-staging.ts`, ảnh bìa `src/episodes/ep002-thumbnails.ts`, composition/Still `EP002` trong `src/Root.tsx`, lệnh `render:ep002`. Chỉ dùng loại thẻ có sẵn, không sửa rig/UI dùng chung (giữ duyệt EP001).
+  - Social `episodes/EP002/social/social.json` (+ social.md), chưa tạo job đăng.
+  - Sửa nhỏ: `tools/episode/delivery.ts` ghi cứng "EP001 dài" → theo mã tập.
+  - **Tiếp theo (người dùng):** xem và duyệt video, đọc và duyệt từng bài social. Chưa tạo job đăng; không đăng tự động.
+
+- **2026-11-16: BỎ CLAUDE API KHỎI STUDIO; viết kịch bản bằng Claude Code + `script:propose`. Đã kiểm trên bản sao. Chưa commit.**
+  - Lý do: người dùng không dùng API trả phí (tài khoản API hết credit); viết kịch bản trong phiên Claude Code (hạn mức gói).
+  - Mới: `npm run script:propose -- EPxxx <file.json> [--note] [--check]` (service `proposeScript` trong `tools/episode/scriptstore.ts`) lưu bản đề xuất, không đổi bản hiện hành, không duyệt. "Tạo tập mới" trong Studio chỉ cấp mã + lưu `script/request.json` (`tools/episode/scriptrequest.ts`). Tab Kịch bản có khung hướng dẫn và câu yêu cầu để chép.
+  - Gỡ: `tools/ai/`, `studio/server/aijobs.ts`, `studio/web/src/AiTaskPanel.tsx`, `config/studio.json`, `@anthropic-ai/sdk`, các route `/api/ai/*`, `/api/ideas`, `script/draft`, `script/revise`, `tasks/:id/cancel|retry`, hàng đợi AI và sổ token. `ANTHROPIC_API_KEY` bỏ khỏi `.env.example`; `.env` của người dùng không bị sửa (có thể tự xoá dòng này).
+  - Cũng trong lượt này: Facebook — Studio báo rõ khi token là User token (`tools/publish/platforms.ts`).
+  - Kiểm: `npm run lint` sạch; các trường hợp của `script:propose` và giao diện chạy trên bản sao (xem `docs/studio.md`).
+
 - **2026-11-12: KẾT NỐI MẠNG XÃ HỘI TRONG STUDIO, đã kiểm bằng mock. CHƯA kết nối Google/Meta thật.**
   - Trang Cấu hình → Kết nối mạng xã hội: YouTube (OAuth Desktop app + PKCE, quyền `youtube.readonly`, xác nhận kênh), Facebook (Page ID + Page token, Lưu và kiểm tra qua Graph v27.0 `/me`), TikTok (username/URL, đăng thủ công).
   - Bí mật: Windows DPAPI (`runtime/connections/secrets.dpapi.json`); metadata riêng (`runtime/connections/connections.json`). Service chung `tools/publish/connections.ts` cho Studio, dry-run, delivery, CLI. `.env` vẫn dùng được, không trộn nguồn.

@@ -1,0 +1,65 @@
+{
+  "$comment": "Nội dung social EP004. Đăng thủ công: bản dán và các bước đăng nằm trong bộ delivery (npm run episode:delivery -- EP004). social.md là bản đọc, tạo bằng npm run episode:social. Không lộ câu chốt, không hứa ngày/giờ.",
+  "episode": "EP004",
+  "language": "vi",
+  "spoilerGuard": {
+    "punchline": "Micro của Kiên bật suốt buổi; Sếp kết thúc cuộc họp và cảm ơn Kiên đã hát nền, biên bản ghi cả đoạn hát, và video cuộc họp được gửi cho cả công ty.",
+    "keepSecret": ["Sếp cảm ơn Kiên đã hát nền", "biên bản ghi cả đoạn hát", "video gửi cả công ty", "chat cuộc họp vỗ tay"],
+    "allowedPremise": "Họp online, Kiên tưởng mình đã tắt micro nên vừa họp vừa than, ăn bánh, ngân nga. Trinh ngồi bàn bên nhắn tin cảnh báo mãi mà Kiên không đọc.",
+    "punchlineMustNotAppear": ["hát nền", "biên bản", "cả công ty", "gửi link", "ghi hình", "vỗ tay", "micro bật", "chưa tắt micro"],
+    "note": "Danh sách từ khóa chỉ là lưới lọc thô, KHÔNG chứng minh bài không spoil. Đọc lại từng bài trước khi đăng."
+  },
+  "platforms": {
+    "youtube": {
+      "video": {
+        "kind": "short",
+        "title": "Họp online mà quên… micro 🎤😶 | Hài công sở",
+        "body": "Họp online 12 người. Kiên tin chắc mình đã tắt micro, nên vừa họp vừa than, vừa ăn bánh, vừa ngân nga cho đỡ buồn. Trinh ở bàn bên nhắn tin liên tục, nhưng Kiên bận… họp.\n\nBạn đã bao giờ quên tắt micro chưa?\n\nPhim hoạt hình hài công sở, lồng tiếng Việt.",
+        "hashtags": ["#haicongso", "#congso", "#hoponline", "#Shorts"],
+        "madeForKids": false,
+        "privacyAtUpload": "private",
+        "captionsFile": "exports/EP004.srt",
+        "thumbnail": "thumbnails/thumb-9x16.png"
+      },
+      "teaser": {
+        "kind": "community_text",
+        "optional": true,
+        "body": "Họp online: bước quan trọng nhất là gì? 🎤\nTập mới của Kiên có câu trả lời.",
+        "hashtags": [],
+        "image": "thumbnails/teaser-1x1.png",
+        "note": "Tùy chọn. Đăng tay trong YouTube Studio (mục Cộng đồng)."
+      }
+    },
+    "facebook": {
+      "video": {
+        "kind": "reel",
+        "body": "Họp online, ăn bánh, ngân nga một chút… vì micro tắt rồi mà. Đúng không? 🎤😶\n\nTag ngay đồng nghiệp hay quên tắt micro 👇",
+        "hashtags": ["#haicongso", "#congso", "#vanphong", "#hoathinh"],
+        "coverImage": "thumbnails/thumb-9x16.png",
+        "captionsFile": "exports/EP004.srt"
+      },
+      "teaser": {
+        "kind": "photo",
+        "image": "thumbnails/teaser-1x1.png",
+        "body": "Kiên đang họp online, vừa ăn bánh vừa ngân nga.\nTrinh ở bàn bên thì tái mặt. 👀\n\nBạn đoán chuyện gì sắp xảy ra?",
+        "hashtags": ["#haicongso", "#congso"]
+      }
+    },
+    "tiktok": {
+      "video": {
+        "kind": "video",
+        "body": "Họp online mà tưởng đã tắt micro 🎤😶",
+        "hashtags": ["#haicongso", "#congso", "#hoponline", "#hoathinh"],
+        "coverTimestampMs": 12000,
+        "coverImage": "thumbnails/thumb-9x16.png",
+        "note": "Ảnh bìa: chọn khung hình gợi ý ở coverTimestampMs, hoặc tải ảnh bìa lên nếu app cho phép (xem delivery/tiktok.md)."
+      },
+      "teaser": {
+        "kind": "photo",
+        "image": "thumbnails/teaser-1x1.png",
+        "body": "Micro tắt chưa nhỉ? 👀",
+        "hashtags": ["#haicongso", "#congso"]
+      }
+    }
+  }
+}

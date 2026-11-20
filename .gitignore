@@ -40,14 +40,10 @@ episodes/*/audio/
 episodes/*/exports/*.mp4
 episodes/*/thumbnails/*.png
 episodes/*/thumbnails/*.jpg
-episodes/*/publishing/.lock
 episodes/*/.lock
 # Model output that failed validation (diagnostics, regenerable)
 episodes/*/script/rejected/
 episodes/*/delivery.*/
-episodes/*/publishing/log.jsonl
-# Resumable upload session URLs (allow upload without login): never in Git
-episodes/*/publishing/upload-state.json
 
 # Episode audio copied for rendering (voice clones)
 public/audio/episodes/

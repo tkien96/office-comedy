@@ -1,0 +1,22 @@
+{
+  "createdAt": "2026-11-16T07:48:10.371Z",
+  "requestToken": "cc-0c405e2c-5ee5-4989-a5da-9a59ddc21759",
+  "ideaSource": "user",
+  "title": "Lỡ bấm Trả lời tất cả",
+  "idea": "Kiên định nhắn riêng cho Trinh lời than về cuộc họp dài, nhưng lỡ gửi vào nhóm chat có Sếp. Kiên và Trinh cuống cuồng tìm cách thu hồi, rồi viết thêm tin giải thích; mỗi lần cứu lại càng tệ hơn.",
+  "punchlineDirection": "Sếp trả lời bình thản: đồng ý, từ tuần sau họp còn 15 phút. Ngay sau đó Sếp gửi lịch họp mới về cách viết tin nhắn nội bộ, chỉ mời mỗi Kiên.",
+  "characters": [
+    "kien",
+    "trinh",
+    "sep"
+  ],
+  "setting": "office",
+  "notes": "Sếp điềm tĩnh, không phải người xấu. Hài từ tình huống và phản ứng, không dùng khác biệt vùng giọng.",
+  "duration": {
+    "minSec": 60,
+    "targetRangeSec": [
+      60,
+      90
+    ]
+  }
+}

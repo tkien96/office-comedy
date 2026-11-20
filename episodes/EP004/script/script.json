@@ -1,0 +1,493 @@
+{
+  "$comment": "Dữ liệu kịch bản EP004 (nguồn duy nhất cho âm thanh và video). Mỗi beat là câu thoại (line) hoặc nhịp hành động không lời (action, \"sec\" theo nội dung hành động). Hành động diễn ra trong lúc có thoại ghi ở \"visual\" của câu đó, không cộng thêm thời gian. Lời Kiên ngân nga là lời tự chế, không phải bài hát có thật.",
+  "id": "EP004",
+  "title": "Họp online",
+  "logline": "Họp trực tuyến, Kiên tưởng đã tắt micro nên vừa họp vừa than, vừa ăn bánh, vừa ngân nga. Trinh nhắn mãi không được, và cả cuộc họp im lặng một cách đáng ngờ.",
+  "creative": {
+    "premise": "Kiên tưởng đã tắt micro trong buổi họp online.",
+    "punchline": "Sếp kết thúc cuộc họp và cảm ơn Kiên đã hát nền suốt buổi; Kiên nổi tiếng cả phòng theo cách không muốn nhất."
+  },
+  "fps": 30,
+  "timing": {
+    "turnGapSec": 0.22,
+    "sameTurnGapSec": 0.2,
+    "leadInSec": 0.25
+  },
+  "scenes": [
+    {
+      "id": "S1",
+      "title": "Chín giờ, họp online",
+      "location": "office",
+      "speakers": [
+        "narrator"
+      ],
+      "note": "Câu móc trong 3 giây đầu."
+    },
+    {
+      "id": "S2",
+      "title": "Micro đã tắt?",
+      "location": "office",
+      "speakers": [
+        "kien",
+        "trinh"
+      ],
+      "note": "Kiên và Trinh cùng dự họp từ bàn mình."
+    },
+    {
+      "id": "S3",
+      "title": "Phòng họp",
+      "location": "meeting",
+      "speakers": [
+        "sep",
+        "kien"
+      ],
+      "note": "Sếp chủ trì từ phòng họp; Kiên chỉ nghe tiếng qua cuộc gọi (không có trong khung hình)."
+    },
+    {
+      "id": "S4",
+      "title": "Sau cuộc họp",
+      "location": "office",
+      "speakers": [
+        "trinh",
+        "kien"
+      ],
+      "note": "Lời dẫn chốt là của Kiên, không đọc chồng lên thoại."
+    }
+  ],
+  "beats": [
+    {
+      "id": "n01",
+      "scene": "S1",
+      "kind": "line",
+      "role": "narrator",
+      "text": "Họp online thì tôi luôn tắt micro.",
+      "visual": "Cận mặt Kiên trước laptop, tự tin bấm chuột.",
+      "expression": {
+        "kien": "happy"
+      }
+    },
+    {
+      "id": "n02",
+      "scene": "S1",
+      "kind": "line",
+      "role": "narrator",
+      "sameTurn": true,
+      "text": "Ít nhất là tôi tưởng vậy.",
+      "visual": "Hình đứng khựng, Kiên vẫn cười.",
+      "expression": {
+        "kien": "happy"
+      }
+    },
+    {
+      "id": "a01",
+      "scene": "S1",
+      "kind": "action",
+      "desc": "Thẻ cuộc họp: \"Họp phòng · 9:00 · 12 người\". Kiên ngả ghế, Trinh ở bàn bên đeo tai nghe.",
+      "sec": 1.2
+    },
+    {
+      "id": "k01",
+      "scene": "S2",
+      "kind": "line",
+      "role": "kien",
+      "text": "Slide này nói ba lần rồi đó trời.",
+      "visual": "Kiên chống cằm, lẩm bẩm với màn hình.",
+      "expression": {
+        "kien": "annoyed"
+      }
+    },
+    {
+      "id": "a02",
+      "scene": "S2",
+      "kind": "action",
+      "desc": "Kiên xé gói bánh, nhai rôm rốp. Trinh quay phắt sang nhìn.",
+      "sec": 1.1
+    },
+    {
+      "id": "k02",
+      "scene": "S2",
+      "kind": "line",
+      "role": "kien",
+      "text": "Bánh này giòn ghê.",
+      "expression": {
+        "kien": "happy",
+        "trinh": "surprised"
+      }
+    },
+    {
+      "id": "k02b",
+      "scene": "S2",
+      "kind": "line",
+      "role": "kien",
+      "text": "Em ăn bánh không? Giòn lắm nè.",
+      "visual": "Kiên chìa gói bánh sang bàn Trinh.",
+      "expression": {
+        "kien": "happy",
+        "trinh": "surprised"
+      }
+    },
+    {
+      "id": "t01b",
+      "scene": "S2",
+      "kind": "line",
+      "role": "trinh",
+      "text": "Anh nói nhỏ thôi!",
+      "expression": {
+        "trinh": "annoyed"
+      }
+    },
+    {
+      "id": "k02c",
+      "scene": "S2",
+      "kind": "line",
+      "role": "kien",
+      "text": "Ủa, anh tắt micro rồi mà. Sợ gì.",
+      "expression": {
+        "kien": "suspicious"
+      }
+    },
+    {
+      "id": "t01",
+      "scene": "S2",
+      "kind": "line",
+      "role": "trinh",
+      "text": "Anh ơi…",
+      "visual": "Trinh thì thầm, chỉ vào laptop của Kiên.",
+      "expression": {
+        "trinh": "surprised"
+      },
+      "pose": {
+        "trinh": "pointing"
+      }
+    },
+    {
+      "id": "k03",
+      "scene": "S2",
+      "kind": "line",
+      "role": "kien",
+      "text": "Suỵt. Anh đang họp mà em.",
+      "visual": "Kiên đưa ngón tay lên môi.",
+      "expression": {
+        "kien": "neutral"
+      }
+    },
+    {
+      "id": "a03",
+      "scene": "S2",
+      "kind": "action",
+      "desc": "Trinh gõ điện thoại lia lịa. Thẻ tin nhắn hiện liên tiếp: \"Anh ơi\", \"Anh ơi!!\", \"MICRO\".",
+      "sec": 1.4
+    },
+    {
+      "id": "k03b",
+      "scene": "S2",
+      "kind": "line",
+      "role": "kien",
+      "text": "Em nhắn gì mà nhiều vậy? Lát họp xong anh đọc.",
+      "visual": "Kiên úp điện thoại xuống bàn.",
+      "expression": {
+        "kien": "neutral",
+        "trinh": "annoyed"
+      }
+    },
+    {
+      "id": "k04",
+      "scene": "S2",
+      "kind": "line",
+      "role": "kien",
+      "text": "Thứ Sáu ơi, mau tới đi mà…",
+      "visual": "Kiên ngân nga, lắc lư theo nhịp, không nhìn điện thoại.",
+      "expression": {
+        "kien": "happy"
+      }
+    },
+    {
+      "id": "k05",
+      "scene": "S2",
+      "kind": "line",
+      "role": "kien",
+      "sameTurn": true,
+      "text": "La la la, tan ca rồi về…",
+      "expression": {
+        "kien": "happy"
+      }
+    },
+    {
+      "id": "t02",
+      "scene": "S2",
+      "kind": "line",
+      "role": "trinh",
+      "text": "Anh! Cái micro!",
+      "visual": "Trinh nói khẽ hết mức có thể, mặt đỏ bừng.",
+      "expression": {
+        "trinh": "annoyed"
+      }
+    },
+    {
+      "id": "k06",
+      "scene": "S2",
+      "kind": "line",
+      "role": "kien",
+      "text": "Ừ, anh tắt rồi. Yên tâm đi em.",
+      "visual": "Kiên giơ ngón cái, mắt vẫn dán vào màn hình.",
+      "expression": {
+        "kien": "happy",
+        "trinh": "embarrassed"
+      }
+    },
+    {
+      "id": "n03",
+      "scene": "S2",
+      "kind": "line",
+      "role": "narrator",
+      "text": "Tôi không để ý, cả cuộc họp im lặng một cách lạ lùng.",
+      "expression": {
+        "kien": "neutral"
+      }
+    },
+    {
+      "id": "a04",
+      "scene": "S3",
+      "kind": "action",
+      "desc": "Phòng họp. Sếp đứng trước màn hình chiếu, hắng giọng, nhìn vào camera.",
+      "sec": 1.2
+    },
+    {
+      "id": "s01",
+      "scene": "S3",
+      "kind": "line",
+      "role": "sep",
+      "text": "Thôi, hôm nay họp đến đây nhé.",
+      "expression": {
+        "sep": "neutral"
+      }
+    },
+    {
+      "id": "s02",
+      "scene": "S3",
+      "kind": "line",
+      "role": "sep",
+      "sameTurn": true,
+      "text": "Cảm ơn các em đã tham gia.",
+      "expression": {
+        "sep": "happy"
+      }
+    },
+    {
+      "id": "s03",
+      "scene": "S3",
+      "kind": "line",
+      "role": "sep",
+      "sameTurn": true,
+      "text": "Và cảm ơn Kiên đã hát nền suốt buổi nhé.",
+      "visual": "Sếp mỉm cười, gật đầu với camera.",
+      "expression": {
+        "sep": "happy"
+      }
+    },
+    {
+      "id": "k07",
+      "scene": "S3",
+      "kind": "line",
+      "role": "kien",
+      "text": "Dạ…? Em… hát ạ?",
+      "visual": "Tiếng Kiên vọng qua loa máy chiếu.",
+      "expression": {
+        "sep": "neutral"
+      }
+    },
+    {
+      "id": "s04",
+      "scene": "S3",
+      "kind": "line",
+      "role": "sep",
+      "text": "Giọng cũng được đấy. Bánh nghe cũng giòn.",
+      "expression": {
+        "sep": "happy"
+      },
+      "pose": {
+        "sep": "pointing"
+      }
+    },
+    {
+      "id": "s05",
+      "scene": "S3",
+      "kind": "line",
+      "role": "sep",
+      "text": "Biên bản hôm nay anh cho ghi đủ cả rồi.",
+      "expression": {
+        "sep": "neutral"
+      }
+    },
+    {
+      "id": "s06",
+      "scene": "S3",
+      "kind": "line",
+      "role": "sep",
+      "sameTurn": true,
+      "text": "Kể cả đoạn tan ca rồi về.",
+      "visual": "Sếp nhấp ngụm trà, mắt cười.",
+      "expression": {
+        "sep": "happy"
+      }
+    },
+    {
+      "id": "a05",
+      "scene": "S3",
+      "kind": "action",
+      "desc": "Sếp bấm kết thúc cuộc họp, nhấp ngụm trà, khẽ cười. Chuyển cảnh.",
+      "sec": 1.2
+    },
+    {
+      "id": "a06",
+      "scene": "S4",
+      "kind": "action",
+      "desc": "Kiên nhìn laptop: biểu tượng micro vẫn sáng. Kiên chết lặng, gói bánh rơi xuống bàn.",
+      "sec": 1.4
+    },
+    {
+      "id": "k08",
+      "scene": "S4",
+      "kind": "line",
+      "role": "kien",
+      "text": "Sao em không nói anh?",
+      "expression": {
+        "kien": "surprised",
+        "trinh": "annoyed"
+      }
+    },
+    {
+      "id": "t03",
+      "scene": "S4",
+      "kind": "line",
+      "role": "trinh",
+      "text": "Em nhắn anh mười hai tin rồi đó.",
+      "visual": "Trinh giơ điện thoại có chuỗi tin nhắn dài.",
+      "expression": {
+        "trinh": "annoyed"
+      },
+      "pose": {
+        "trinh": "phone"
+      }
+    },
+    {
+      "id": "k09",
+      "scene": "S4",
+      "kind": "line",
+      "role": "kien",
+      "text": "Sao em không nói lớn?",
+      "expression": {
+        "kien": "embarrassed"
+      }
+    },
+    {
+      "id": "t04",
+      "scene": "S4",
+      "kind": "line",
+      "role": "trinh",
+      "text": "Em mà nói lớn thì cả phòng cũng nghe luôn.",
+      "expression": {
+        "trinh": "suspicious"
+      }
+    },
+    {
+      "id": "t05",
+      "scene": "S4",
+      "kind": "line",
+      "role": "trinh",
+      "sameTurn": true,
+      "text": "Mà công nhận anh hát cũng được.",
+      "expression": {
+        "trinh": "happy"
+      }
+    },
+    {
+      "id": "t06",
+      "scene": "S4",
+      "kind": "line",
+      "role": "trinh",
+      "sameTurn": true,
+      "text": "Chat cuộc họp vỗ tay quá trời kìa.",
+      "visual": "Trinh chìa màn hình điện thoại cho Kiên xem.",
+      "expression": {
+        "trinh": "happy",
+        "kien": "embarrassed"
+      }
+    },
+    {
+      "id": "a07",
+      "scene": "S4",
+      "kind": "action",
+      "desc": "Thẻ chat cuộc họp: \"Kiên hát hay quá\", \"Xin link bài hát\", \"Bánh gì vậy anh?\". Kiên úp mặt xuống bàn.",
+      "sec": 1.5
+    },
+    {
+      "id": "k10",
+      "scene": "S4",
+      "kind": "line",
+      "role": "kien",
+      "text": "Cuộc họp có ghi hình không em?",
+      "visual": "Kiên ngẩng đầu, run run.",
+      "expression": {
+        "kien": "surprised"
+      }
+    },
+    {
+      "id": "t07",
+      "scene": "S4",
+      "kind": "line",
+      "role": "trinh",
+      "text": "Có. Sếp vừa gửi link cho cả công ty rồi.",
+      "visual": "Trinh vỗ vai Kiên an ủi.",
+      "expression": {
+        "trinh": "embarrassed",
+        "kien": "surprised"
+      }
+    },
+    {
+      "id": "k11",
+      "scene": "S4",
+      "kind": "line",
+      "role": "kien",
+      "text": "Cả công ty luôn hả em?",
+      "expression": {
+        "kien": "surprised"
+      }
+    },
+    {
+      "id": "n04",
+      "scene": "S4",
+      "kind": "line",
+      "role": "narrator",
+      "text": "Hôm đó, tôi nổi tiếng cả phòng.",
+      "expression": {
+        "kien": "embarrassed"
+      }
+    },
+    {
+      "id": "n05",
+      "scene": "S4",
+      "kind": "line",
+      "role": "narrator",
+      "sameTurn": true,
+      "text": "Theo cách tôi không muốn nhất.",
+      "expression": {
+        "kien": "embarrassed"
+      }
+    },
+    {
+      "id": "a08",
+      "scene": "S4",
+      "kind": "action",
+      "desc": "Giữ khung hình mặt Kiên; kết thúc.",
+      "sec": 1
+    }
+  ],
+  "duration": {
+    "minSec": 60,
+    "targetRangeSec": [
+      60,
+      90
+    ]
+  }
+}

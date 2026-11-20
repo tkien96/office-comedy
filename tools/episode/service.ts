@@ -1,135 +1,41 @@
 // Episode services shared by the CLI (tools/episode/cli/*) and Office Comedy
 // Studio (studio/server). Source of truth stays in the episode folder:
-//   episode.json   metadata, production state, approvals (hash + basis)
-//   social.json    social copy (one object per post)
-//   publishing/jobs.json   publishing jobs
+//   episode.json   metadata, versions, checks
+//   social.json    social copy (one object per post), posted by hand
 // Nothing here talks to Claude, TTS, Remotion or any platform.
-import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
-import { join } from "node:path";
+// (Per-part approvals and publishing integrations were removed on 2026-11-16.)
+import { existsSync, readdirSync, statSync } from "node:fs";
 import { captionsFreshness } from "./captions.ts";
 import { withFileLockSync, writeFileAtomic } from "./fsutil.ts";
-import {
-  basisFor,
-  checkApproval,
-  currentHashes,
-  currentSources,
-  dependsOn,
-  hashJson,
-  readManifest,
-  readSocial,
-  SOURCE_LABEL,
-  type Approval,
-  type ApprovalStatus,
-  type Manifest,
-  type SourceKey,
-} from "./manifest.ts";
+import { currentHashes, hashJson, readManifest, readSocial, type Manifest } from "./manifest.ts";
 import { EPISODE_ID, episodePaths, type EpisodePaths } from "./paths.ts";
 import { buildSocialMd, checkSocial, LIMITS, socialMdFreshness, socialMdPath, type Post, type SocialFinding } from "./social.ts";
 
-export const MEDIA_PARTS = ["script", "audio", "video", "captions", "thumbnail9x16", "teaser1x1"] as const;
-export type MediaPart = (typeof MEDIA_PARTS)[number];
+export const PARTS = ["script", "audio", "video", "captions", "thumbnail9x16", "teaser1x1", "social"] as const;
+export type Part = (typeof PARTS)[number];
 
-export const PART_LABEL: Record<string, string> = {
+export const PART_LABEL: Record<Part, string> = {
   script: "Kịch bản",
   audio: "Âm thanh",
   video: "Video",
   captions: "Phụ đề (SRT)",
   thumbnail9x16: "Thumbnail 9:16",
   teaser1x1: "Ảnh nhá hàng 1:1",
-};
-const PLATFORM_LABEL: Record<string, string> = { youtube: "YouTube", facebook: "Facebook", tiktok: "TikTok" };
-const POST_LABEL: Record<string, string> = { video: "video", teaser: "bài nhá hàng" };
-export const partLabel = (part: string) => {
-  if (!part.startsWith("social.")) return PART_LABEL[part] ?? part;
-  const [, pl, post] = part.split(".");
-  return `Social ${PLATFORM_LABEL[pl] ?? pl} – ${POST_LABEL[post] ?? post}`;
+  social: "Nội dung social",
 };
 
-export type PartState = {
-  part: string;
-  label: string;
-  production: string;
-  status: ApprovalStatus;
-  detail: string;
-  hash: string | null;
-  approvedAt: string | null;
-  changedSources: string[];
-  dependsOn: string[];
-  /** Identifies exactly the version shown (own hash + current source hashes). Approving requires it. */
-  viewToken: string | null;
-};
+/** A product of the episode: does its file/content exist right now? */
+export type PartState = { part: Part; label: string; exists: boolean; hash: string | null };
 
-export const viewTokenFor = (part: string, hash: string | null, src: Record<SourceKey, string | null>) =>
-  hash ? hashJson({ part, hash, basis: basisFor(part, src) }).slice(0, 32) : null;
-
-export const partStates = (P: EpisodePaths, m: Manifest = readManifest(P)): PartState[] => {
+export const partStates = (P: EpisodePaths): PartState[] => {
   const cur = currentHashes(P);
-  const src = currentSources(P, m);
-  const out: PartState[] = [];
-  const add = (part: string, a: Approval | undefined, hash: string | null, production: string) => {
-    const r = checkApproval(a, hash, src);
-    out.push({
-      part,
-      label: partLabel(part),
-      production,
-      status: r.status,
-      detail: r.detail,
-      hash,
-      approvedAt: r.status === "missing" || r.status === "not_approved" ? null : (a?.approvedAt ?? null),
-      changedSources: r.changedSources.map((k) => SOURCE_LABEL[k as SourceKey] ?? k),
-      dependsOn: dependsOn(part).map((k) => SOURCE_LABEL[k]),
-      viewToken: viewTokenFor(part, hash, src),
-    });
-  };
-  for (const k of MEDIA_PARTS) add(k, m.approvals[k], cur[k], m.production[k] ?? "chưa có");
-  for (const [post, h] of Object.entries(cur.social)) add(`social.${post}`, m.approvals.social[post], h, m.production.social ?? "chưa có");
-  return out;
+  const socialHash = existsSync(P.social) && Object.keys(cur.social).length ? hashJson(cur.social) : null;
+  const hashes: Record<Part, string | null> = { ...cur, social: socialHash };
+  return PARTS.map((part) => ({ part, label: PART_LABEL[part], exists: hashes[part] !== null, hash: hashes[part] }));
 };
-
-// ---------------------------------------------------------------------------
-// Approvals
 
 export class ConflictError extends Error {}
 export class ValidationError extends Error {}
-
-/**
- * Records the user's approval of `part` bound to its current hash and source
- * hashes. With `viewToken`, refuses if the product or a source changed after
- * the user looked at it. Never approves anything implicitly.
- */
-export const approvePart = (P: EpisodePaths, part: string, opts: { viewToken?: string; note?: string; revoke?: boolean; by?: string } = {}) =>
-  withFileLockSync(P.episodeLock, "approve", P.id, () => {
-    const m = readManifest(P);
-    const cur = currentHashes(P);
-    const src = currentSources(P, m);
-    const isSocial = part.startsWith("social.");
-    const key = isSocial ? part.slice("social.".length) : part;
-    if (!isSocial && !(MEDIA_PARTS as readonly string[]).includes(part)) throw new ValidationError(`Phần không hợp lệ: ${part}`);
-    if (isSocial && !(key in cur.social)) throw new ValidationError(`Không có bài "${key}" trong social.json.`);
-    const hash = isSocial ? cur.social[key] : cur[part as MediaPart];
-
-    let approval: Approval;
-    if (opts.revoke) {
-      approval = { status: "not_approved", note: opts.note ?? `Thu hồi duyệt ${new Date().toISOString().slice(0, 10)}` };
-    } else {
-      if (!hash) throw new ValidationError(`${partLabel(part)}: chưa có file/nội dung, không duyệt được.`);
-      if (opts.viewToken !== undefined && opts.viewToken !== viewTokenFor(part, hash, src))
-        throw new ConflictError(`${partLabel(part)} hoặc nguồn của nó đã thay đổi sau khi bạn mở trang. Tải lại để xem bản mới rồi duyệt lại.`);
-      approval = {
-        status: "approved",
-        approvedAt: new Date().toISOString().slice(0, 10),
-        approvedBy: opts.by ?? "người dùng",
-        sha256: hash,
-        basis: basisFor(part, src),
-        ...(opts.note ? { note: opts.note } : {}),
-      };
-    }
-    const raw = JSON.parse(readFileSync(P.episodeJson, "utf8"));
-    if (isSocial) raw.approvals.social[key] = approval;
-    else raw.approvals[part] = { ...(part === "audio" ? { lineCacheKeys: raw.approvals.audio?.lineCacheKeys } : {}), ...approval };
-    writeFileAtomic(P.episodeJson, JSON.stringify(raw, null, 2) + "\n");
-    return { part, status: approval.status, hash: approval.sha256 ?? null };
-  });
 
 // ---------------------------------------------------------------------------
 // Social editing
@@ -223,10 +129,7 @@ export type EpisodeSummary = {
   updatedAt?: string;
   parts?: PartState[];
   problems?: string[];
-  publishing?: Record<string, { state: string; label: string; jobs: { id: string; type: string; state: string; mode: string }[] }>;
 };
-
-const PUBLISH_PLATFORMS = ["facebook", "youtube", "tiktok"] as const;
 
 export const episodeSummary = (id: string): EpisodeSummary => {
   try {
@@ -238,7 +141,7 @@ export const episodeSummary = (id: string): EpisodeSummary => {
     } catch (e) {
       return { id, ok: false, error: `episode.json lỗi: ${(e as Error).message}` };
     }
-    const parts = partStates(P, m);
+    const parts = partStates(P);
     const problems: string[] = [];
     if (existsSync(P.social)) {
       try {
@@ -247,15 +150,6 @@ export const episodeSummary = (id: string): EpisodeSummary => {
         problems.push(`social.json lỗi: ${(e as Error).message}`);
       }
     }
-    for (const p of parts) if (p.production === "done" && p.status === "missing") problems.push(`${p.label}: đánh dấu đã làm nhưng không tìm thấy file.`);
-    const jobs = existsSync(P.jobs) ? (JSON.parse(readFileSync(P.jobs, "utf8")).jobs as { id: string; platform: string; type: string; state: string; mode: string }[]) : [];
-    const publishing = Object.fromEntries(
-      PUBLISH_PLATFORMS.map((pl) => {
-        const js = jobs.filter((j) => j.platform === pl).map((j) => ({ id: j.id, type: j.type, state: j.state, mode: j.mode }));
-        const main = js.find((j) => j.type === "video") ?? js[0];
-        return [pl, { state: main?.state ?? "none", label: main ? main.state : "không có job", jobs: js }];
-      }),
-    );
     return {
       id,
       ok: true,
@@ -268,7 +162,6 @@ export const episodeSummary = (id: string): EpisodeSummary => {
       updatedAt: statSync(P.episodeJson).mtime.toISOString(),
       parts,
       problems,
-      publishing,
     };
   } catch (e) {
     return { id, ok: false, error: (e as Error).message };
@@ -288,7 +181,6 @@ export const socialFindings = (P: EpisodePaths): SocialFinding[] => {
 export const REPORTS: Record<string, { file: (P: EpisodePaths) => string; label: string; kind: "md" | "json" }> = {
   "qa-report": { file: (P) => P.qaReport, label: "QC tập (âm thanh, video)", kind: "md" },
   "captions-qc": { file: (P) => P.captionsQc, label: "Kiểm tra phụ đề", kind: "md" },
-  "publish-dry-run": { file: (P) => join(P.reportsDir, "publish-dry-run.json"), label: "Dry-run phát hành (lần chạy gần nhất)", kind: "json" },
   "script-md": { file: (P) => P.scriptMd, label: "Kịch bản (bản đọc)", kind: "md" },
   "social-md": { file: (P) => socialMdPath(P), label: "Social (bản đọc)", kind: "md" },
 };

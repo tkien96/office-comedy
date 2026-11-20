@@ -1,7 +1,6 @@
 // npm run episode:docs -- EP001
 // Writes script.md from the episode data + timeline.json (real measured times).
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { checkApproval, currentHashes, readManifest } from "../../episode/manifest.ts";
 import { resolveEpisode } from "../../episode/paths.ts";
 
 type Beat = {
@@ -46,15 +45,7 @@ out.push(`# ${ep.id} — ${ep.title}`, "");
 const durText = tl
   ? `${tl.contentEndSec.toFixed(2)} s thực tế (${tl.durationInFrames} khung hình @30 fps), ${tl.durationStatus}`
   : `chưa đo (tối thiểu ${ep.duration.minSec} s, mục tiêu ${ep.duration.targetRangeSec.join("–")} s)`;
-// Approval state lives in episode.json (bound to hashes), never in script.json.
-const statusText = existsSync(P.episodeJson)
-  ? (() => {
-      const m = readManifest(P);
-      const cur = currentHashes(P);
-      const s = (k: "script" | "audio" | "video") => `${k} ${checkApproval(m.approvals[k], cur[k]).status === "approved" ? "đã duyệt" : "chưa duyệt/cần duyệt lại"}`;
-      return [s("script"), s("audio"), s("video")].join(", ");
-    })()
-  : "chưa có episode.json";
+const statusText = [`âm thanh ${existsSync(P.preview) ? "có" : "chưa có"}`, `video ${existsSync(P.video) ? "có" : "chưa có"}`].join(", ");
 out.push(`**Trạng thái:** ${statusText} (xem \`npm run episode:status -- ${ep.id}\`) · **Thời lượng:** ${durText} · **Dữ liệu nguồn:** \`${file.replace(/\\/g, "/")}\``, "");
 out.push(`**Ý tưởng:** ${ep.logline}`, "");
 out.push("**Vai:** Kiên (miền Nam, kiêm lời dẫn ngôi thứ nhất), Trinh (miền Nam), Sếp (miền Bắc, trên 50). Xưng hô: Kiên/Trinh gọi \"sếp\", xưng \"em\"; Sếp xưng \"anh\"; Kiên–Trinh anh–em.", "");

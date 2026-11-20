@@ -1,10 +1,11 @@
-// Script versions, AI proposals and the creation request, per episode:
+// Script versions, proposals and the creation request, per episode:
 //
-//   script/script.json            current version (what tools and approvals read)
+//   script/script.json            current version (what the tools read)
 //   script/request.json           the user's original request (idea, cast, duration…)
 //   script/versions/v0001.json    every committed version {meta + script}; never deleted
-//   script/proposals/<id>.json    AI suggestions, never applied automatically
-//   script/rejected/<id>.json     model output that failed validation (diagnostics only)
+//   script/proposals/<id>.json    suggested scripts (Claude Code via script:propose;
+//                                 older ones from the removed Claude API flow),
+//                                 never applied automatically
 //
 // The current version only changes through commitVersion(), under the episode
 // lock, and only if the caller saw the current hash (no silent overwrite).
@@ -14,10 +15,11 @@ import { join } from "node:path";
 import { withFileLockSync, writeFileAtomic } from "./fsutil.ts";
 import { scriptContentHash } from "./manifest.ts";
 import type { EpisodePaths } from "./paths.ts";
-import type { CheckResult, ScriptDoc } from "./scriptdoc.ts";
+import { CHARACTERS, validateScript, type CheckResult, type ScriptDoc } from "./scriptdoc.ts";
 import { ConflictError, ValidationError } from "./service.ts";
 
-export type VersionSource = "user" | "claude" | "restore" | "import";
+/** "claude" = old Claude API flow (removed); "claude-code" = proposal written in a Claude Code session. */
+export type VersionSource = "user" | "claude" | "claude-code" | "restore" | "import";
 export type VersionMeta = {
   version: number;
   createdAt: string;
@@ -30,10 +32,14 @@ export type VersionMeta = {
   restoredFrom?: number;
 };
 export type ProposalStatus = "pending" | "accepted" | "discarded" | "conflict";
+export type ProposalSource = "claude" | "claude-code";
 export type Proposal = {
   id: string;
   createdAt: string;
-  jobId: string;
+  /** Missing on old proposals = "claude" (Claude API flow, removed). */
+  source?: ProposalSource;
+  /** Background task id (old Claude API flow only). */
+  jobId?: string;
   kind: "draft" | "revise";
   instruction: string;
   scope: string[]; // scene ids; empty = whole script
@@ -48,7 +54,7 @@ export type Proposal = {
 export type ScriptRequest = {
   createdAt: string;
   requestToken: string;
-  ideaSource: "user" | "claude";
+  ideaSource: "user" | "claude" | "claude-code";
   title: string;
   idea: string;
   premise?: string;
@@ -62,7 +68,6 @@ export type ScriptRequest = {
 const dirs = (P: EpisodePaths) => ({
   versions: join(P.scriptDir, "versions"),
   proposals: join(P.scriptDir, "proposals"),
-  rejected: join(P.scriptDir, "rejected"),
   request: join(P.scriptDir, "request.json"),
 });
 const vfile = (P: EpisodePaths, n: number) => join(dirs(P).versions, `v${String(n).padStart(4, "0")}.json`);
@@ -136,13 +141,10 @@ export const commitVersion = (
       ...(opts.restoredFrom ? { restoredFrom: opts.restoredFrom } : {}),
     });
     writeFileAtomic(P.script, JSON.stringify(script, null, 2) + "\n");
-    // Keep episode.json in step (title, content hash, production state). Approvals are NOT touched:
-    // the script approval is bound to its hash, so it becomes "cần duyệt lại" by itself.
+    // Keep episode.json in step (title, content hash).
     const m = JSON.parse(readFileSync(P.episodeJson, "utf8"));
     m.title = script.title;
     m.contentHash = v.hash;
-    m.production = { ...m.production, script: "done" };
-    if (m.approvals?.script?.status === "missing") m.approvals.script = { status: "not_approved" };
     writeFileAtomic(P.episodeJson, JSON.stringify(m, null, 2) + "\n");
     return v;
   });
@@ -189,10 +191,17 @@ export const acceptProposal = (P: EpisodePaths, id: string, viewedHash: string |
   if (p.check.errors.length) throw new ValidationError("Bản đề xuất còn lỗi chặn, không áp dụng được.");
   const cur = readCurrent(P);
   if ((cur?.hash ?? null) !== p.baseHash) {
-    setProposalStatus(P, p, "conflict", "Kịch bản hiện hành đã đổi sau khi Claude bắt đầu sửa.");
-    throw new ConflictError("Kịch bản hiện hành đã thay đổi sau khi Claude bắt đầu sửa, nên không áp dụng tự động bản đề xuất này. Bản đề xuất vẫn được giữ để xem.");
+    setProposalStatus(P, p, "conflict", "Kịch bản hiện hành đã đổi sau khi bản đề xuất được tạo.");
+    throw new ConflictError("Kịch bản hiện hành đã thay đổi sau khi bản đề xuất được tạo, nên không áp dụng tự động bản đề xuất này. Bản đề xuất vẫn được giữ để xem.");
   }
-  const v = commitVersion(P, p.script, { expectedHash: viewedHash, source: "claude", note: p.instruction || "Bản nháp do Claude viết", jobId: p.jobId, proposalId: p.id });
+  const source: VersionSource = p.source === "claude-code" ? "claude-code" : "claude";
+  const v = commitVersion(P, p.script, {
+    expectedHash: viewedHash,
+    source,
+    note: p.instruction || (source === "claude-code" ? "Bản nháp viết bằng Claude Code" : "Bản nháp do Claude viết"),
+    ...(p.jobId ? { jobId: p.jobId } : {}),
+    proposalId: p.id,
+  });
   setProposalStatus(P, p, "accepted", `Thành phiên bản ${v.version}`);
   return v;
 };
@@ -204,15 +213,63 @@ export const discardProposal = (P: EpisodePaths, id: string) => {
   setProposalStatus(P, p, "discarded");
 };
 
-// ---- Request + rejected output ---------------------------------------------------
+// ---- Request (the brief the script is written from) -------------------------------
 
 export const readRequest = (P: EpisodePaths): ScriptRequest | null => (existsSync(dirs(P).request) ? readJson<ScriptRequest>(dirs(P).request) : null);
 export const writeRequest = (P: EpisodePaths, r: ScriptRequest) => writeFileAtomic(dirs(P).request, JSON.stringify(r, null, 2) + "\n");
 
-/** Model output that failed validation: kept for diagnosis, never used as the script. */
-export const saveRejected = (P: EpisodePaths, entry: { jobId: string; errors: string[]; output: unknown }) => {
-  mkdirSync(dirs(P).rejected, { recursive: true });
-  const f = join(dirs(P).rejected, `${new Date().toISOString().replace(/[:.]/g, "-")}-${entry.jobId.slice(0, 8)}.json`);
-  writeFileAtomic(f, JSON.stringify({ at: new Date().toISOString(), ...entry }, null, 2) + "\n");
-  return f;
+// ---- Proposals written outside the Studio (npm run script:propose) ----------------
+
+/** Characters a script for this episode may use: the brief's cast plus anyone already speaking. */
+export const castOf = (P: EpisodePaths, script: ScriptDoc | null): string[] => {
+  const req = readRequest(P);
+  const roles = new Set<string>(req?.characters ?? []);
+  for (const b of script?.beats ?? []) if (b.kind === "line" && b.role && b.role !== "narrator") roles.add(b.role);
+  if (script?.beats.some((b) => b.role === "narrator")) roles.add("kien");
+  return roles.size ? [...roles] : [...CHARACTERS];
+};
+
+export type ProposeResult = { proposal: Proposal | null; duplicateOf: string | null; check: CheckResult };
+
+/**
+ * Stores a script written in a Claude Code session as a PROPOSAL. The current
+ * version never changes here: the user reviews the diff in the Studio and
+ * accepts (new version) or discards. Blocking errors → nothing is saved.
+ * Same content as a pending proposal on the same base → not saved twice.
+ */
+export const proposeScript = (P: EpisodePaths, input: ScriptDoc, opts: { note: string }): ProposeResult => {
+  // Checked BEFORE taking the lock: the lock file must never create a folder for
+  // an episode that was not allocated by episode:new / the Studio.
+  if (!existsSync(P.episodeJson)) throw new ValidationError(`Chưa có tập ${P.id}. Tạo tập bằng npm run episode:new hoặc Studio → Tạo tập mới trước.`);
+  return withFileLockSync(P.episodeLock, "script-propose", P.id, () => {
+    if (input.id && input.id !== P.id) throw new ValidationError(`Kịch bản có id "${input.id}", không phải ${P.id}.`);
+    const cur = readCurrent(P);
+    const req = readRequest(P);
+    const script: ScriptDoc = {
+      ...input,
+      id: P.id,
+      duration: input.duration ?? cur?.script.duration ?? req?.duration ?? { minSec: 60, targetRangeSec: [60, 90] },
+    };
+    // Cast: the brief + whoever already speaks in the current version (not the new
+    // text itself). Without a brief (e.g. EP001) every character is allowed.
+    const allowed = req ? castOf(P, cur?.script ?? null) : [...CHARACTERS];
+    const check = validateScript(script, { cast: allowed });
+    if (check.errors.length) return { proposal: null, duplicateOf: null, check };
+    const hash = hashScript(script);
+    if (cur && cur.hash === hash) throw new ValidationError("Nội dung giống hệt bản hiện hành, không có gì để đề xuất.");
+    const dup = listProposals(P).find((p) => p.status === "pending" && p.hash === hash && p.baseHash === (cur?.hash ?? null));
+    if (dup) return { proposal: null, duplicateOf: dup.id, check };
+    const proposal = saveProposal(P, {
+      source: "claude-code",
+      kind: cur ? "revise" : "draft",
+      instruction: opts.note.replace(/\r\n/g, "\n").normalize("NFC").trim().slice(0, 300),
+      scope: [],
+      baseVersion: currentVersion(P)?.version ?? null,
+      baseHash: cur?.hash ?? null,
+      status: "pending",
+      check,
+      script,
+    });
+    return { proposal, duplicateOf: null, check };
+  });
 };

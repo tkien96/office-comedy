@@ -88,7 +88,7 @@ src/
   backgrounds/          văn phòng, phòng họp, pantry, bàn phía trước
   ui/                   phụ đề, thẻ thông báo, chữ sốc, overlay vùng an toàn
   scenes/ScriptedScene  bộ dựng cảnh thử (demo 10 s)
-  episode/EpisodeVideo  bộ dựng TẬP: đọc kịch bản đã duyệt + timeline.json + dàn cảnh
+  episode/EpisodeVideo  bộ dựng TẬP: đọc kịch bản + timeline.json + dàn cảnh
   episodes/             CHỈ dữ liệu: dàn cảnh từng tập (<id>-staging.ts: vị trí, camera, thẻ, cue biểu cảm cho nhịp hành động), bố cục ảnh bìa (<id>-thumbnails.ts)
   thumbnails/           bộ dựng ảnh bìa 9:16 / nhá hàng 1:1 (cùng rig, nền, font với video)
   sheets/               ảnh tổng hợp nhân vật và bối cảnh
@@ -96,25 +96,21 @@ src/
 public/audio/           giọng đọc, nhạc, SFX (sau này)
 assets/LICENSES.md      nguồn và giấy phép mọi tài nguyên
 episodes/EPxxx/         mỗi tập (đường dẫn định nghĩa duy nhất trong tools/episode/paths.ts):
-  episode.json          metadata, phiên bản, trạng thái sản xuất, DUYỆT gắn hash
+  episode.json          metadata, phiên bản (hash nguồn lúc sản xuất), kết quả kiểm tra
   script/               script.json (nguồn), script.md, timeline.json
   audio/                dialogue-preview.wav, lines/            (không đưa vào Git)
   assets/               tài nguyên riêng của tập (tài nguyên chung để ngoài)
   exports/              EPxxx.mp4 (không đưa vào Git), EPxxx.srt (tạo bằng episode:captions)
   thumbnails/           thumb-9x16.png, teaser-1x1.png          (ảnh không đưa vào Git)
   social/               social.json (nguồn, từng bài từng nền tảng), social.md (bản đọc, tạo bằng episode:social)
-  publishing/           jobs.json; log.jsonl, .lock, upload-state.json (không đưa vào Git)
-  reports/              qa-report.md, captions-qc.md, publish-dry-run.json
+  reports/              qa-report.md, captions-qc.md
   delivery/             BẢN XUẤT để đăng tay, tạo lại toàn bộ bằng episode:delivery (không đưa vào Git)
-config/publishing.json  tài khoản đích (chỉ TÊN biến môi trường), khả năng nền tảng
-docs/publishing-platforms.md  bảng khả năng đăng bài và ảnh bìa theo tài liệu chính thức
-docs/youtube-integration-plan.md  kế hoạch tích hợp YouTube (chưa triển khai)
+docs/publishing-platforms.md  ghi chú khả năng đăng bài và ảnh bìa từng nền tảng (tham khảo khi đăng tay)
 docs/local-assets.md  tài nguyên chỉ có trên máy (không đưa vào Git), hash và cách khôi phục
 docs/studio.md        website local Office Comedy Studio: kiến trúc, nguồn dữ liệu, an toàn
-docs/social-connections.md  kết nối YouTube/Facebook/TikTok trong Studio, kho bí mật, nguồn cấu hình
 studio/               Office Comedy Studio: server/ (Node, node:http), web/ (React), build.mjs → dist/ (không đưa vào Git)
 Studio.cmd            launcher Windows cho Studio
-runtime/              dữ liệu vận hành của Studio (công việc nền; connections/: metadata kết nối + bí mật DPAPI), không đưa vào Git
+runtime/              dữ liệu vận hành của Studio (công việc nền), không đưa vào Git
 out/                    video và ảnh xuất ra (không đưa vào Git)
 ```
 
@@ -211,7 +207,7 @@ Khi sửa xưng hô, sửa theo từng câu và từng quan hệ. **Không tìm�
 
 - Composition tập (ví dụ `EP001` trong `src/Root.tsx`) nhập trực tiếp `episodes/EPxxx/script/script.json` và `script/timeline.json`.
   - `durationInFrames` lấy từ timeline, không ghi cứng.
-  - Âm thanh là bản đã duyệt, chép sang `public/audio/episodes/EPxxx/dialogue.wav` bằng `npm run episode:stage-audio -- EPxxx` (lệnh từ chối nếu hash khác bản duyệt; thư mục không đưa vào Git).
+  - Âm thanh chép từ `audio/dialogue-preview.wav` sang `public/audio/episodes/EPxxx/dialogue.wav` bằng `npm run episode:stage-audio -- EPxxx` (lệnh kiểm bản chép đúng từng byte; thư mục không đưa vào Git).
   - Render ra `episodes/EPxxx/exports/EPxxx.mp4` (ví dụ `npm run render:ep001`).
 - Biểu cảm và tư thế lấy từ gợi ý `expression`/`pose` của câu thoại. Nhịp hành động chỉ có mô tả chữ, nên biểu cảm của chúng ghi ở `cues` trong file dàn cảnh, bám đúng mô tả.
 - Người nói có `talking` trong khoảng lời của họ; người nghe tự nhìn về phía người nói. Lời dẫn (narrator) là giọng đọc ngoài hình: Kiên không mấp máy môi.
@@ -221,85 +217,49 @@ Khi sửa xưng hô, sửa theo từng câu và từng quan hệ. **Không tìm�
 - Sau khi render: `npm run episode:verify -- EPxxx` (mặc định kiểm `exports/EPxxx.mp4`). Kiểm tra:
   - thời lượng ≥ 60 s và số khung hình = timeline;
   - codec;
-  - âm thanh khớp bản duyệt;
+  - âm thanh khớp bản preview;
   - không cắt cụt, không khung đen, không hình đứng im ≥ 2 s.
 
 ## Quản lý tập
 
-- **Mã tập:** chỉ cấp bằng `npm run episode:new -- "Tiêu đề"`.
-  - Lệnh dùng `mkdir` không đệ quy làm khóa nguyên tử, nên chạy lại hay chạy đồng thời cũng không trùng mã.
+- **Không có quy trình duyệt từng phần** (bỏ ngày 2026-11-16 theo quyết định của người dùng). `episode.json` không còn `approvals`/`production`; trạng thái mỗi phần là "có / chưa có" tính từ file thật (`partStates` trong `tools/episode/service.ts`). Không thêm lại bước duyệt khi người dùng chưa yêu cầu.
+- **Mã tập:** chỉ cấp bằng `npm run episode:new -- "Tiêu đề"` hoặc Studio → Tạo tập mới (cùng bộ cấp mã).
+  - Dùng `mkdir` không đệ quy làm khóa nguyên tử, nên chạy lại hay chạy đồng thời cũng không trùng mã.
   - Không tự đặt tên thư mục tập bằng tay.
-- **Duyệt gắn hash** (`episode.json` → `approvals`):
-  - Mỗi phần có hash riêng: kịch bản (hash nội dung), âm thanh, video, phụ đề (SRT, đổi CRLF→LF trước khi hash), thumbnail 9:16, ảnh nhá hàng 1:1.
-  - Social duyệt **theo từng bài**: `approvals.social["youtube.video"]`, `["facebook.teaser"]`, …; mỗi bài một hash. Sửa một bài không làm mất duyệt bài khác.
-  - Mỗi duyệt ghi kèm `basis`: hash các NGUỒN của sản phẩm (`DEPENDS_ON` trong `tools/episode/manifest.ts`). Ví dụ video phụ thuộc kịch bản, timeline, âm thanh, dàn cảnh, rig dùng chung; phụ đề phụ thuộc kịch bản và timeline; social phụ thuộc kịch bản.
-  - Hash sản phẩm đổi → "cần duyệt lại". Hash sản phẩm còn nguyên nhưng nguồn đổi → "cần kiểm tra lại". Cả hai đều chặn đăng.
-  - **Không đăng bằng duyệt cũ.**
-  - Chỉ người dùng mới duyệt, bằng `npm run episode:approve -- EPxxx <phần>` (người dùng tự chạy). Mình không chạy lệnh này và không tự đặt `approved`.
 - **File xuất từ nguồn** (SRT ← timeline, social.md ← social.json, delivery/ ← mọi thứ): tạo bằng lệnh, tất định. `episode:status` và `episode:delivery --check` báo "khớp nguồn" hay "lệch nguồn". Không sửa tay file xuất.
 - **Phụ đề:** `npm run episode:captions -- EPxxx`.
   - Chữ đúng nguyên văn câu đã tạo giọng; chỉ thêm ngắt dòng (≤ 2 dòng, ≤ 42 ký tự; không tách từ ghép trong `NO_BREAK`).
   - Cue ngắn được giữ tối thiểu 0,8 s trong khoảng lặng phía sau, không chồng câu sau.
   - Báo cáo `reports/captions-qc.md` tách phần máy kiểm với phần cần người xem/nghe.
-- **Social:** `npm run episode:social -- EPxxx` kiểm từ khóa lộ câu chốt, hứa ngày giờ, giới hạn nền tảng; ghi `social/social.md`. Bộ lọc từ khóa không chứng minh bài không spoil.
+- **Social** (đăng thủ công): `npm run episode:social -- EPxxx` kiểm từ khóa lộ câu chốt (`spoilerGuard`), hứa ngày giờ, giới hạn nền tảng; ghi `social/social.md`. Bộ lọc từ khóa không chứng minh bài không spoil. Không hứa ngày giờ trong bài.
 - **Ảnh bìa:** `npm run episode:thumbnails -- EPxxx` render 9:16 (2160x3840) và 1:1 (1080x1080) từ Still `<ID>-thumb-9x16` / `<ID>-teaser-1x1`. Mỗi tỷ lệ có bố cục riêng (camera, vị trí, khối chữ) trong `src/episodes/<id>-thumbnails.ts`. Không vẽ lại nhân vật, không đổi phong cách.
-- **Bộ đăng thủ công:** `npm run episode:delivery -- EPxxx` xoá và tạo lại `delivery/` (video, SRT, 2 ảnh, youtube/facebook/tiktok.md, README, manifest.json có hash và trạng thái duyệt lúc xuất). Xuất không đổi trạng thái duyệt. Kiểm tra: `--check`.
-- **Trạng thái:** `npm run episode:status -- EPxxx` tính lại toàn bộ hash. Những gì chưa tạo thì ghi "chưa có", không ghi là hoàn thành.
-- **Tài nguyên dùng chung** (rig, nền, UI, model TTS, cấu hình giọng) để ngoài thư mục tập. `episode.json` ghi hash phiên bản (`voiceConfigHash`, `sharedAssetsHash`, commit) lúc sản xuất.
+- **Bộ đăng thủ công:** `npm run episode:delivery -- EPxxx` xoá và tạo lại `delivery/` (video, SRT, 2 ảnh, youtube/facebook/tiktok.md có bản dán + các bước đăng, README, manifest.json có hash). Kiểm tra: `--check`. Người dùng tự đăng; ghi chú khả năng từng nền tảng: `docs/publishing-platforms.md` (chỉ tham khảo).
+- **Trạng thái:** `npm run episode:status -- EPxxx`. Những gì chưa tạo thì ghi "chưa có", không ghi là hoàn thành.
+- **Tài nguyên dùng chung** (rig, nền, UI, model TTS, cấu hình giọng) để ngoài thư mục tập. `episode.json` ghi hash phiên bản (`voiceConfigHash`, `sharedAssetsHash`, commit, `stagingFile`/`stagingHash`, `checks.verify`) lúc sản xuất.
 
 ## Office Comedy Studio (`studio/`, `docs/studio.md`)
 
+- **Chỉ để quản lý tập** (đổi 2026-11-16): danh sách tập, tạo tập, kịch bản (phiên bản, đề xuất, sửa tay), xem âm thanh/video/phụ đề/ảnh, sửa nội dung social, tạo và tải bộ đăng thủ công, báo cáo. Không có duyệt, kết nối mạng xã hội, job đăng hay dry-run.
 - Chạy: `npm run studio` hoặc `Studio.cmd` → http://127.0.0.1:5178. Chỉ nghe 127.0.0.1.
-- **Một nguồn dữ liệu:** Studio đọc/ghi đúng các file của tập (`episode.json`, `social.json`, `publishing/jobs.json`) qua service dùng chung `tools/episode/service.ts`, `delivery.ts`, `tools/publish/dryrun.ts`. CLI dùng cùng service. Không tạo nguồn trạng thái duyệt thứ hai. `runtime/studio/tasks.json` chỉ là dữ liệu vận hành.
+- **Một nguồn dữ liệu:** Studio đọc/ghi đúng các file của tập (`episode.json`, `script/`, `social.json`) qua service dùng chung `tools/episode/service.ts`, `delivery.ts`, `scriptstore.ts`. CLI dùng cùng service. `runtime/studio/tasks.json` chỉ là dữ liệu vận hành.
 - Logic mới: viết vào service dùng chung trước, rồi gọi từ CLI và Studio. Không viết lại nghiệp vụ trong `studio/server`.
 - Ghi file: `writeFileAtomic` + khoá `episodes/EPxxx/.lock` (`withFileLockSync`) cho mọi sửa `episode.json`/`social.json`/delivery.
-- Duyệt từ Studio gửi kèm `viewToken` (hash sản phẩm + hash nguồn); máy chủ từ chối bản cũ. Mình không bấm duyệt thay người dùng, kể cả khi thử nghiệm (thử trên bản sao).
 - Việc nặng hoặc lâu chạy bằng công việc nền gọi lệnh CLI trong tiến trình con (`runNodeScript`, đối số cố định, không shell). Không hiển thị phần trăm giả; máy chủ dừng giữa chừng thì công việc là "Bị gián đoạn".
-- An toàn: kiểm Host/Origin + header `X-Studio` cho request thay đổi; API chỉ nhận mã tập và tên cố định; file phục vụ phải nằm trong thư mục cho phép sau khi giải symlink; không gửi bí mật xuống trình duyệt.
+- An toàn: kiểm Host/Origin + header `X-Studio` cho request thay đổi; API chỉ nhận mã tập và tên cố định; file phục vụ phải nằm trong thư mục cho phép sau khi giải symlink.
 - Nút cho chức năng chưa có backend: khoá và ghi lý do (`Unavailable`). Không tạo trạng thái thành công giả.
 - Giao diện build bằng esbuild (`node studio/build.mjs`); kiểm tra kiểu: `npm run lint` (gồm `tsc -p studio/server` và `tsc -p studio/web`).
-- **Viết kịch bản bằng Claude** (`tools/ai/`, `tools/episode/scriptdoc.ts`, `scriptstore.ts`, `studio/server/aijobs.ts`):
-  - Claude chỉ sinh hoặc sửa JSON kịch bản theo schema; không tool, không shell, không quyền sửa code. Backend cấp mã, lưu file, kiểm tra, cập nhật trạng thái.
-  - SDK chính thức `@anthropic-ai/sdk` (khoá phiên bản). Model lấy từ `config/studio.json`, chỉ được chọn trong danh sách đã khai báo. Không đoán tên model. Không tự chuyển nhà cung cấp hay cách tính phí khi lỗi.
-  - Khóa chỉ là `ANTHROPIC_API_KEY` trong `.env`. Không đưa khóa vào prompt, log, giao diện hay Git.
-  - Bản Claude sửa luôn là đề xuất; phiên bản chỉ đổi qua `commitVersion` (kiểm hash bản đang xem). Lịch sử không xoá; phục hồi tạo phiên bản mới. Không tự duyệt.
-  - Không gọi model khi chỉ mở, xem hay duyệt. Timeout hoặc lỗi mạng không tự thử lại (có thể đã tính phí); chỉ 429/529 được thử lại có giới hạn.
-  - Chi phí luôn là ước tính từ số token API trả; thiếu dữ liệu thì ghi "không xác định", không ghi 0.
-  - Mock (`tools/ai/mock.ts`) chỉ chạy khi có cả `STUDIO_TEST=1` và `STUDIO_AI_MOCK`; mọi kết quả mock mang nhãn `[MOCK]`.
-- **`config/publishing.json` → `credentialEnv` chỉ chứa TÊN biến** (dạng `ABC_DEF`). Dry-run và trang Cấu hình không in mục nào không phải tên biến. Giá trị bí mật đặt trong kho DPAPI của Studio hoặc `.env`.
+- **Viết kịch bản bằng Claude Code** (đổi 2026-11-16; `tools/episode/scriptstore.ts` → `proposeScript`, `tools/episode/cli/propose.ts`, `tools/episode/scriptrequest.ts`, `docs/studio.md`):
+  - Studio **không gọi model** và không có khóa API. Luồng Claude API cũ (`tools/ai/`, `aijobs.ts`, `config/studio.json`, `@anthropic-ai/sdk`) đã gỡ; không thêm lại hay chuyển sang nhà cung cấp/cách tính phí khác khi người dùng chưa yêu cầu.
+  - Khi người dùng nhờ viết hoặc sửa kịch bản trong phiên Claude Code: đọc `script/request.json` (nếu có) và bản hiện hành, viết file JSON cùng cấu trúc `script/script.json` ngoài thư mục tập (ví dụ scratchpad), chạy `npm run script:propose -- EPxxx <file> --check`, sửa đến khi hết lỗi chặn, rồi lưu bằng `npm run script:propose -- EPxxx <file> --note "…"`.
+  - Tập mới phải được cấp mã trước (`npm run episode:new` hoặc Studio → Tạo tập mới). Không tự tạo thư mục tập.
+  - Bản đề xuất **không** đổi bản hiện hành. Không ghi thẳng `script/script.json`, không chấp nhận đề xuất thay người dùng; người dùng xem khác biệt và chấp nhận trong Studio.
+  - Bản hiện hành chỉ đổi qua `commitVersion` (kiểm hash bản đang xem). Lịch sử không xoá; phục hồi tạo phiên bản mới.
 
-- **Kết nối mạng xã hội** (`docs/social-connections.md`, `tools/publish/connections.ts`, `tools/secrets/dpapi.ts`, `studio/server/oauth.ts`, `socialapi.ts`):
-  - Metadata (`runtime/connections/connections.json`) tách khỏi bí mật (`runtime/connections/secrets.dpapi.json`, Windows DPAPI CurrentUser). Kho không mở được thì báo lỗi; **không** lưu plaintext thay thế, không tự chế mã hoá có khoá nằm cạnh dữ liệu.
-  - API đọc chỉ trả metadata + "đã lưu bí mật". Ô bí mật trống khi mở lại; để trống = giữ; không nhận chuỗi che. Không đưa bí mật vào frontend, storage trình duyệt, URL, log, báo cáo, delivery, prompt AI.
-  - Nguồn có hiệu lực theo tài khoản đích: kết nối Studio, hoặc toàn bộ từ `.env` (cách cũ). **Không trộn.** Gỡ khỏi Studio thì tắt `.env` của tài khoản đó, không tự dùng lại. Không tự sửa/xoá `.env`.
-  - "Đã xác minh" = chứng minh được danh tính bằng lệnh đọc; không phải quyền đăng. Lỗi mạng ≠ token hết hạn. TikTok luôn là "Đăng thủ công", không bao giờ "đã xác minh".
-  - YouTube: client Desktop app, PKCE S256, redirect `http://127.0.0.1:<cổng>/`, state một lần + cookie, quyền tối thiểu `youtube.readonly`. Kết nối mới chỉ thay kết nối cũ sau khi người dùng xác nhận kênh. Facebook: Graph API v27.0 `/me`, token ở header; chưa xác minh quyền đăng (cần App token).
-  - Job API gắn `account` (connectionId + platformAccountId) do người dùng gắn; không tự gán, đổi kết nối không tự chuyển đích job. Mình không bấm kết nối/cấp quyền thay người dùng.
-  - Kiểm thử: mock nền tảng chỉ khi `STUDIO_TEST=1` + `STUDIO_SOCIAL_MOCK_BASE` (loopback); kiểm trên bản sao, không trên dữ liệu thật.
+## Đăng social
 
-## Đăng bài đa nền tảng (`tools/publish`, `config/publishing.json`)
-
-- **Hiện tại chỉ có dry-run.** Chưa có code upload hay đặt lịch thật. Kế hoạch YouTube: `docs/youtube-integration-plan.md`. Không đăng hoặc đặt lịch khi người dùng chưa yêu cầu rõ ràng.
-- **Job:** mỗi job là một bài trên một nền tảng và một tài khoản (`publishing/jobs.json`).
-  - Trạng thái: `draft` → `planned` (lịch chỉ có trong dự án) → `uploading`/`processing` → `scheduled` (nền tảng đã xác nhận giữ lịch) → `published` (đã kiểm tra là công khai). Ngoài ra có `failed`, `cancelled`, `missed`.
-  - HTTP thành công hay upload xong **không** có nghĩa là đã đăng công khai.
-- **Giờ:** ghi theo Asia/Ho_Chi_Minh (UTC+7, không có giờ mùa hè), lưu kèm UTC.
-  - `npm run publish:plan -- EPxxx <jobId> "YYYY-MM-DD HH:mm"` chỉ đặt lịch trong dự án.
-  - Chỉ dùng giờ người dùng đã xác nhận.
-- **Chống trùng và khôi phục:**
-  - Khóa `publishing/.lock` khi xử lý.
-  - `idempotencyKey` = hash của tập, phiên bản, nền tảng, tài khoản đích, loại bài, media và nội dung.
-  - Lưu remote ID ngay khi nhận được.
-  - Job đã có remote ID hoặc đang dở thì phải đối chiếu trạng thái trên nền tảng trước, không gửi lại.
-  - Retry tối đa `maxAttempts`, có ghi `log.jsonl` (bí mật được che).
-  - Quá giờ cộng thời gian ân hạn mà job chưa chạy thì chuyển `missed`, **không tự đăng dồn**.
-- **Kiểm tra trước khi đăng:** `npm run publish:dry-run -- EPxxx`. Chỉ báo cáo, không upload và không sửa job.
-- **Bí mật:** token chỉ đặt trong `.env` hoặc kho bí mật ngoài repo. `config/publishing.json` chỉ ghi tên biến. Không in token ra log hay chat.
-- **Nội dung social:**
-  - Nhá hàng không lộ câu chốt (`spoilerGuard` trong `social.json`).
-  - Không hứa ngày giờ khi chưa có lịch xác nhận.
-  - Loại bài nền tảng hoặc API không hỗ trợ thì đặt `mode: "manual"` và chuẩn bị bản xuất để đăng tay.
-- **Thứ tự tích hợp đề xuất:** YouTube, rồi Facebook Page. TikTok: đăng thủ công (xem `docs/publishing-platforms.md`).
+- **Đăng thủ công** (quyết định 2026-11-16). Đã gỡ toàn bộ tích hợp đăng bài: kết nối YouTube/Facebook/TikTok, OAuth, kho bí mật DPAPI, job, lịch, dry-run (`tools/publish/`, `tools/secrets/`, `config/publishing.json`, `publishing/` trong từng tập). Không thêm lại khi người dùng chưa yêu cầu.
+- Mình không đăng, không đặt lịch, không đăng nhập hay cấp quyền tài khoản mạng xã hội thay người dùng.
+- Nội dung bài: `social/social.json`; bản dán và các bước đăng: bộ `delivery/`.
 
 ## Quy tắc bộ hình ảnh
 

@@ -1,10 +1,9 @@
 import React, { useRef, useState } from "react";
-import { get, type EpisodeDetail, type PartState } from "./api";
-import { ApprovalPanel } from "./Approval";
+import { get, type EpisodeDetail } from "./api";
 import { Markdown } from "./Markdown";
 import { Empty, ErrorBox, fmtBytes, fmtSec, Loading, TechDetails, useAsync } from "./ui";
 
-type TabProps = { d: EpisodeDetail; reload: () => void };
+type TabProps = { d: EpisodeDetail };
 const media = (d: EpisodeDetail, k: string) => d.media?.[k];
 const src = (d: EpisodeDetail, k: string) => `/api/episodes/${d.summary.id}/media/${k}`;
 
@@ -16,7 +15,7 @@ const Missing: React.FC<{ what: string; path?: string }> = ({ what, path }) => (
 
 // ---- Âm thanh và video --------------------------------------------------------------
 
-export const MediaTab: React.FC<TabProps & { audio?: PartState; video?: PartState }> = ({ d, audio, video, reload }) => {
+export const MediaTab: React.FC<TabProps> = ({ d }) => {
   const v = media(d, "video");
   const a = media(d, "audio");
   return (
@@ -34,7 +33,6 @@ export const MediaTab: React.FC<TabProps & { audio?: PartState; video?: PartStat
           ) : (
             <Missing what="Video" path={v?.path} />
           )}
-          {video ? <ApprovalPanel episode={d.summary.id} part={video} onChanged={reload} /> : null}
         </div>
         <div className="media-col">
           <h2>Âm thanh</h2>
@@ -46,7 +44,6 @@ export const MediaTab: React.FC<TabProps & { audio?: PartState; video?: PartStat
           ) : (
             <Missing what="Âm thanh" path={a?.path} />
           )}
-          {audio ? <ApprovalPanel episode={d.summary.id} part={audio} onChanged={reload} /> : null}
           <p className="muted small">Tạo lại giọng và render video chưa có trong Studio: dùng lệnh npm hiện có. Mở trang không tạo lại hay thay đổi gì.</p>
         </div>
       </div>
@@ -56,7 +53,7 @@ export const MediaTab: React.FC<TabProps & { audio?: PartState; video?: PartStat
 
 // ---- Phụ đề ----------------------------------------------------------------------------
 
-export const CaptionsTab: React.FC<TabProps & { part?: PartState }> = ({ d, part, reload }) => {
+export const CaptionsTab: React.FC<TabProps> = ({ d }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const cues = d.captions;
   const v = media(d, "video");
@@ -68,7 +65,6 @@ export const CaptionsTab: React.FC<TabProps & { part?: PartState }> = ({ d, part
   };
   return (
     <div className="stack">
-      {part ? <ApprovalPanel episode={d.summary.id} part={part} onChanged={reload} /> : null}
       <p className="small">
         So với timeline: <strong>{d.freshness?.captions}</strong>. Báo cáo kiểm tra tự động: tab <a href={`#/tap/${d.summary.id}/bao-cao`}>Báo cáo</a> → "Kiểm tra phụ đề".
       </p>
@@ -118,7 +114,7 @@ export const CaptionsTab: React.FC<TabProps & { part?: PartState }> = ({ d, part
 
 // ---- Hình ảnh --------------------------------------------------------------------------
 
-export const ImagesTab: React.FC<TabProps & { thumb?: PartState; teaser?: PartState }> = ({ d, thumb, teaser, reload }) => {
+export const ImagesTab: React.FC<TabProps> = ({ d }) => {
   const t = media(d, "thumb9x16");
   const s = media(d, "teaser1x1");
   return (
@@ -133,7 +129,6 @@ export const ImagesTab: React.FC<TabProps & { thumb?: PartState; teaser?: PartSt
           <Missing what="Thumbnail 9:16" path={t?.path} />
         )}
         {t?.exists ? <p className="muted small">{fmtBytes(t.size)} · dùng cho YouTube Shorts (Studio trên máy tính), ảnh bìa Reel</p> : null}
-        {thumb ? <ApprovalPanel episode={d.summary.id} part={thumb} onChanged={reload} /> : null}
       </div>
       <div className="media-col">
         <h2>Ảnh nhá hàng 1:1</h2>
@@ -145,7 +140,6 @@ export const ImagesTab: React.FC<TabProps & { thumb?: PartState; teaser?: PartSt
           <Missing what="Ảnh nhá hàng 1:1" path={s?.path} />
         )}
         {s?.exists ? <p className="muted small">{fmtBytes(s.size)} · bài ảnh nhá hàng Facebook / TikTok</p> : null}
-        {teaser ? <ApprovalPanel episode={d.summary.id} part={teaser} onChanged={reload} /> : null}
       </div>
     </div>
   );

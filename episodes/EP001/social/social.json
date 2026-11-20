@@ -1,22 +1,42 @@
 {
-  "$comment": "Nội dung social EP001 (CHỜ DUYỆT). Mỗi BÀI được duyệt riêng (episode.json → approvals.social.<nền tảng>.<bài>), gắn với hash của chính bài đó: sửa một bài không làm mất duyệt bài khác. Bản dán = body + hashtag (xem social.md, tạo bằng npm run episode:social). Không lộ câu chốt, không hứa ngày/giờ.",
+  "$comment": "Nội dung social EP001. Đăng thủ công: bản dán và các bước đăng nằm trong bộ delivery (npm run episode:delivery -- EP001). social.md là bản đọc, tạo bằng npm run episode:social. Không lộ câu chốt, không hứa ngày/giờ.",
   "episode": "EP001",
   "language": "vi",
   "spoilerGuard": {
     "punchline": "Công cụ tiết kiệm ba tiếng, nhưng giải thích nó tốn bảy tiếng (bảy buổi họp); Trinh còn dùng chính công cụ đó làm biên bản họp.",
-    "keepSecret": ["chuỗi buổi họp và con số bảy", "cả cuối tuần viết báo cáo", "Trinh dùng công cụ làm biên bản", "câu 'báo cáo về việc không phải làm báo cáo'"],
+    "keepSecret": [
+      "chuỗi buổi họp và con số bảy",
+      "cả cuối tuần viết báo cáo",
+      "Trinh dùng công cụ làm biên bản",
+      "câu 'báo cáo về việc không phải làm báo cáo'"
+    ],
     "allowedPremise": "Kiên làm công cụ tiết kiệm ba tiếng mỗi tuần, Trinh nhờ làm giùm, Sếp nghe tin và rất mê số liệu. Câu móc 3 giây đầu ('sai lầm lớn nhất đời tôi') đã có ngay đầu video.",
-    "punchlineMustNotAppear": ["bảy tiếng", "7 tiếng", "bảy buổi", "7 buổi", "giải thích nó tốn", "buổi họp", "lịch họp", "biên bản", "cuối tuần", "không phải làm báo cáo"],
-    "note": "Danh sách từ khóa chỉ là lưới lọc thô, KHÔNG chứng minh bài không spoil. Người duyệt cần đọc lại từng bài."
+    "punchlineMustNotAppear": [
+      "bảy tiếng",
+      "7 tiếng",
+      "bảy buổi",
+      "7 buổi",
+      "giải thích nó tốn",
+      "buổi họp",
+      "lịch họp",
+      "biên bản",
+      "cuối tuần",
+      "không phải làm báo cáo"
+    ],
+    "note": "Danh sách từ khóa chỉ là lưới lọc thô, KHÔNG chứng minh bài không spoil. Đọc lại từng bài trước khi đăng."
   },
   "platforms": {
     "youtube": {
       "video": {
         "kind": "short",
-        "postingMode": "api",
         "title": "Tiết kiệm 3 tiếng mỗi tuần, rồi sếp biết 😶 | Hài công sở",
         "body": "Kiên viết được công cụ tự làm báo cáo: bấm một cái là xong, mỗi tuần đỡ ba tiếng. Trinh xin làm giùm luôn. Rồi sếp nghe tin… mà sếp thì rất mê số liệu.\n\nBạn đã bao giờ làm việc nhanh hơn rồi được “thưởng” thêm việc chưa?\n\nPhim hoạt hình hài công sở, lồng tiếng Việt.",
-        "hashtags": ["#haicongso", "#congso", "#hoathinh", "#Shorts"],
+        "hashtags": [
+          "#haicongso",
+          "#congso",
+          "#hoathinh",
+          "#Shorts"
+        ],
         "madeForKids": false,
         "privacyAtUpload": "private",
         "captionsFile": "exports/EP001.srt",
@@ -25,47 +45,57 @@
       "teaser": {
         "kind": "community_text",
         "optional": true,
-        "postingMode": "manual",
-        "supportedByApi": false,
         "body": "Có ai từng làm việc nhanh hơn… rồi được giao thêm việc không? 🙋\nTập mới của Kiên kể đúng chuyện đó.",
         "hashtags": [],
         "image": "thumbnails/teaser-1x1.png",
-        "note": "Tùy chọn. YouTube Data API không có endpoint đăng bài cộng đồng; nếu dùng thì đăng tay trong YouTube Studio. Không tạo job API."
+        "note": "Tùy chọn. Đăng tay trong YouTube Studio (mục Cộng đồng)."
       }
     },
     "facebook": {
       "video": {
         "kind": "reel",
-        "postingMode": "api",
         "body": "Bấm một cái là báo cáo xong. Kiên tưởng mình vừa thắng lớn ở công ty… 😌\n\nTag ngay đồng nghiệp hay “làm giùm” cả phòng 👇",
-        "hashtags": ["#haicongso", "#congso", "#vanphong", "#hoathinh"],
+        "hashtags": [
+          "#haicongso",
+          "#congso",
+          "#vanphong",
+          "#hoathinh"
+        ],
         "coverImage": "thumbnails/thumb-9x16.png",
         "captionsFile": "exports/EP001.srt"
       },
       "teaser": {
         "kind": "photo",
-        "postingMode": "api",
         "image": "thumbnails/teaser-1x1.png",
         "body": "Kiên vừa làm được công cụ tiết kiệm ba tiếng mỗi tuần.\nSếp thì đang đứng ngay sau lưng. 👀\n\nBạn đoán chuyện gì xảy ra tiếp theo?",
-        "hashtags": ["#haicongso", "#congso"]
+        "hashtags": [
+          "#haicongso",
+          "#congso"
+        ]
       }
     },
     "tiktok": {
       "video": {
         "kind": "video",
-        "postingMode": "manual",
         "body": "Tiết kiệm được 3 tiếng mỗi tuần. Rồi sếp biết 😶",
-        "hashtags": ["#haicongso", "#congso", "#vanphong", "#hoathinh"],
+        "hashtags": [
+          "#haicongso",
+          "#congso",
+          "#vanphong",
+          "#hoathinh"
+        ],
         "coverTimestampMs": 16500,
         "coverImage": "thumbnails/thumb-9x16.png",
-        "note": "Đăng thủ công trong app TikTok (API không hẹn giờ; client chưa audit chỉ đăng riêng tư). Ảnh bìa: chọn khung hình gợi ý ở coverTimestampMs, hoặc tải ảnh bìa lên nếu app cho phép (xem delivery/tiktok.md)."
+        "note": "Ảnh bìa: chọn khung hình gợi ý ở coverTimestampMs, hoặc tải ảnh bìa lên nếu app cho phép (xem delivery/tiktok.md)."
       },
       "teaser": {
         "kind": "photo",
-        "postingMode": "manual",
         "image": "thumbnails/teaser-1x1.png",
         "body": "Ba tiếng mỗi tuần. Đổi lại cái gì? 👀",
-        "hashtags": ["#haicongso", "#congso"]
+        "hashtags": [
+          "#haicongso",
+          "#congso"
+        ]
       }
     }
   }

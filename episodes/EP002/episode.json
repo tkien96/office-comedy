@@ -1,0 +1,56 @@
+{
+  "id": "EP002",
+  "title": "Lỡ bấm Trả lời tất cả",
+  "contentVersion": 1,
+  "contentHash": "9316132ae40e29309f6c89b4cb4e691954b7c40343aa4e48fbc93597ffba1735",
+  "createdAt": "2026-11-16T07:48:10.328Z",
+  "duration": {
+    "contentEndSec": 74,
+    "videoSec": 74.005,
+    "durationInFrames": 2220,
+    "fps": 30
+  },
+  "paths": {
+    "root": "episodes/EP002",
+    "episodeJson": "episodes/EP002/episode.json",
+    "episodeLock": "episodes/EP002/.lock",
+    "scriptDir": "episodes/EP002/script",
+    "script": "episodes/EP002/script/script.json",
+    "scriptMd": "episodes/EP002/script/script.md",
+    "timeline": "episodes/EP002/script/timeline.json",
+    "audioDir": "episodes/EP002/audio",
+    "preview": "episodes/EP002/audio/dialogue-preview.wav",
+    "linesDir": "episodes/EP002/audio/lines",
+    "assetsDir": "episodes/EP002/assets",
+    "exportsDir": "episodes/EP002/exports",
+    "video": "episodes/EP002/exports/EP002.mp4",
+    "captions": "episodes/EP002/exports/EP002.srt",
+    "thumbnailsDir": "episodes/EP002/thumbnails",
+    "thumbnail9x16": "episodes/EP002/thumbnails/thumb-9x16.png",
+    "teaser1x1": "episodes/EP002/thumbnails/teaser-1x1.png",
+    "socialDir": "episodes/EP002/social",
+    "social": "episodes/EP002/social/social.json",
+    "reportsDir": "episodes/EP002/reports",
+    "qaReport": "episodes/EP002/reports/qa-report.md",
+    "captionsQc": "episodes/EP002/reports/captions-qc.md",
+    "deliveryDir": "episodes/EP002/delivery",
+    "publicAudio": "public/audio/episodes/EP002/dialogue.wav"
+  },
+  "versions": {
+    "voiceConfigHash": "79a5e10c01239a3f242835721c3564a0bef10c5ae134a821bf818bc163ef707f",
+    "sharedAssetsHash": "dbbb624b920fe35d8106e314e87e6d9fce53ae35c75de1838dfa7a7ac68b2524",
+    "gitCommit": "ea56ae7",
+    "ttsModel": "vieneu@3.8.4/v3turbo-onnx-fp32/pnnbao-ump/VieNeu-TTS-v3-Turbo@61b85e3d937fbbacb387714180e8182823512523/OpenMOSS-Team/MOSS-Audio-Tokenizer-Nano-ONNX@ceff0d0749bfb3fa2d61149794ec6feef0d1e1ae",
+    "stagingFile": "src/episodes/ep002-staging.ts",
+    "stagingHash": "aa11003b8a7640313dc34e467bae83ecd47069a4168ce62578cc6239e3beef89",
+    "thumbnailDesignHash": "dad43fac5a5ecc7088e8f7fd419fb1793f8a99b3ff4bf896d5976c1e37bcf409"
+  },
+  "checks": {
+    "verify": {
+      "at": "2026-11-16",
+      "tool": "npm run episode:verify -- EP002",
+      "result": "10/10 đạt",
+      "videoSha256": "da7155f224ad94addf22259feeb5fa00a7d491adc34c08639b83ddce845bc6d6"
+    }
+  }
+}

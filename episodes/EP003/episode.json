@@ -1,0 +1,56 @@
+{
+  "id": "EP003",
+  "title": "Ai lấy hộp cơm của tôi?",
+  "contentVersion": 1,
+  "contentHash": "79c6724cb9b98f59285a29e3e42de493d8f4ae644965f0db41ad72d97c52f959",
+  "createdAt": "2026-11-16T09:48:25.925Z",
+  "duration": {
+    "contentEndSec": 66.06,
+    "videoSec": 66.069,
+    "durationInFrames": 1982,
+    "fps": 30
+  },
+  "paths": {
+    "root": "episodes/EP003",
+    "episodeJson": "episodes/EP003/episode.json",
+    "episodeLock": "episodes/EP003/.lock",
+    "scriptDir": "episodes/EP003/script",
+    "script": "episodes/EP003/script/script.json",
+    "scriptMd": "episodes/EP003/script/script.md",
+    "timeline": "episodes/EP003/script/timeline.json",
+    "audioDir": "episodes/EP003/audio",
+    "preview": "episodes/EP003/audio/dialogue-preview.wav",
+    "linesDir": "episodes/EP003/audio/lines",
+    "assetsDir": "episodes/EP003/assets",
+    "exportsDir": "episodes/EP003/exports",
+    "video": "episodes/EP003/exports/EP003.mp4",
+    "captions": "episodes/EP003/exports/EP003.srt",
+    "thumbnailsDir": "episodes/EP003/thumbnails",
+    "thumbnail9x16": "episodes/EP003/thumbnails/thumb-9x16.png",
+    "teaser1x1": "episodes/EP003/thumbnails/teaser-1x1.png",
+    "socialDir": "episodes/EP003/social",
+    "social": "episodes/EP003/social/social.json",
+    "reportsDir": "episodes/EP003/reports",
+    "qaReport": "episodes/EP003/reports/qa-report.md",
+    "captionsQc": "episodes/EP003/reports/captions-qc.md",
+    "deliveryDir": "episodes/EP003/delivery",
+    "publicAudio": "public/audio/episodes/EP003/dialogue.wav"
+  },
+  "versions": {
+    "voiceConfigHash": "79a5e10c01239a3f242835721c3564a0bef10c5ae134a821bf818bc163ef707f",
+    "sharedAssetsHash": "dbbb624b920fe35d8106e314e87e6d9fce53ae35c75de1838dfa7a7ac68b2524",
+    "gitCommit": "ea56ae7",
+    "ttsModel": "vieneu@3.8.4/v3turbo-onnx-fp32/pnnbao-ump/VieNeu-TTS-v3-Turbo@61b85e3d937fbbacb387714180e8182823512523/OpenMOSS-Team/MOSS-Audio-Tokenizer-Nano-ONNX@ceff0d0749bfb3fa2d61149794ec6feef0d1e1ae",
+    "stagingFile": "src/episodes/ep003-staging.ts",
+    "stagingHash": "d7160be43a2a5eb41cddc24cb02debbcb8b081d289f191e2bf529c65891b776a",
+    "thumbnailDesignHash": "9412962c9cdcec10b5b0e441b5f927263dca21099114328e35de19dc5e932ed0"
+  },
+  "checks": {
+    "verify": {
+      "at": "2026-11-16",
+      "tool": "npm run episode:verify -- EP003",
+      "result": "10/10 đạt",
+      "videoSha256": "e2c6f301bc16f9525edbb1a2963de5dd1f68cbdfae97d817d4e1cda57f747d83"
+    }
+  }
+}

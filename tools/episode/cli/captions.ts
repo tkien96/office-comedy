@@ -3,11 +3,10 @@
 // Rebuilds exports/EPxxx.srt from the measured timeline (deterministic) and
 // writes reports/captions-qc.md: automatic checks + what still needs a human
 // to watch/listen. --check: only compare, write nothing to exports/.
-// Never marks captions approved (the user runs episode:approve).
 import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { buildCues, buildSrt, CAPTION_RULES, parseSrt, readTimeline, srtTime } from "../captions.ts";
-import { checkApproval, currentSources, hashText, readManifest } from "../manifest.ts";
+import { hashText } from "../manifest.ts";
 import { rel, resolveEpisode } from "../paths.ts";
 
 const args = process.argv.slice(2);
@@ -18,7 +17,6 @@ const script = JSON.parse(readFileSync(P.script, "utf8")) as {
   scenes: { id: string; speakers: string[] }[];
   beats: { id: string; scene: string; kind: string; role?: string; text?: string }[];
 };
-const m = readManifest(P);
 const cues = buildCues(tl);
 const srt = buildSrt(tl);
 const videoEnd = tl.durationInFrames / tl.fps;
@@ -135,7 +133,7 @@ else {
       run = 0;
     }
   }
-  note(`Âm thanh lấy từ video đã duyệt (${rel(P.video)}, ${(audio.length / 100).toFixed(2)} s). Cue cuối kết thúc ${Math.max(...cues.map((c) => c.end)).toFixed(3)} s; video dài ${videoEnd.toFixed(3)} s.`);
+  note(`Âm thanh lấy từ video (${rel(P.video)}, ${(audio.length / 100).toFixed(2)} s). Cue cuối kết thúc ${Math.max(...cues.map((c) => c.end)).toFixed(3)} s; video dài ${videoEnd.toFixed(3)} s.`);
 }
 
 // 6) Round-trip of the generated file.
@@ -155,12 +153,11 @@ if (!checkOnly) {
   writeFileSync(P.captions, srt, "utf8");
 }
 const after = hashText(P.captions);
-const ap = checkApproval(m.approvals.captions, after, currentSources(P, m));
 const role = (r: string) => ({ narrator: "Kiên (lời dẫn)", kien: "Kiên", trinh: "Trinh", sep: "Sếp" })[r] ?? r;
 
 const md = `# Phụ đề ${P.id}: kiểm tra
 
-File: \`${rel(P.captions)}\` · hash \`${after?.slice(0, 16)}\` · trạng thái duyệt: **${ap.detail}**
+File: \`${rel(P.captions)}\` · hash \`${after?.slice(0, 16)}\`
 
 Tạo bằng \`npm run episode:captions -- ${P.id}\` từ \`${rel(P.timeline)}\` (khoảng lời đo trên âm thanh thật của từng câu). Chữ đúng nguyên văn câu đã tạo giọng; chỉ thêm ngắt dòng.
 
@@ -173,7 +170,7 @@ Tạo bằng \`npm run episode:captions -- ${P.id}\` từ \`${rel(P.timeline)}\`
   - mốc nằm trong thời lượng video; không chồng cue; độ dài cue;
   - ngắt dòng; Unicode NFC; khoảng trắng và dấu câu;
   - tên Kiên/Trinh; xưng hô theo quan hệ;
-  - tiếng nói trong âm thanh của video đã duyệt nằm trong cue, không có đoạn nói nào thiếu phụ đề.
+  - tiếng nói trong âm thanh của video nằm trong cue, không có đoạn nói nào thiếu phụ đề.
 
 ${f.length ? f.map((x) => `- **${x.level}**${x.cue ? ` (cue ${x.cue})` : ""}: ${x.msg}`).join("\n") : "- Không có phát hiện."}
 
@@ -196,8 +193,6 @@ ${cues.map((c) => `| ${c.index} | ${srtTime(c.start)} → ${srtTime(c.end)} | ${
 - [ ] Ngắt dòng đọc tự nhiên, không tách cụm từ.
 - [ ] Mở \`${rel(P.video)}\` bằng một trình phát (ví dụ VLC: Phụ đề → Thêm file phụ đề), nạp SRT, xem phụ đề hiện và ẩn đúng lúc.
 - [ ] SRT không có nhãn người nói (video đã in phụ đề kèm nhãn). Quyết định có cần nhãn trong SRT không.
-
-Duyệt sau khi xem: \`npm run episode:approve -- ${P.id} captions\`
 `;
 mkdirSync(P.reportsDir, { recursive: true });
 writeFileSync(`${P.reportsDir}/captions-qc.md`, md);
